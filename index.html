@@ -18,6 +18,22 @@
       text-align: center;
       padding: 2rem;
     }
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 0;
+      background-color: #0f172a;
+    }
+    header img {
+      max-height: 60px;
+    }
+    main {
+      margin-top: 100px; /* adds space so content doesn't sit under header */
+    }
     h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
@@ -42,8 +58,13 @@
   </style>
 </head>
 <body>
-  <h1>Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">&reg;</sup></h1>
-  <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
-  <a href="mailto:info@newclear.co">Contact Us</a>
+  <header>
+    <img src="logo.png" alt="NewClear Computing Logo" />
+  </header>
+  <main>
+    <h1>Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">&reg;</sup></h1>
+    <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
+    <a href="mailto:info@newclear.co">Contact Us</a>
+  </main>
 </body>
 </html>
