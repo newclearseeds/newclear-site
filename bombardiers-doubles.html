@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bombardiers — Darts Doubles (3-Set)</title>
+
+  <!-- Tailwind (CDN play mode) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coal: { 900: "#0a0a0a", 950: "#050505" },
+            blaze: { 400: "#ff8a3d", 500: "#ff7a1a", 600: "#ff6a00", 700: "#e65f00" }
+          },
+          boxShadow: {
+            soft: "0 10px 30px rgba(0,0,0,.22)",
+            glow: "0 8px 28px rgba(255,122,26,.28)"
+          },
+          borderRadius: {
+            xl3: "1.25rem"
+          },
+          fontFamily: {
+            display: ['Impact', 'Anton', 'Oswald', 'ui-sans-serif', 'system-ui']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+  <div id="root"></div>
+
+  <!-- React & Babel (for inline JSX). For production, bundle instead. -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useMemo, useState, useEffect } = React;
+
+    const PLAYERS = ["Dean","Wayne","Gabor","Mark","Jun","Grant","Kalien","Darren","Debby","Liam","BurwoodSpare"];
+
+    /** Reusable bits **/
+    const Badge = ({ tone="gray", children }) => {
+      const tones = {
+        gray: "bg-neutral-100 text-neutral-700 border-neutral-200",
+        amber: "bg-amber-50 text-amber-800 border-amber-200",
+        green: "bg-green-50 text-green-800 border-green-200",
+        red: "bg-red-50 text-red-800 border-red-200",
+        orange: "bg-orange-50 text-orange-800 border-orange-200",
+      };
+      return <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs ${tones[tone]}`}>{children}</span>;
+    };
+
+    const Button = ({ children, className="", ...props }) => (
+      <button
+        className={`px-3 py-2 rounded-xl border border-neutral-200 bg-white hover:shadow-soft transition active:translate-y-[1px] ${className}`}
+        {...props}
+      >{children}</button>
+    );
+
+    const PrimaryButton = ({ children, className="", ...props }) => (
+      <button
+        className={`px-3 py-2 rounded-xl3 text-white bg-gradient-to-r from-blaze-700 to-coal-900 border border-neutral-800 shadow-glow hover:shadow-soft transition active:translate-y-[1px] ${className}`}
+        {...props}
+      >{children}</button>
+    );
+
+    const Card = ({ title, children, footer, className="" }) => (
+      <div className={`rounded-xl3 bg-white border border-neutral-200 shadow-soft ${className}`}>
+        <div className="flex items-center justify-between p-4 md:p-5 border-b border-neutral-200">
+          <h2 className="text-lg md:text-xl font-semibold">{title}</h2>
+          {footer}
+        </div>
+        <div className="p-4 md:p-6">{children}</div>
+      </div>
+    );
+
+    /** Lancaster-style header art (inline SVG, public-domain style silhouette) **/
+    const BomberBanner = () => (
+      <div className="overflow-hidden rounded-xl3 border border-neutral-800 shadow-soft">
+        <div className="relative bg-gradient-to-r from-coal-900 via-coal-900 to-blaze-700">
+          <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
+            backgroundImage: 'radial-gradient(1200px 200px at 10% 0%, rgba(255,255,255,.08), transparent)'
+          }} />
+          <div className="px-5 py-6 md:px-8 md:py-8 flex items-center gap-4 text-white">
+            {/* Bomber silhouette */}
+            <svg width="120" height="44" viewBox="0 0 240 88" className="shrink-0 drop-shadow-[0_6px_12px_rgba(0,0,0,0.5)]">
+              <g fill="currentColor">
+                <!-- fuselage -->
+                <rect x="72" y="36" width="96" height="10" rx="2" />
+                <rect x="160" y="38" width="30" height="6" rx="2" />
+                <!-- cockpit bump -->
+                <rect x="80" y="32" width="12" height="6" rx="2" />
+                <!-- tail -->
+                <rect x="64" y="34" width="8" height="14" rx="2" />
+                <rect x="60" y="30" width="6" height="12" rx="1" transform="rotate(-10 63 36)" />
+                <!-- wings -->
+                <rect x="46" y="26" width="148" height="6" rx="2" />
+                <rect x="36" y="54" width="168" height="6" rx="2" />
+                <!-- engines -->
+                <rect x="86" y="28" width="8" height="16" rx="2" />
+                <rect x="112" y="28" width="8" height="16" rx="2" />
+                <rect x="138" y="28" width="8" height="16" rx="2" />
+                <rect x="164" y="28" width="8" height="16" rx="2" />
+                <!-- simple prop disks -->
+                <circle cx="90" cy="24" r="4" />
+                <circle cx="116" cy="24" r="4" />
+                <circle cx="142" cy="24" r="4" />
+                <circle cx="168" cy="24" r="4" />
+              </g>
+              <!-- little bomb -->
+              <g transform="translate(182,70)">
+                <path d="M0 0 c8 -2 14 -8 16 -16 l6 2 c-2 10 -10 18 -20 20z" fill="#ff7a1a"/>
+                <rect x="14" y="-18" width="6" height="10" rx="1" fill="#ff7a1a" transform="rotate(20 17 -13)"/>
+              </g>
+            </svg>
+
+            <div className="flex-1">
+              <div className="flex items-center gap-3">
+                <span className="font-display tracking-wider text-2xl md:text-3xl font-black">BOMBARDIERS</span>
+                <span className="text-xs md:text-sm px-2 py-1 rounded-full border border-white/30 bg-white/10">Darts Doubles — 3-Set</span>
+              </div>
+              <p className="mt-1 text-white/80 text-sm">
+                Fill Set 1, then apply <strong>HOME</strong> or <strong>AWAY</strong> to scaffold Sets 2–3. Warnings are hints, not blockers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    /** Form components **/
+    function PairSelect({ label, value, onChange, players }) {
+      const handle = (key, v) => onChange({ ...value, [key]: v });
+      const duplicateInPair = value.p1 && value.p1 === value.p2;
+
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+          <div className="text-sm font-semibold text-neutral-800">{label}</div>
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <label className="block text-xs text-neutral-600 mb-1">Player 1</label>
+              <select className="w-full rounded-2xl border border-neutral-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,122,26,0.35)]"
+                value={value.p1} onChange={(e)=>handle("p1", e.target.value)}>
+                <option value="">— Select —</option>
+                {players.map(p => <option key={p} value={p} disabled={value.p2===p}>{p}</option>)}
+              </select>
+            </div>
+            <div className="flex-1">
+              <label className="block text-xs text-neutral-600 mb-1">Player 2</label>
+              <select className="w-full rounded-2xl border border-neutral-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,122,26,0.35)]"
+                value={value.p2} onChange={(e)=>handle("p2", e.target.value)}>
+                <option value="">— Select —</option>
+                {players.map(p => <option key={p} value={p} disabled={value.p1===p}>{p}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="text-xs md:text-sm">
+            {duplicateInPair
+              ? <span className="text-red-600">Players in a pair must be different.</span>
+              : (value.p1 && value.p2)
+                  ? <span className="text-green-700">Pair ready ✓</span>
+                  : <span className="text-neutral-600">Choose two players.</span>}
+          </div>
+        </div>
+      );
+    }
+
+    // Letter-locked warnings for Sets 2 & 3
+    function LetterLockWarnings({ setValue, fromSet1, setNo }) {
+      if (!fromSet1) return null;
+      const Ls = ["A","B","C"];
+      const s1 = {
+        A: new Set([fromSet1.A.p1, fromSet1.A.p2].filter(Boolean)),
+        B: new Set([fromSet1.B.p1, fromSet1.B.p2].filter(Boolean)),
+        C: new Set([fromSet1.C.p1, fromSet1.C.p2].filter(Boolean)),
+      };
+      const cur = {
+        A: new Set([setValue.A.p1, setValue.A.p2].filter(Boolean)),
+        B: new Set([setValue.B.p1, setValue.B.p2].filter(Boolean)),
+        C: new Set([setValue.C.p1, setValue.C.p2].filter(Boolean)),
+      };
+
+      const warnings = [];
+      Ls.forEach(L => {
+        if (s1[L].size) {
+          const overlap = [...s1[L]].some(p => cur[L].has(p));
+          if (!overlap) warnings.push(`Set ${setNo} Pair ${L}: include ≥1 from Set 1 Pair ${L}.`);
+        }
+      });
+      Ls.forEach(L => {
+        const others = Ls.filter(x => x !== L);
+        [...s1[L]].forEach(p => {
+          if (others.some(o => cur[o].has(p))) {
+            warnings.push(`Set ${setNo}: "${p}" from Set 1 Pair ${L} must not appear in Pair ${others.find(o=>cur[o].has(p))}.`);
+          }
+        });
+      });
+
+      if (warnings.length === 0) return <div className="mt-2"><Badge tone="green">Letter-lock ok</Badge></div>;
+      return <ul className="mt-2 space-y-1 text-xs text-amber-800">{warnings.map((w,i)=><li key={i}>⚠️ {w}</li>)}</ul>;
+    }
+
+    function SetCard({ setNo, value, onChange, coverageFrom }) {
+      const playersUsed = useMemo(() => {
+        const list = [value.A.p1,value.A.p2,value.B.p1,value.B.p2,value.C.p1,value.C.p2].filter(Boolean);
+        const count = {}; list.forEach(p => count[p]=(count[p]||0)+1); return count;
+      }, [value]);
+      const warnDupWithinSet = Object.values(playersUsed).some(n => n>1);
+      const setPair = (k, v) => onChange({ ...value, [k]: v });
+      const clearSet = () => onChange({ A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} });
+
+      return (
+        <Card
+          title={`Set ${setNo}`}
+          footer={<Button onClick={clearSet}>Clear set</Button>}
+        >
+          <div className="space-y-5">
+            <PairSelect label="Pair A" value={value.A} onChange={v=>setPair("A", v)} players={PLAYERS} />
+            <PairSelect label="Pair B" value={value.B} onChange={v=>setPair("B", v)} players={PLAYERS} />
+            <PairSelect label="Pair C" value={value.C} onChange={v=>setPair("C", v)} players={PLAYERS} />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {warnDupWithinSet
+              ? <Badge tone="amber">Heads up: someone is used more than once in this set.</Badge>
+              : <Badge>Tip: spread players across pairs.</Badge>}
+          </div>
+          {coverageFrom && <LetterLockWarnings setValue={value} fromSet1={coverageFrom} setNo={setNo} />}
+        </Card>
+      );
+    }
+
+    /** App **/
+    function App() {
+      const [mode, setMode] = useState("home");
+      const [sets, setSets] = useState({
+        1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        2: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        3: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+      });
+
+      const applyHomeRules = () => {
+        const s1 = sets[1]; setMode("home");
+        setSets(prev => ({
+          ...prev,
+          2:{ A:s1.A, B:s1.C, C:s1.B },
+          3:{ A:s1.C, B:s1.A, C:s1.B }
+        }));
+      };
+      const applyAwayRules = () => {
+        const s1 = sets[1]; setMode("away");
+        setSets(prev => ({
+          ...prev,
+          2:{ A:s1.B, B:s1.A, C:s1.C },
+          3:{ A:s1.B, B:s1.C, C:s1.A }
+        }));
+      };
+
+      useEffect(() => { applyHomeRules(); }, []);
+
+      const updateSet = (n, v) => setSets(s => ({ ...s, [n]: v }));
+
+      const fmtPair = (p) => (p.p1 && p.p2 ? `${p.p1} & ${p.p2}` : "—");
+      const lineupText = useMemo(() => [
+        `SET 1: A) ${fmtPair(sets[1].A)}  |  B) ${fmtPair(sets[1].B)}  |  C) ${fmtPair(sets[1].C)}`,
+        `SET 2: A) ${fmtPair(sets[2].A)}  |  B) ${fmtPair(sets[2].B)}  |  C) ${fmtPair(sets[2].C)}`,
+        `SET 3: A) ${fmtPair(sets[3].A)}  |  B) ${fmtPair(sets[3].B)}  |  C) ${fmtPair(sets[3].C)}`
+      ].join("\n"), [sets]);
+
+      const copy = async () => {
+        try { await navigator.clipboard.writeText(lineupText); alert("Copied lineup to clipboard!"); }
+        catch { alert("Could not copy. Select the text and copy manually."); }
+      };
+
+      const toCsv = () => {
+        const rows = [
+          ["Team","Bombardiers"],
+          ["Mode", mode.toUpperCase()], [],
+          ["Set", "Pair", "Player 1", "Player 2"],
+          ...[[1,sets[1]],[2,sets[2]],[3,sets[3]]].flatMap(([n,s]) => [
+            [n,"A",s.A.p1||"",s.A.p2||""],
+            [n,"B",s.B.p1||"",s.B.p2||""],
+            [n,"C",s.C.p1||"",s.C.p2||""],
+          ])
+        ];
+        const csv = rows.map(r => r.map(cell => {
+          const v = String(cell ?? "");
+          return (v.includes(",")||v.includes('"')||v.includes("\n")) ? `"${v.replaceAll('"','""')}"` : v;
+        }).join(",")).join("\n");
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a"); a.href = url; a.download = `bombardiers_lineup_${mode}.csv`; a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      const printPage = () => window.print();
+
+      return (
+        <div className="min-h-screen">
+          <style>{`@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } .print\\:border-0 { border: 0 !important; } .print\\:shadow-none { box-shadow: none !important; } .print\\:bg-transparent { background: transparent !important; } }`}</style>
+
+          <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
+            <BomberBanner />
+
+            <div className="bg-white rounded-xl3 border border-neutral-200 shadow-soft px-5 py-4 md:px-8 md:py-5 flex flex-wrap items-center gap-3 no-print">
+              <label className="text-sm text-neutral-800">Mode</label>
+              <select className="rounded-xl border border-neutral-300 px-3 py-2"
+                      value={mode} onChange={(e)=>setMode(e.target.value)}>
+                <option value="home">Home</option>
+                <option value="away">Away</option>
+              </select>
+
+              <PrimaryButton onClick={applyHomeRules}>Apply HOME rules</PrimaryButton>
+              <PrimaryButton onClick={applyAwayRules} className="from-coal-900 to-coal-900">Apply AWAY rules</PrimaryButton>
+
+              <Button onClick={copy}>Copy</Button>
+              <Button onClick={toCsv}>Export CSV</Button>
+              <Button onClick={printPage}>Print / Save PDF</Button>
+            </div>
+
+            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} />
+            <SetCard setNo={2} value={sets[2]} onChange={(v)=>updateSet(2, v)} coverageFrom={sets[1]} />
+            <SetCard setNo={3} value={sets[3]} onChange={(v)=>updateSet(3, v)} coverageFrom={sets[1]} />
+
+            <Card title={`Summary (${mode.toUpperCase()})`}>
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  <Badge tone="orange">Bombardiers rule</Badge>
+                  <span className="text-sm text-neutral-800">
+                    Sets 2 & 3: Each Pair A/B/C must include <strong>≥1</strong> player from the same letter’s Pair in Set 1.
+                    Those Set 1 players must not appear under a different letter.
+                  </span>
+                </div>
+                <pre className="text-sm bg-neutral-100 rounded-xl p-3 overflow-x-auto whitespace-pre-wrap print:bg-transparent">
+{`SET 1: A) ${sets[1].A.p1&&sets[1].A.p2?sets[1].A.p1+" & "+sets[1].A.p2:"—"}  |  B) ${sets[1].B.p1&&sets[1].B.p2?sets[1].B.p1+" & "+sets[1].B.p2:"—"}  |  C) ${sets[1].C.p1&&sets[1].C.p2?sets[1].C.p1+" & "+sets[1].C.p2:"—"}
+SET 2: A) ${sets[2].A.p1&&sets[2].A.p2?sets[2].A.p1+" & "+sets[2].A.p2:"—"}  |  B) ${sets[2].B.p1&&sets[2].B.p2?sets[2].B.p1+" & "+sets[2].B.p2:"—"}  |  C) ${sets[2].C.p1&&sets[2].C.p2?sets[2].C.p1+" & "+sets[2].C.p2:"—"}
+SET 3: A) ${sets[3].A.p1&&sets[3].A.p2?sets[3].A.p1+" & "+sets[3].A.p2:"—"}  |  B) ${sets[3].B.p1&&sets[3].B.p2?sets[3].B.p1+" & "+sets[3].B.p2:"—"}  |  C) ${sets[3].C.p1&&sets[3].C.p2?sets[3].C.p1+" & "+sets[3].C.p2:"—"}`}
+                </pre>
+              </div>
+            </Card>
+
+            <footer className="pb-10 text-center text-xs text-neutral-600">
+              Bombardiers • Black & Orange theme • Single-file React + Tailwind • Warnings are suggestions only.
+            </footer>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
