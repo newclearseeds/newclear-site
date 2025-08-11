@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Doubles Pairing – Home/Away Scheduler</title>
+<style>
+  :root{
+    --bg:#0f172a;        /* slate-900 */
+    --panel:#0b1226;     /* slightly darker */
+    --card:#111c36;      /* slate-850-ish */
+    --accent:#22d3ee;    /* cyan-400 */
+    --accent-2:#38bdf8;  /* sky-400 */
+    --text:#e5e7eb;      /* gray-200 */
+    --muted:#9ca3af;     /* gray-400 */
+    --warn:#f59e0b;      /* amber-500 */
+    --good:#10b981;      /* emerald-500 */
+    --bad:#ef4444;       /* red-500 */
+    --ring:#60a5fa;      /* blue-400 */
+    --shadow: 0 10px 30px rgba(0,0,0,.45);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    background: radial-gradient(60vw 60vh at 15% 10%, #10203f 0%, var(--bg) 55%), radial-gradient(40vw 40vh at 95% 10%, #0e2546 0%, var(--bg) 60%), var(--bg);
+    color:var(--text);
+  }
+  .container{max-width:1100px;margin:40px auto;padding:0 16px}
+  .header{
+    display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:20px
+  }
+  .title{
+    font-size: clamp(22px, 3.2vw, 34px);font-weight:800;letter-spacing:.2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent
+  }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+    border:1px solid rgba(148,163,184,.18);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;padding:16px}
+  .seg{
+    display:inline-flex;border:1px solid rgba(148,163,184,.25);border-radius:999px;overflow:hidden
+  }
+  .seg input{display:none}
+  .seg label{
+    padding:8px 14px;cursor:pointer;font-weight:600;color:var(--muted);backdrop-filter: blur(6px)
+  }
+  .seg input:checked + label{
+    background:linear-gradient(90deg, rgba(34,211,238,.15), rgba(56,189,248,.15));
+    color:var(--text)
+  }
+  .btn{
+    appearance:none;border:1px solid rgba(148,163,184,.25);background:linear-gradient(180deg,#1a2a4f,#13203e);
+    color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:.2s transform,.2s box-shadow
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .btn.secondary{background:linear-gradient(180deg,#10213f,#0d1b33)}
+  .btn.accent{
+    border-color:rgba(34,211,238,.45);background:linear-gradient(180deg,#123c47,#0e3039)
+  }
+  .grid{display:grid;gap:16px;padding:16px}
+  @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr} }
+  .set-card{padding:14px}
+  .set-head{
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:8px
+  }
+  .set-title{font-size:18px;font-weight:800}
+  .note{font-size:12px;color:var(--muted)}
+  .pair{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;padding:12px;border:1px dashed rgba(148,163,184,.25);border-radius:12px;background:rgba(255,255,255,.02)
+  }
+  .pair h4{margin:0 0 6px 0;font-size:14px;letter-spacing:.3px;color:#cfe8ff}
+  select{
+    width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(148,163,184,.28);
+    background:#0a1226;color:var(--text);outline:none
+  }
+  select:focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(96,165,250,.25)}
+  .warnings{padding:16px;border-top:1px solid rgba(148,163,184,.18)}
+  .warn{display:flex;gap:8px;align-items:flex-start;margin:6px 0;color:#fef3c7}
+  .warn:before{content:"⚠️"}
+  .good{color:#d1fae5}
+  .footer-actions{display:flex;flex-wrap:wrap;gap:10px;padding:16px;justify-content:flex-end}
+  .readonly{
+    opacity:.9;background:linear-gradient(180deg, rgba(20,34,68,.8), rgba(12,22,44,.8));
+  }
+  .badge{
+    font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(148,163,184,.25);color:var(--muted)
+  }
+  .legend{display:flex;gap:10px;flex-wrap:wrap;padding:0 16px 8px 16px;color:var(--muted);font-size:12px}
+  .sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="title">Doubles Pairing Scheduler</div>
+        <div class="note">Fill Sets 1–3. Choose Home or Away. Later sets (4–9) auto-generate. Warnings only.</div>
+      </div>
+      <button class="btn secondary" id="printBtn" title="Print">🖨️ Print</button>
+    </div>
+
+    <div class="card toolbar">
+      <div class="seg" role="tablist" aria-label="Home or Away">
+        <input type="radio" name="venue" id="home" checked />
+        <label for="home">Home</label>
+        <input type="radio" name="venue" id="away" />
+        <label for="away">Away</label>
+      </div>
+      <button class="btn accent" id="applyRules">Apply Home/Away Rules</button>
+      <button class="btn" id="exportBtn">Export JSON</button>
+    </div>
+
+    <div class="legend">
+      <span class="badge">Rule 1: In Sets 2 & 3, each Pair (A/B/C) must include ≥1 player from that Pair in Set 1.</span>
+      <span class="badge">Rule 2: Players from Set 1 Pair A/B/C can only appear in the same Pair letter in Sets 2 & 3.</span>
+    </div>
+
+    <div class="card grid" id="inputGrid">
+      <!-- Sets 1–3 (editable) -->
+    </div>
+
+    <div class="card warnings" id="warnings">
+      <div class="good">No warnings yet. You’re all set.</div>
+    </div>
+
+    <div class="card grid readonly" id="autoGrid" aria-live="polite" aria-busy="false">
+      <!-- Sets 4–9 (read-only, auto) -->
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn secondary" id="clearBtn">Clear All</button>
+    </div>
+  </div>
+
+<script>
+/* ======= Data ======= */
+const players = [
+  "Dean","Wayne","Gabor","Mark","Jun","Grant","Kalien","Darren",
+  "Debby","Liam","BurwoodSpare"
+];
+
+/* ======= Helpers ======= */
+const $ = sel => document.querySelector(sel);
+const el = (tag, cls, html) => {
+  const n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(html !== undefined) n.innerHTML = html;
+  return n;
+};
+
+function playerSelect(id){
+  const s = document.createElement('select');
+  s.id = id;
+  s.appendChild(new Option("— select —",""));
+  players.forEach(p => s.appendChild(new Option(p,p)));
+  return s;
+}
+
+function pairBlock(setNum, pairLetter){
+  const wrap = el('div','pair');
+  const label = el('h4','',`Pair ${pairLetter}`);
+  wrap.appendChild(label);
+  const s1 = playerSelect(`S${setNum}${pairLetter}P1`);
+  const s2 = playerSelect(`S${setNum}${pairLetter}P2`);
+  wrap.appendChild(s1); wrap.appendChild(s2);
+  return wrap;
+}
+
+function setCard(setNum, editable=true){
+  const card = el('div','set-card');
+  const header = el('div','set-head');
+  const title = el('div','set-title',`Set ${setNum}`);
+  const note = el('div','note', editable ? 'Editable' : 'Auto from Home/Away rules');
+  header.appendChild(title); header.appendChild(note);
+  card.appendChild(header);
+
+  ['A','B','C'].forEach(letter=>{
+    card.appendChild(pairBlock(setNum, letter));
+  });
+  if(!editable){
+    card.querySelectorAll('select').forEach(s => { s.disabled = true; s.tabIndex = -1; });
+  }
+  return card;
+}
+
+/* ======= Build UI ======= */
+const inputGrid = $("#inputGrid");
+[1,2,3].forEach(n => inputGrid.appendChild(setCard(n, true)));
+
+const autoGrid = $("#autoGrid");
+[4,5,6,7,8,9].forEach(n => autoGrid.appendChild(setCard(n, false)));
+
+/* ======= Rules & Validation ======= */
+/* Rule mapping for later sets */
+const homeRepeats = {
+  4:1, 8:1, 6:2, 9:2, 5:3, 7:3
+};
+const awayRepeats = {
+  5:1, 9:1, 4:2, 7:2, 6:3, 8:3
+};
+
+function getPairPlayers(setNum, letter){
+  const p1 = $(`#S${setNum}${letter}P1`).value;
+  const p2 = $(`#S${setNum}${letter}P2`).value;
+  return [p1, p2].filter(Boolean);
+}
+
+function setPairPlayers(setNum, letter, [p1, p2]){
+  $(`#S${setNum}${letter}P1`).value = p1 || "";
+  $(`#S${setNum}${letter}P2`).value = p2 || "";
+}
+
+function copySet(src, dst){
+  ['A','B','C'].forEach(letter=>{
+    const vals = [
+      $(`#S${src}${letter}P1`).value || "",
+      $(`#S${src}${letter}P2`).value || ""
+    ];
+    setPairPlayers(dst, letter, vals);
+  });
+}
+
+function applyHomeAway(){
+  const isHome = $("#home").checked;
+  const mapping = isHome ? homeRepeats : awayRepeats;
+  for(const dst in mapping){
+    const src = mapping[dst];
+    copySet(src, Number(dst));
+  }
+  validateWarnings(); // refresh
+}
+
+/* Validation:
+   1) For Sets 2 & 3, Pair X must include ≥1 player from Set 1 Pair X.
+   2) Any player from Set 1 Pair X must only appear in Pair X (not B/C) in Sets 2 & 3.
+   Warnings only (non-blocking).
+*/
+function validateWarnings(){
+  const warnings = [];
+  const set1 = {
+    A: new Set(getPairPlayers(1,'A')),
+    B: new Set(getPairPlayers(1,'B')),
+    C: new Set(getPairPlayers(1,'C')),
+  };
+
+  [2,3].forEach(setNum=>{
+    ['A','B','C'].forEach(letter=>{
+      const cur = getPairPlayers(setNum, letter);
+      const s1 = set1[letter];
+
+      // Rule 1
+      const overlap = cur.filter(p => s1.has(p));
+      if(s1.size>0 && overlap.length===0){
+        warnings.push(`Set ${setNum} Pair ${letter}: should include at least one player from Set 1 Pair ${letter}.`);
+      }
+    });
+
+    // Rule 2: players from Set 1 Pair A must not appear in Pair B/C; likewise for B and C
+    const s2A = new Set(getPairPlayers(setNum,'A'));
+    const s2B = new Set(getPairPlayers(setNum,'B'));
+    const s2C = new Set(getPairPlayers(setNum,'C'));
+
+    for(const p of set1.A){
+      if(s2B.has(p) || s2C.has(p)){
+        warnings.push(`Set ${setNum}: Player "${p}" from Set 1 Pair A can only appear in Pair A.`);
+      }
+    }
+    for(const p of set1.B){
+      if(s2A.has(p) || s2C.has(p)){
+        warnings.push(`Set ${setNum}: Player "${p}" from Set 1 Pair B can only appear in Pair B.`);
+      }
+    }
+    for(const p of set1.C){
+      if(s2A.has(p) || s2B.has(p)){
+        warnings.push(`Set ${setNum}: Player "${p}" from Set 1 Pair C can only appear in Pair C.`);
+      }
+    }
+  });
+
+  // Render warnings
+  const wr = $("#warnings");
+  wr.innerHTML = "";
+  if(warnings.length===0){
+    wr.appendChild(el('div','good','No warnings detected. Looks good!'));
+  }else{
+    warnings.forEach(w => wr.appendChild(el('div','warn', w)));
+  }
+}
+
+/* ======= Events ======= */
+document.querySelectorAll('#inputGrid select').forEach(s=>{
+  s.addEventListener('change', ()=>{ validateWarnings(); });
+});
+
+$("#applyRules").addEventListener('click', ()=>{
+  applyHomeAway();
+});
+
+$("#exportBtn").addEventListener('click', ()=>{
+  const data = {};
+  for(let set=1; set<=9; set++){
+    data[`Set${set}`] = {};
+    ['A','B','C'].forEach(letter=>{
+      data[`Set${set}`][`Pair${letter}`] = {
+        P1: $(`#S${set}${letter}P1`).value || null,
+        P2: $(`#S${set}${letter}P2`).value || null
+      };
+    });
+  }
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'doubles-pairing.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$("#clearBtn").addEventListener('click', ()=>{
+  document.querySelectorAll('select').forEach(s=> s.value = "");
+  validateWarnings();
+  applyHomeAway();
+});
+
+$("#printBtn").addEventListener('click', ()=> window.print());
+
+// Initial apply for empty state
+validateWarnings();
+applyHomeAway();
+</script>
+</body>
+</html>
