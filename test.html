@@ -176,10 +176,10 @@
               <thead>
                 <tr>
                   <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold'}}>Set</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '120px'}}>Players (H)</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '140px'}}>HOME Players</th>
                   <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '40px'}}>Result</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '40px'}}>Result</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '120px'}}>Players (A)</th>
+                  <th style={{border: '1px solid black', borderRight: '3px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '40px'}}>Result</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '140px'}}>AWAY Players</th>
                   <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold'}}>Set</th>
                 </tr>
               </thead>
@@ -187,8 +187,8 @@
                 {[0, 1, 2].map(setIndex => 
                   ['A', 'B', 'C'].map((pairLetter, pairIndex) => {
                     const gameNumber = setIndex * 3 + pairIndex + 1;
-                    const homePair = rotationPairs[setIndex][pairIndex];
-                    const homeFormatted = formatPair(homePair);
+                    const currentPair = rotationPairs[setIndex][pairIndex];
+                    const homeFormatted = formatPair(currentPair);
                     const asterisk = pairLetter === 'A' || pairLetter === 'C' ? '*' : '';
                     const awayAsterisk = pairLetter === 'B' ? '*' : '';
                     
@@ -198,12 +198,12 @@
                           #{gameNumber}
                         </td>
                         <td style={{border: '1px solid black', padding: '8px'}}>
-                          {pairLetter}{asterisk}
+                          {homeFormatted ? `${pairLetter}${asterisk} - ${homeFormatted}` : `${pairLetter}${asterisk} - (Not Set)`}
                         </td>
                         <td style={{border: '1px solid black', padding: '8px'}}></td>
-                        <td style={{border: '1px solid black', padding: '8px'}}></td>
+                        <td style={{border: '1px solid black', borderRight: '3px solid black', padding: '8px'}}></td>
                         <td style={{border: '1px solid black', padding: '8px'}}>
-                          {pairLetter}{awayAsterisk}
+                          {`${pairLetter}${awayAsterisk} - (Away Team)`}
                         </td>
                         <td style={{border: '1px solid black', padding: '8px', textAlign: 'center', fontWeight: 'bold'}}>
                           #{gameNumber}
