@@ -188,9 +188,40 @@
                   ['A', 'B', 'C'].map((pairLetter, pairIndex) => {
                     const gameNumber = setIndex * 3 + pairIndex + 1;
                     const currentPair = rotationPairs[setIndex][pairIndex];
-                    const homeFormatted = formatPair(currentPair);
+                    const pairFormatted = formatPair(currentPair);
                     const asterisk = pairLetter === 'A' || pairLetter === 'C' ? '*' : '';
                     const awayAsterisk = pairLetter === 'B' ? '*' : '';
+                    
+                    // Show players in HOME column if mode is "home", AWAY column if mode is "away"
+                    const homeContent = mode === "home" ? (
+                      <>
+                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
+                          Pair {pairLetter}{asterisk}
+                        </div>
+                        <div>
+                          {pairFormatted || '(Not Set)'}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{color: '#888', fontSize: '9px'}}>
+                        (Home Team)
+                      </div>
+                    );
+
+                    const awayContent = mode === "away" ? (
+                      <>
+                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
+                          Pair {pairLetter}{awayAsterisk}
+                        </div>
+                        <div>
+                          {pairFormatted || '(Not Set)'}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{color: '#888', fontSize: '9px'}}>
+                        (Away Team)
+                      </div>
+                    );
                     
                     return (
                       <tr key={`${setIndex}-${pairIndex}`}>
@@ -198,22 +229,12 @@
                           #{gameNumber}
                         </td>
                         <td style={{border: '1px solid black', padding: '6px', fontSize: '10px'}}>
-                          <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
-                            Pair {pairLetter}{asterisk}
-                          </div>
-                          <div>
-                            {homeFormatted || '(Not Set)'}
-                          </div>
+                          {homeContent}
                         </td>
                         <td style={{border: '1px solid black', padding: '6px', textAlign: 'center'}}></td>
                         <td style={{border: '1px solid black', borderRight: '4px solid black', padding: '6px', textAlign: 'center'}}></td>
                         <td style={{border: '1px solid black', padding: '6px', fontSize: '10px'}}>
-                          <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
-                            Pair {pairLetter}{awayAsterisk}
-                          </div>
-                          <div>
-                            (Away Team)
-                          </div>
+                          {awayContent}
                         </td>
                         <td style={{border: '1px solid black', padding: '6px', textAlign: 'center', fontWeight: 'bold', fontSize: '10px'}}>
                           #{gameNumber}
