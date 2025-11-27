@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leading cybersecurity and IT solutions provider. Protect your digital assets with cutting-edge technology.">
+    <link rel="preload" href="logo.png" as="image">
     <title>Newclear Computing Pty Ltd® - Cybersecurity and IT Solutions</title>
     <style>
         /* Reset and base styles */
@@ -50,6 +52,7 @@
             font-weight: bold;
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
         header::after {
             content: '0x7B3C ████ ALERT::THREAT ████ 01010110 01010000 01001110 ████ 0xD1F8 ████ WARNING ████ 01000100 01000101 01000110 01000101 01001110 01010011 01000101 ████ 0x4E92 ████ CRITICAL::BLOCKED ████ 01001001 01000100 01010011 ████ 0x6A2B ████';
@@ -68,6 +71,7 @@
             font-weight: bold;
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
         .nav-code-line {
             white-space: nowrap;
@@ -199,10 +203,6 @@
         .services {
             padding: 4rem 0;
             background: #1a1a1a;
-            background-image: url('https://github.com/apps/desktop');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
             position: relative;
         }
         .services::before {
@@ -305,6 +305,7 @@
             text-shadow: 0 0 10px rgba(0,166,81,0.8), 0 0 20px rgba(0,166,81,0.4);
             animation: matrixScroll1 45s linear infinite;
             font-weight: bold;
+            will-change: transform;
         }
         .about-image::after {
             content: '0x4F91 ████ PORTS::65535 ████ 01010011 01000011 01000001 01001110 ████ MALWARE::BLOCKED ████ 0xDE23 ████ SSL::VERIFIED ████ 01000101 01001110 01000011 01010010 01011001 01010000 01010100 ████ TLS-1.3 ████ 0x8A7C ████ DEFENSE::ACTIVE ████ 01010000 01010010 01001111 01010100 01000101 01000011 01010100 01000101 01000100 ████ INTRUSION::PREVENTED ████ 0xB5F3 ████';
@@ -317,6 +318,7 @@
             text-shadow: 0 0 10px rgba(0,214,104,0.8), 0 0 20px rgba(0,214,104,0.4);
             animation: matrixScroll2 50s linear infinite;
             font-weight: bold;
+            will-change: transform;
         }
         @keyframes matrixScroll1 {
             0% { transform: translateX(100%); }
@@ -495,7 +497,7 @@
         <span class="nav-code-line" style="top: 85%; color: rgba(255,255,255,0.2); text-shadow: 0 0 5px rgba(255,255,255,0.3); animation: navMatrixScroll1 45s linear infinite, blink 3s ease-in-out infinite;">0x9F2E ████ SYSTEM::ONLINE ████ 01010011 01011001 01010011 ████ 0xE7A1 ████ STATUS::OK ████ 01001110 01000101 01010100 01010111 01001111 01010010 01001011 ████</span>
         <nav class="container">
             <div class="logo">
-                <img src="logo.png" alt="Newclear Computing Pty Ltd®">
+                <img src="logo.png" alt="Newclear Computing Pty Ltd®" width="240" height="240" loading="eager">
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
