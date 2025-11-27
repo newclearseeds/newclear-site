@@ -379,6 +379,19 @@
             border: 2px solid #ffb000;
             border-radius: 0px;
             box-shadow: 0 0 20px rgba(255,176,0,0.2);
+            position: relative;
+        }
+        .calendly-inline-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.3);
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: multiply;
         }
         /* Contact Section */
         .contact {
@@ -491,6 +504,24 @@
             position: relative;
             z-index: 1;
         }
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .footer-content img {
+            height: 100px;
+            width: auto;
+        }
+        .footer-content p {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            color: #00ff00;
+            text-shadow: 0 0 5px rgba(0,255,0,0.5);
+        }
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .nav-links {
@@ -584,6 +615,38 @@
                     <h3>Cloud Integration</h3>
                     <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
                 </div>
+                <div class="service-card">
+                    <h3>Microsoft Support</h3>
+                    <p>Expert support for Microsoft 365, Azure, and Windows environments. Maximize productivity with enterprise solutions.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Essential Eight</h3>
+                    <p>Implementation and compliance with the Essential Eight security framework to protect against cyber threats.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Action1 Management</h3>
+                    <p>Remote endpoint management and patch automation. Keep your systems secure and up-to-date effortlessly.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Proxmox Virtualization</h3>
+                    <p>Enterprise virtualization solutions with Proxmox VE. Build powerful, scalable infrastructure on open-source technology.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Linux Solutions</h3>
+                    <p>Server deployment, management, and support for Linux environments. Robust, secure, and cost-effective solutions.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Google Workspace</h3>
+                    <p>Migration, deployment, and support for Google Workspace. Enhance collaboration with cloud-based productivity tools.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Scripting & Automation</h3>
+                    <p>Custom scripts and automation solutions. Streamline repetitive tasks and boost operational efficiency.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Custom Programming</h3>
+                    <p>Bespoke software development and integrations. Tailored solutions to meet your unique business requirements.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -615,7 +678,7 @@
                 <p>Schedule a free consultation to discuss your cybersecurity needs. Choose a time that works best for you.</p>
             </div>
             <!-- Calendly inline widget begin -->
-            <div class="calendly-inline-widget" data-url="https://calendly.com/dcovell?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffb000&primary_color=00ff00"></div>
+            <div class="calendly-inline-widget" data-url="https://calendly.com/dcovell?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffb000&primary_color=00ff00&hide_event_type_details=1"></div>
             <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
             <!-- Calendly inline widget end -->
         </div>
@@ -645,10 +708,10 @@
 
     <footer>
         <div class="container">
-            <div style="margin-bottom: 1rem;">
-                <img src="logo.png" alt="Newclear Computing Pty Ltd®" style="height: 80px; width: auto;" loading="lazy">
+            <div class="footer-content">
+                <img src="logo.png" alt="Newclear Computing Pty Ltd®" loading="lazy">
+                <p>&copy; <span id="year"></span> Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">®</sup>. All rights reserved.</p>
             </div>
-            <p>&copy; <span id="year"></span> Newclear Computing Pty Ltd®. All rights reserved.</p>
         </div>
     </footer>
 
