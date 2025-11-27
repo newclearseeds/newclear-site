@@ -133,6 +133,30 @@
         .nav-links a:hover {
             color: #00a651;
         }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1000;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #ffb000;
+            margin: 3px 0;
+            transition: all 0.3s;
+            box-shadow: 0 0 5px rgba(255,176,0,0.5);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
         .cta-button {
             background: transparent;
             color: #ffb000;
@@ -635,6 +659,29 @@
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #000000;
+                width: 100%;
+                text-align: center;
+                transition: left 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.8);
+                border-top: 2px solid #ffb000;
+                padding: 2rem 0;
+                gap: 0;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .cta-button {
                 display: none;
             }
             .hero h1 {
@@ -678,6 +725,11 @@
                 <li><a href="#booking">Book Consultation</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <a href="#booking" class="cta-button">Book Now</a>
         </nav>
     </header>
@@ -918,8 +970,32 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    // Close mobile menu after clicking a link
+                    const navLinks = document.querySelector('.nav-links');
+                    const hamburger = document.querySelector('.hamburger');
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
                 }
             });
+        });
+
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
         });
 
         // Contact form handling with Formspree
