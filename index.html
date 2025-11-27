@@ -1,75 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Newclear Computing Pty Ltd®</title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 0;
-  }
-
-  header {
-    width: 100%;
-    padding: 1rem 0;
-    background-color: #0f172a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  header img {
-    max-height: 414px;
-    width: auto;
-  }
-
-  main {
-    padding: 4rem 2rem;
-    max-width: 800px;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-  }
-
-  a {
-    background: #38bdf8;
-    color: #0f172a;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-
-  a:hover {
-    background: #0ea5e9;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newclear Computing Pty Ltd® - Cybersecurity and IT Solutions</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ffb000;
+            background-color: #0d0d0d;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        header {
+            background: #000000;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        header::before {
+            content: '01010011 ████ 0xF3A2 ████ SECURE ████ 01001110 01000101 01010111 ████ 0x8B71 ████ CYBER ████ 01010000 01010010 01001111 ████ 0xC4E9 ████ PROTECTED ████ 01000011 01001100 01000101 01000001 01010010 ████ 0x2D5F ████ FIREWALL ████ 01010011 01000101 01000011 ████ 0xA9E2 ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 15%;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: rgba(0, 166, 81, 0.25);
+            text-shadow: 0 0 5px rgba(0,166,81,0.4);
+            animation: navMatrixScroll1 35s linear infinite, blink 2s ease-in-out infinite;
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+        }
+        header::after {
+            content: '0x7B3C ████ ALERT::THREAT ████ 01010110 01010000 01001110 ████ 0xD1F8 ████ WARNING ████ 01000100 01000101 01000110 01000101 01001110 01010011 01000101 ████ 0x4E92 ████ CRITICAL::BLOCKED ████ 01001001 01000100 01010011 ████ 0x6A2B ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 55%;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: rgba(255, 50, 50, 0.25);
+            text-shadow: 0 0 5px rgba(255,50,50,0.4);
+            animation: navMatrixScroll2 40s linear infinite, blink 2.5s ease-in-out infinite;
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .nav-code-line {
+            white-space: nowrap;
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+        @keyframes navMatrixScroll1 {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        @keyframes navMatrixScroll2 {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            margin-right: -30rem;
+        }
+        .logo img {
+            max-height: 240px;
+            width: auto;
+            position: relative;
+            top: 10px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover {
+            color: #00a651;
+        }
+        .cta-button {
+            background: transparent;
+            color: #ffb000;
+            padding: 0.5rem 1rem;
+            border: 2px solid #ffb000;
+            border-radius: 0px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(255,176,0,0.7);
+            box-shadow: 0 0 10px rgba(255,176,0,0.3);
+        }
+        .cta-button:hover {
+            background: #ffb000;
+            color: #0a0a0a;
+            text-shadow: none;
+            box-shadow: 0 0 20px rgba(255,176,0,0.8);
+        }
+        /* Hero Section */
+        .hero {
+            background: #0a0a0a;
+            background-size: cover;
+            color: #ffb000;
+            text-align: center;
+            padding: 4rem 0;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(255,176,0,0.7);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255, 176, 0, 0.03) 0px,
+                    rgba(255, 176, 0, 0.03) 2px,
+                    transparent 2px,
+                    transparent 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hero > * {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffb000;
+            text-shadow: 0 0 10px rgba(255,176,0,0.8);
+            letter-spacing: 1px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #ffb000;
+            text-shadow: 0 0 5px rgba(255,176,0,0.6);
+        }
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+            background: #1a1a1a;
+            background-image: url('https://github.com/apps/desktop');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            position: relative;
+        }
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.85);
+            z-index: 0;
+        }
+        .services .container {
+            position: relative;
+            z-index: 1;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #ffb000;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(255,176,0,0.6);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: #0a0a0a;
+            padding: 2rem;
+            border-radius: 0px;
+            border: 2px solid #ffb000;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255,176,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #ffb000;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255,176,0,0.5);
+            border-color: #00ff00;
+        }
+        .service-card h3 {
+            color: #00ff00;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(0,255,0,0.6);
+        }
+        .service-card p {
+            color: #ffb000;
+        }
+        /* About Section */
+        .about {
+            padding: 4rem 0;
+            background: #0d0d0d;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-text h2 {
+            color: #ffb000;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(255,176,0,0.6);
+        }
+        .about-text p {
+            color: #ffb000;
+            line-height: 1.8;
+        }
+        .about-image {
+            background: #0a0e27;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            color: #00a651;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 8px 20px rgba(0,166,81,0.3);
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            line-height: 1.8;
+        }
+        .about-image::before {
+            content: '01010011 01000101 01000011 01010101 01010010 01000101 ████ 0xA3F2 ████ FIREWALL::ACTIVE ████ 01101110 01100101 01110111 01100011 01101100 01100101 01100001 01110010 ████ ENCRYPTED ████ 0xFF89 ████ VPN::ONLINE ████ 01010000 01010010 01001111 01010100 01000101 01000011 01010100 ████ IDS::SCANNING ████ 0x7B4E ████ THREAT::NONE ████ 01000011 01011001 01000010 01000101 01010010 ████ AES-256 ████ 0x9C2A ████ SECURE::CONNECTION ████ 01001000 01000001 01000011 01001011 ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 10%;
+            text-align: left;
+            font-size: 1rem;
+            color: #00a651;
+            text-shadow: 0 0 10px rgba(0,166,81,0.8), 0 0 20px rgba(0,166,81,0.4);
+            animation: matrixScroll1 45s linear infinite;
+            font-weight: bold;
+        }
+        .about-image::after {
+            content: '0x4F91 ████ PORTS::65535 ████ 01010011 01000011 01000001 01001110 ████ MALWARE::BLOCKED ████ 0xDE23 ████ SSL::VERIFIED ████ 01000101 01001110 01000011 01010010 01011001 01010000 01010100 ████ TLS-1.3 ████ 0x8A7C ████ DEFENSE::ACTIVE ████ 01010000 01010010 01001111 01010100 01000101 01000011 01010100 01000101 01000100 ████ INTRUSION::PREVENTED ████ 0xB5F3 ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 45%;
+            text-align: left;
+            font-size: 1rem;
+            color: #00d668;
+            text-shadow: 0 0 10px rgba(0,214,104,0.8), 0 0 20px rgba(0,214,104,0.4);
+            animation: matrixScroll2 50s linear infinite;
+            font-weight: bold;
+        }
+        @keyframes matrixScroll1 {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        @keyframes matrixScroll2 {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .code-line {
+            white-space: nowrap;
+            position: absolute;
+            font-size: 0.95rem;
+            color: #00a651;
+            text-shadow: 0 0 8px rgba(0,166,81,0.6);
+            animation: matrixScroll1 40s linear infinite;
+        }
+        .code-line:nth-child(3) {
+            top: 80%;
+            color: #00ff6a;
+            animation: matrixScroll1 55s linear infinite;
+        }
+        @keyframes pacmanMove {
+            0% { transform: translateX(-10%); }
+            100% { transform: translateX(110%); }
+        }
+        @keyframes pacmanChomp {
+            0% { content: 'ᗧ'; }
+            50% { content: 'ᗤ'; }
+        }
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: #1a1a1a;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(0,255,0,0.5);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ffb000;
+            border-radius: 0px;
+            font-size: 1rem;
+            background: #0a0a0a;
+            color: #ffb000;
+            font-family: 'Courier New', monospace;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background: transparent;
+            color: #00ff00;
+            padding: 1rem 2rem;
+            border: 2px solid #00ff00;
+            border-radius: 0px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(0,255,0,0.7);
+            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+        }
+        .submit-btn:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+            text-shadow: none;
+            box-shadow: 0 0 20px rgba(0,255,0,0.8);
+        }
+        /* Footer */
+        footer {
+            background: #000000;
+            color: #ffb000;
+            text-align: center;
+            padding: 2rem 0;
+            font-family: 'Courier New', monospace;
+            border-top: 2px solid #ffb000;
+            position: relative;
+            overflow: hidden;
+        }
+        footer::before {
+            content: '01010011 ████ 0xF3A2 ████ SECURE ████ 01001110 01000101 01010111 ████ 0x8B71 ████ CYBER ████ 01010000 01010010 01001111 ████ 0xC4E9 ████ PROTECTED ████ 01000011 01001100 01000101 01000001 01010010 ████ 0x2D5F ████ FIREWALL ████ 01010011 01000101 01000011 ████ 0xA9E2 ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 15%;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: rgba(0, 166, 81, 0.25);
+            text-shadow: 0 0 5px rgba(0,166,81,0.4);
+            animation: navMatrixScroll1 35s linear infinite, blink 2s ease-in-out infinite;
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+        }
+        footer::after {
+            content: '0x7B3C ████ ALERT::THREAT ████ 01010110 01010000 01001110 ████ 0xD1F8 ████ WARNING ████ 01000100 01000101 01000110 01000101 01001110 01010011 01000101 ████ 0x4E92 ████ CRITICAL::BLOCKED ████ 01001001 01000100 01010011 ████ 0x6A2B ████';
+            white-space: nowrap;
+            position: absolute;
+            top: 55%;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: rgba(255, 50, 50, 0.25);
+            text-shadow: 0 0 5px rgba(255,50,50,0.4);
+            animation: navMatrixScroll2 40s linear infinite, blink 2.5s ease-in-out infinite;
+            font-weight: bold;
+            z-index: 0;
+            pointer-events: none;
+        }
+        footer > * {
+            position: relative;
+            z-index: 1;
+        }
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            .hero {
+                padding: 2rem 0;
+            }
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="NewClear Computing Logo" />
-  </header>
-  <main>
-    <h1>Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">&reg;</sup></h1>
-    <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
-    <a href="mailto:info@newclear.co">Contact Us</a>
-  </main>
+    <header>
+        <span class="nav-code-line" style="top: 85%; color: rgba(255,255,255,0.2); text-shadow: 0 0 5px rgba(255,255,255,0.3); animation: navMatrixScroll1 45s linear infinite, blink 3s ease-in-out infinite;">0x9F2E ████ SYSTEM::ONLINE ████ 01010011 01011001 01010011 ████ 0xE7A1 ████ STATUS::OK ████ 01001110 01000101 01010100 01010111 01001111 01010010 01001011 ████</span>
+        <nav class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Newclear Computing Pty Ltd®">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Contact Us</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Cybersecurity and IT Solutions Built for the Modern Age</h1>
+            <p>Helping businesses stay secure, compliant, and connected. Protect your digital assets with cutting-edge technology and expert guidance tailored to your needs.</p>
+            <div style="font-size: 2rem; margin: 2rem 0; letter-spacing: 2rem; opacity: 0.7;">
+                👾 ▼ 👾 ▼ 👾 ▼ 👾
+            </div>
+            <div style="font-size: 1.2rem; margin: 1rem 0; color: #ff4444; text-shadow: 0 0 10px rgba(255,68,68,0.8);">
+                ⚠ MALWARE DETECTED ⚠
+            </div>
+            <div style="font-size: 1rem; margin: 0.5rem 0; color: #ffb000;">
+                [████████████████████] 100%
+            </div>
+            <div style="font-size: 1rem; margin: 0.5rem 0; color: #00ff00; text-shadow: 0 0 5px rgba(0,255,0,0.7);">
+                ✓ THREAT NEUTRALIZED ✓
+            </div>
+            <div style="font-size: 1.5rem; margin: 2rem 0; letter-spacing: 1rem; opacity: 0.6;">
+                ▲ 👾 ▲ 👾 ▲ 👾 ▲
+            </div>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Cybersecurity</h3>
+                    <p>Comprehensive protection against evolving threats. From firewalls to advanced threat detection, we safeguard your business.</p>
+                </div>
+                <div class="service-card">
+                    <h3>IT Consulting</h3>
+                    <p>Strategic IT advice to optimize your infrastructure. Ensure scalability, efficiency, and future-proofing for your operations.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Compliance Solutions</h3>
+                    <p>Navigate regulatory requirements with ease. We help you achieve and maintain compliance standards effortlessly.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cloud Integration</h3>
+                    <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Newclear Computing</h2>
+                    <p>Newclear Computing Pty Ltd® is a leading provider of cybersecurity and IT solutions designed for the modern business landscape. With years of experience, we empower organizations to thrive securely in an increasingly connected world.</p>
+                    <p>Our team of experts is dedicated to delivering innovative, reliable services that keep you ahead of threats and compliant with industry standards.</p>
+                </div>
+                <div class="about-image">
+                    <span class="code-line" style="top: 20%;">0xC92F ████ AUTHENTICATION::2FA ████ 01010110 01010000 01001110 ████ NETWORK::SECURE ████ 0x3E8A ████</span>
+                    <span class="code-line" style="top: 55%;">████ QUANTUM::ENCRYPTED ████ 01000100 01000001 01010100 01000001 ████ 0x7F21 ████ ZERO-DAY::BLOCKED ████</span>
+                    <span class="code-line">████ PATCH::UPDATED ████ 01010011 01011001 01010011 01010100 01000101 01001101 ████ 0xA1B2 ████ SECURE ████</span>
+                    <div style="position: absolute; top: 50%; left: 0; font-size: 3rem; animation: pacmanMove 8s linear infinite;">
+                        <span style="animation: pacmanChomp 0.5s steps(2) infinite;">ᗧ</span> · · · 👾
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Newclear Computing Pty Ltd®. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form handling (client-side validation and simulation)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                // Simulate form submission (in real scenario, send via Poe bot or external service)
+                alert('Thank you for your message! We\'ll get back to you soon.'); // Note: In Poe Canvas, native alert is disabled; replace with custom modal if needed
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Mobile menu toggle (if needed, but hidden for simplicity)
+        // Add hamburger menu logic here if expanding nav for mobile
+    </script>
 </body>
 </html>
+```
