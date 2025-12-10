@@ -175,12 +175,14 @@
             }}>
               <thead>
                 <tr>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>Game</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '160px'}}>HOME Players</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>H</th>
-                  <th style={{border: '1px solid black', borderRight: '4px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>A</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '160px'}}>AWAY Players</th>
-                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>Game</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>Set</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '60px'}}></th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '200px'}}>Players (H)</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '60px'}}>Result</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '60px'}}>Result</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', minWidth: '200px'}}>Players (A)</th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '60px'}}></th>
+                  <th style={{border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0', fontWeight: 'bold', width: '50px'}}>Set</th>
                 </tr>
               </thead>
               <tbody>
@@ -196,50 +198,31 @@
                     const borderTop = (gameNumber === 4 || gameNumber === 7) ? '3px solid black' : '1px solid black';
                     
                     // Show players in HOME column if mode is "home", AWAY column if mode is "away"
-                    const homeContent = mode === "home" ? (
-                      <>
-                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
-                          Pair {pairLetter}{asterisk}
-                        </div>
-                        <div>
-                          {pairFormatted || '(Not Set)'}
-                        </div>
-                      </>
-                    ) : (
-                      <div style={{color: '#888', fontSize: '9px'}}>
-                        (Home Team)
-                      </div>
-                    );
-
-                    const awayContent = mode === "away" ? (
-                      <>
-                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
-                          Pair {pairLetter}{awayAsterisk}
-                        </div>
-                        <div>
-                          {pairFormatted || '(Not Set)'}
-                        </div>
-                      </>
-                    ) : (
-                      <div style={{color: '#888', fontSize: '9px'}}>
-                        (Away Team)
-                      </div>
-                    );
+                    const homeContent = mode === "home" ? pairFormatted || '(Not Set)' : '';
+                    const awayContent = mode === "away" ? pairFormatted || '(Not Set)' : '';
+                    const homePairLabel = mode === "home" ? `${pairLetter}${asterisk}` : '';
+                    const awayPairLabel = mode === "away" ? `${pairLetter}${awayAsterisk}` : '';
                     
                     return (
                       <tr key={`${setIndex}-${pairIndex}`}>
-                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '6px', textAlign: 'center', fontWeight: 'bold', fontSize: '10px'}}>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px', textAlign: 'center', fontWeight: 'bold'}}>
                           #{gameNumber}
                         </td>
-                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '6px', fontSize: '10px'}}>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px', textAlign: 'center', fontWeight: 'bold'}}>
+                          {homePairLabel}
+                        </td>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px'}}>
                           {homeContent}
                         </td>
-                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '6px', textAlign: 'center'}}></td>
-                        <td style={{border: '1px solid black', borderRight: '4px solid black', borderTop: borderTop, padding: '6px', textAlign: 'center'}}></td>
-                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '6px', fontSize: '10px'}}>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px'}}></td>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px'}}></td>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px'}}>
                           {awayContent}
                         </td>
-                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '6px', textAlign: 'center', fontWeight: 'bold', fontSize: '10px'}}>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px', textAlign: 'center', fontWeight: 'bold'}}>
+                          {awayPairLabel}
+                        </td>
+                        <td style={{border: '1px solid black', borderTop: borderTop, padding: '8px', textAlign: 'center', fontWeight: 'bold'}}>
                           #{gameNumber}
                         </td>
                       </tr>
