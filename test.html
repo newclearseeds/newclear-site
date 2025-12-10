@@ -166,12 +166,14 @@
                 </tr>
               </thead>
               <tbody>
-                {[1, 2, 3].map(setNum => 
-                  ['A', 'B', 'C'].map((pairLetter, pairIndex) => {
+                {[1, 2, 3].map(setNum => {
+                  const setPairs = getPairsForSet(setNum);
+                  return ['A', 'B', 'C'].map((pairLetter, pairIndex) => {
                     const gameNumber = (setNum - 1) * 3 + pairIndex + 1;
-                    const setPairs = getPairsForSet(setNum);
                     const currentPair = setPairs[pairIndex];
                     const pairFormatted = formatPair(currentPair);
+                    
+                    // Pair letter is based on position: A, B, or C
                     const asterisk = pairLetter === 'A' || pairLetter === 'C' ? '*' : '';
                     const awayAsterisk = pairLetter === 'B' ? '*' : '';
                     
@@ -208,8 +210,8 @@
                         </td>
                       </tr>
                     );
-                  })
-                )}
+                  });
+                })}
               </tbody>
             </table>
 
