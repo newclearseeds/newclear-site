@@ -25,116 +25,7 @@
   <script type="text/babel">
     const { useMemo, useState, useEffect } = React;
 
-    const DEFAULT_PLAYERS = ["Dean","Wayne","Mark","Grant","Kailen","Darren","Liam","BurwoodSpare","Elton","Debby","Patrick","Neil"];
-
-    function PlayerManager({ players, setPlayers }) {
-      const [newPlayer, setNewPlayer] = useState("");
-      const [editing, setEditing] = useState(null);
-      const [editValue, setEditValue] = useState("");
-
-      const addPlayer = () => {
-        const trimmed = newPlayer.trim();
-        if (!trimmed) return alert("Player name cannot be empty");
-        if (players.includes(trimmed)) return alert("Player already exists");
-        setPlayers([...players, trimmed]);
-        setNewPlayer("");
-      };
-
-      const removePlayer = (name) => {
-        if (confirm(`Remove ${name}?`)) {
-          setPlayers(players.filter(p => p !== name));
-        }
-      };
-
-      const startEdit = (name) => {
-        setEditing(name);
-        setEditValue(name);
-      };
-
-      const saveEdit = (oldName) => {
-        const trimmed = editValue.trim();
-        if (!trimmed) return alert("Player name cannot be empty");
-        if (trimmed !== oldName && players.includes(trimmed)) {
-          return alert("Player name already exists");
-        }
-        setPlayers(players.map(p => p === oldName ? trimmed : p));
-        setEditing(null);
-      };
-
-      const cancelEdit = () => {
-        setEditing(null);
-        setEditValue("");
-      };
-
-      return (
-        <div className="rounded-2xl border bg-white p-4 md:p-6 space-y-4 no-print">
-          <h3 className="font-semibold text-lg">Manage Players</h3>
-          
-          {/* Add new player */}
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Enter player name"
-              value={newPlayer}
-              onChange={(e) => setNewPlayer(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-              className="flex-1 rounded-2xl border px-3 py-2"
-            />
-            <button onClick={addPlayer} className="px-4 py-2 rounded-2xl border bg-blue-500 text-white hover:bg-blue-600">
-              Add Player
-            </button>
-          </div>
-
-          {/* Player list */}
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {players.map(player => (
-              <div key={player} className="flex items-center justify-between gap-2 p-2 bg-gray-50 rounded-xl">
-                {editing === player ? (
-                  <>
-                    <input
-                      type="text"
-                      value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && saveEdit(player)}
-                      className="flex-1 rounded-xl border px-2 py-1 text-sm"
-                      autoFocus
-                    />
-                    <button onClick={() => saveEdit(player)} className="text-xs px-2 py-1 rounded-xl bg-green-500 text-white hover:bg-green-600">
-                      Save
-                    </button>
-                    <button onClick={cancelEdit} className="text-xs px-2 py-1 rounded-xl border hover:bg-gray-200">
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <span className="flex-1 text-sm font-medium">{player}</span>
-                    <button onClick={() => startEdit(player)} className="text-xs px-2 py-1 rounded-xl border hover:bg-gray-200">
-                      Edit
-                    </button>
-                    <button onClick={() => removePlayer(player)} className="text-xs px-2 py-1 rounded-xl bg-red-500 text-white hover:bg-red-600">
-                      Remove
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Reset button */}
-          <button 
-            onClick={() => {
-              if (confirm("Reset to default player list?")) {
-                setPlayers([...DEFAULT_PLAYERS]);
-              }
-            }}
-            className="w-full px-3 py-2 rounded-2xl border hover:shadow text-sm"
-          >
-            Reset to Default Players
-          </button>
-        </div>
-      );
-    }
+    const PLAYERS = ["Dean","Wayne","Mark","Grant","Kailen","Darren","Liam","BurwoodSpare","Elton","Debby","Patrick","Neil"];
 
     function PairSelect({ label, value, onChange, players }) {
       const handle = (key, v) => onChange({ ...value, [key]: v });
@@ -224,15 +115,6 @@
     }
 
     function App() {
-      const [players, setPlayers] = useState(() => {
-        const saved = localStorage.getItem('dartsPlayers');
-        return saved ? JSON.parse(saved) : DEFAULT_PLAYERS;
-      });
-
-      useEffect(() => {
-        localStorage.setItem('dartsPlayers', JSON.stringify(players));
-      }, [players]);
-
       const [mode, setMode] = useState("home");
       const [sets, setSets] = useState({
         1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
@@ -307,9 +189,7 @@
               </div>
             </header>
 
-            <PlayerManager players={players} setPlayers={setPlayers} />
-
-            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} players={players} />
+            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} />
             <SetCard setNo={2} value={sets[2]} onChange={(v)=>updateSet(2, v)} coverageFrom={sets[1]} />
             <SetCard setNo={3} value={sets[3]} onChange={(v)=>updateSet(3, v)} coverageFrom={sets[1]} />
 
