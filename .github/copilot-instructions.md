@@ -49,42 +49,50 @@ Each darts app follows this pattern:
 - Export functionality via CSV download and clipboard API
 
 ### UI Component Patterns
-Reusable components defined inline:
-- Badge components with tone-based styling
-- Card layouts with consistent header/content structure  
-- Button variants (primary, secondary) with hover states
-- Form controls with validation feedback
+# Copilot Instructions for NewClear Computing Site (concise)
 
-## Key Features & Workflows
+Purpose: Help AI coding agents be immediately productive editing this small static site.
 
-### Tournament Rule Implementation
-- **Home/Away Rules**: Automatic pair rotation logic in `setdoubles.html`
-- **Coverage Validation**: Ensures each set includes players from all Set 1 pairs
-- **Duplicate Detection**: Real-time validation preventing player conflicts
+Quick facts
+- Hosted via GitHub Pages (CNAME present). No build or bundler; edits are deployed by pushing files.
+- Apps are single-file React pages that run in the browser via CDN React + Babel.
 
-### Export & Sharing
-All darts apps support multiple output formats:
-- Clipboard copy for quick sharing
-- CSV export with structured data
-- Print-friendly layouts with `@media print` styles
+Architecture & patterns (what to expect)
+- Single-file apps: `index.html`, `setdoubles.html`, `bombardiers-doubles.html`, `darts-pairs.html`.
+- Client-side JSX transpiled with `@babel/standalone` (look for `type="text/babel"`).
+- Styling: mix of Tailwind CDN (used in `setdoubles.html`) and plain CSS variables or inline CSS (used in `darts-pairs.html` and `index.html`).
+- Data: player lists and rules are plain `const` arrays/objects inside the HTML files (search for `const PLAYERS`).
+- Exports: CSV downloads and `navigator.clipboard` are used for sharing results.
 
-## Development Guidelines
+Editing guidance (practical rules for agents)
+- Preserve the single-file pattern: add new features inline in the same HTML file unless the user asks for a build setup.
+- Keep external CDN order: React, ReactDOM, then `@babel/standalone`. If missing, mirror existing pages.
+- Use the existing state pattern (`useState`) and inline components; follow existing naming conventions (e.g., `PLAYERS`, `generate...`, `downloadCSV`).
+- For UI/styling, prefer the page's current approach: Tailwind utilities in `setdoubles.html`, CSS variables in `darts-pairs.html`.
 
-### Adding New Darts Applications
-1. Follow the single-file HTML + embedded React pattern
-2. Include player validation and conflict detection
-3. Implement export functionality (copy, CSV, print)
-4. Use consistent UI patterns from existing apps
-5. Consider team-specific customization (colors, players, rules)
+Developer workflows (how to test changes locally)
+- Quick preview by opening the HTML in a browser or run a simple server from the repo root:
 
-### Styling Consistency
-- Maintain responsive design with mobile-first approach
-- Use consistent spacing and border radius patterns
-- Implement hover states and micro-interactions
-- Consider print styles for tournament documentation
+  python -m http.server 8000
 
-### File Organization
-- Keep each application as a single HTML file for easy deployment
-- Static assets (`logo.png`, `favicon.ico`) in root directory
-- CNAME file configures custom domain for GitHub Pages
-- No build artifacts or dependency management needed
+- No tests or CI steps detected; assume manual testing by opening pages.
+
+Search shortcuts (useful strings)
+- `type="text/babel"` — identifies React+Babel pages
+- `@babel/standalone` — confirms in-browser transpilation
+- `const PLAYERS` — where player data is hardcoded
+- `download` / `createObjectURL` / `navigator.clipboard` — export/clipboard logic
+
+When to ask the user
+- If a change requires many new files or a bundler, confirm first — repository intentionally avoids build steps.
+- If introducing persistent storage or server-side features, ask before adding any backend code.
+
+Files to inspect for examples
+- index.html — corporate landing and site structure
+- setdoubles.html — Tailwind + set rotation logic and `PLAYERS` array
+- bombardiers-doubles.html — team-specific color rules and scheduler
+- darts-pairs.html — CSS variable theming and print styles
+
+Done: keep changes minimal, follow patterns, and ask for clarification for any cross-file refactor.
+
+If this summary missed a pattern you rely on, tell me what to include and I'll iterate.
