@@ -1,75 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">&reg;</sup></title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <title>Newclear Computing Pty Ltd&reg; - Cybersecurity and IT Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  header {
-    width: 100%;
-    padding: 1rem 0;
-    background-color: #0f172a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+        :root {
+            --brand-dark: #0f172a;
+            --brand-blue: #0d47a1;
+            --brand-blue-2: #1976d2;
+            --cta: #ff6b35;
+            --cta-hover: #e55a2b;
+        }
 
-  header img {
-    max-height: 120px;
-    width: auto;
-  }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--brand-dark);
+        }
 
-  main {
-    padding: 4rem 2rem;
-    max-width: 800px;
-  }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
+        header {
+            background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-blue) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
 
-  p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-  }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
 
-  a {
-    background: #38bdf8;
-    color: #0f172a;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 0;
+        }
 
-  a:hover {
-    background: #0ea5e9;
-  }
-</style>
+        .logo-wrap img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            background: var(--cta);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--cta-hover);
+        }
+
+        .tech-carousel {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: var(--brand-dark);
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 2;
+            max-width: 80%;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .carousel-overlay h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-overlay p {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(13, 71, 161, 0.8);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 3;
+            transition: background 0.3s;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(13, 71, 161, 1);
+        }
+
+        .carousel-nav.prev {
+            left: 20px;
+        }
+
+        .carousel-nav.next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--cta);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(13, 71, 161, 0.86)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--brand-blue);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card h3 {
+            color: var(--brand-blue);
+            margin-bottom: 1rem;
+        }
+
+        .about {
+            padding: 4rem 0;
+            background: #f0f4fb;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            color: var(--brand-blue);
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--brand-blue-2), #42a5f5);
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .about-image img {
+            max-width: 220px;
+            width: 70%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .contact {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-email {
+            text-align: center;
+            margin: 0 0 1.5rem;
+            color: #1f2937;
+        }
+
+        .contact-email a {
+            color: var(--brand-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-email a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--brand-blue);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--brand-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--brand-blue-2);
+        }
+
+        footer {
+            background: var(--brand-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer a {
+            color: #cbd5e1;
+        }
+
+        @media (max-width: 900px) {
+            .logo-text {
+                font-size: 1rem;
+                white-space: normal;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .tech-carousel {
+                height: 300px;
+            }
+
+            .carousel-overlay h2 {
+                font-size: 1.8rem;
+            }
+
+            .carousel-overlay p {
+                font-size: 1rem;
+                display: none;
+            }
+
+            .carousel-nav {
+                padding: 0.5rem;
+                font-size: 1.2rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 2.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .carousel-nav.prev {
+                left: 10px;
+            }
+
+            .carousel-nav.next {
+                right: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="NewClear Computing Logo" />
-  </header>
-  <main>
-    <h1>Newclear Computing Pty Ltd<sup style="font-size: 0.6em;">&reg;</sup></h1>
-    <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
-    <a href="mailto:info@newclear.co">Contact Us</a>
-  </main>
+    <header>
+        <nav class="container">
+            <div class="logo-wrap">
+                <img src="logo.png" alt="Newclear Computing logo">
+                <div class="logo-text">Newclear Computing Pty Ltd&reg;</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Contact Us</a>
+        </nav>
+    </header>
+
+    <section class="tech-carousel" id="carousel" aria-label="Technology highlights">
+        <div class="carousel-container" id="carouselContainer">
+            <div class="carousel-slide active">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDQwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMGIxMDUwIi8+CjxjaXJjbGUgY3g9IjMwMCIgY3k9IjE1MCIgcj0iODAiIGZpbGw9IiNmZjgwMDAiIHN0cm9rZT0iI2ZmNjUwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjYwMCIgY3k9IjIwMCIgcj0iNjAiIGZpbGw9IiMwMGRmZmYiIHN0cm9rZT0iIzAwY2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjkwMCIgY3k9IjI1MCIgcj0iNzAiIGZpbGw9IiNmZjAwMDAiIHN0cm9rZT0iI2ZmMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjEwMDAiIGN5PSIxODAiIHI9IjQwIiBmaWxsPSIjMDBmZjAwIiBzdHJva2U9IiMwMGVmMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNIDEwMCAxNTAgTCAxMDAgMjUwIEwgMjAwIDI1MCBMIDIwMCAxNTAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHBhdGggZD0iTSAxMDAwIDE1MCBMIDEwMDAgMjUwIEwgMTEwMCAyNTAgTCAxMTAwIDE1MCBaIiBmaWxsPSIjZmZmIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMSIvPgo8bGluZSB4MT0iMjAwIiB5MT0iMjAwIiB4Mj0iMTAwMCIgeTI9IjIwMCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjUsMyIvPgo8bGluZSB4MT0iNDAwIiB5MT0iMTAwIiB4Mj0iODAwIiB5Mj0iMzAwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWRhc2hhcnJheT0iNSwzIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMjMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCI+U2VjdXJlIE5ldHdvcms8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij5BZHZhbmNlZCBUaHJlYXQgRGV0ZWN0aW9uPC90ZXh0Pgo8L3N2Zz4K" alt="Advanced Cybersecurity Network">
+                <div class="carousel-overlay">
+                    <h2>Advanced Network Security</h2>
+                    <p>Real-time threat detection and protection for enterprise networks</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDQwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMGMxMDUwIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEyMCIgcj0iNTAiIGZpbGw9IiNmZjgwMDAiIHN0cm9rZT0iI2ZmNjUwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjQwMCIgY3k9IjE4MCIgcj0iNjAiIGZpbGw9IiMwMGRmZmYiIHN0cm9rZT0iIzAwY2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjYwMCIgY3k9IjE1MCIgcj0iODAiIGZpbGw9IiNmZjAwMDAiIHN0cm9rZT0iI2ZmMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjgwMCIgY3k9IjIwMCIgcj0iNzAiIGZpbGw9IiMwMGZmZmYiIHN0cm9rZT0iIzAwZDVmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjEwMDAiIGN5PSIxNDAiIHI9IjQwIiBmaWxsPSIjMDBmZjAwIiBzdHJva2U9IiMwMGVmMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNIDMwMCAxMDAgTCAzMDAgMjAwIEwgNDAwIDIwMCBMIDQwMCAxMDAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHBhdGggZD0iTSAxMDAwIDEwMCBMIDEwMDAgMjAwIEwgMTEwMCAyMDAgTCAxMTAwIDEwMCBaIiBmaWxsPSIjZmZmIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMSIvPgo8bGluZSB4MT0iMTAwIiB5MT0iMTUwIiB4Mj0iMTEwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KPHBhdGggZD0iTSA1MDAgMTAwIEw1MDAgMjAwIEw2MDAgMjAwIEw2MDAgMTAwIFogTSA3MDAgMTAwIEw3MDAgMjAwIEw4MDAgMjAwIEw4MDAgMTAwIFoiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMjMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCI+Q2xvdWQgU2VjdXJpdHk8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij5FbnRlcnByaXNlLUdyYWRlIFByb3RlY3Rpb248L3RleHQ+Cjwvc3ZnPgo=" alt="Enterprise Cloud Security">
+                <div class="carousel-overlay">
+                    <h2>Enterprise Cloud Security</h2>
+                    <p>Comprehensive cloud infrastructure protection with multi-layered security</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDQwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMDcxM2E4Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iNDAiIGZpbGw9IiNmZjgwMDAiIHN0cm9rZT0iI2ZmNjUwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjMwMCIgY3k9IjIwMCIgcj0iNjAiIGZpbGw9IiMwMGRmZmYiIHN0cm9rZT0iIzAwY2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjUwMCIgY3k9IjE0MCIgcj0iNTAiIGZpbGw9IiNmZjAwMDAiIHN0cm9rZT0iI2ZmMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjcwMCIgY3k9IjE4MCIgcj0iNzAiIGZpbGw9IiMwMGZmZmYiIHN0cm9rZT0iIzAwZDVmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjkwMCIgY3k9IjE2MCIgcj0iNDUiIGZpbGw9IiMwMGZmMDAiIHN0cm9rZT0iIzAwZWEwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjExMDAiIGN5PSIxOTAiIHI9IjM1IiBmaWxsPSIjMDBmZjAwIiBzdHJva2U9IiMwMGVmMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNIDIwMCAxMDAgTCAyMDAgMTgwIEwgMzAwIDE4MCBMIDMwMCAxMDAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHBhdGggZD0iTSAxMDAwIDEwMCBMIDEwMDAgMTgwIEwgMTEwMCAxODAgTCAxMTAwIDEwMCBaIiBmaWxsPSIjZmZmIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMSIvPgo8bGluZSB4MT0iMTAwIiB5MT0iMTUwIiB4Mj0iMTEwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTSB0IDQwMCwxMDAgTCA0MDAgMTgwIEw1MDAgMTgwIEw1MDAgMTAwIFogTSB0IDYwMCwxMDAgTCA2MDAgMTgwIEw3MDAgMTgwIEw3MDAgMTAwIFoiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxIi8+CjxwYXRoIGQ9Ik0gODAwLDEwMCBMIDgwMCAxODAgTDkwMCAxODAgTDkwMCAxMDAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iNjAwIiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIj5BSSAmIENvbXBsaWFuY2UgU29sdXRpb25zPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+U3RyZWFtbGluZWQgSW1wbGVtZW50YXRpb24gJiBSaXNrIE1hbmFnZW1lbnQ8L3RleHQ+Cjwvc3ZnPgo=" alt="AI and Compliance Solutions">
+                <div class="carousel-overlay">
+                    <h2>AI &amp; Compliance Solutions</h2>
+                    <p>Intelligent automation and regulatory compliance for modern businesses</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI0MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDQwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMDUxYThkIi8+CjxjaXJjbGUgY3g9IjE4MCIgY3k9IjE0MCIgcj0iNDUiIGZpbGw9IiNmZjgwMDAiIHN0cm9rZT0iI2ZmNjUwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjM1MCIgY3k9IjE2MCIgcj0iNTUiIGZpbGw9IiMwMGRmZmYiIHN0cm9rZT0iIzAwY2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjU1MCIgY3k9IjEzMCIgcj0iNjUiIGZpbGw9IiNmZjAwMDAiIHN0cm9rZT0iI2ZmMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9Ijc1MCIgY3k9IjE3MCIgcj0iNjAiIGZpbGw9IiMwMGZmZmYiIHN0cm9rZT0iIzAwZDVmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9Ijk1MCIgY3k9IjE1MCIgcj0iNTAiIGZpbGw9IiMwMGZmMDAiIHN0cm9rZT0iIzAwZWEwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjExMDAiIGN5PSIxNjAiIHI9IjM4IiBmaWxsPSIjMDBmZjAwIiBzdHJva2U9IiMwMGVmMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNIDI1MCAxMjAgTCAyNTAgMTgwIEwgMzUwIDE4MCBMIDM1MCAxMjAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHBhdGggZD0iTSAxMDAwIDEyMCBMIDEwMDAgMTgwIEwgMTEwMCAxODAgTCAxMTAwIDEyMCBaIiBmaWxsPSIjZmZmIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMSIvPgo8bGluZSB4MT0iMTAwIiB5MT0iMTUwIiB4Mj0iMTEwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KPHBhdGggZD0iTSB0IDQwMCwxMjAgTCA0MDAgMTgwIEw1MDAgMTgwIEw1MDAgMTIwIFogTSB0IDYwMCwxMjAgTCA2MDAgMTgwIEw3MDAgMTgwIEw3MDAgMTIwIFoiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxIi8+CjxwYXRoIGQ9Ik0gODAwLDEyMCBMIDgwMCAxODAgTDkwMCAxODAgTDkwMCAxMjAgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iNjAwIiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIj5JVCBJbmZyYXN0cnVjdHVyZTwvdGV4dD4KPHRleHQgeD0iNjAwIiB5PSIyNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiPk9wdGltaXplZCBmb3IgU2NhbGFiaWxpdHkgJiBQZXJmb3JtYW5jZTwvdGV4dD4KPC9zdmc+Cg==" alt="IT Infrastructure Optimization">
+                <div class="carousel-overlay">
+                    <h2>IT Infrastructure</h2>
+                    <p>Scalable and high-performance IT solutions for growing businesses</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-nav prev" onclick="changeSlide(-1)" aria-label="Previous slide">&#10094;</button>
+        <button class="carousel-nav next" onclick="changeSlide(1)" aria-label="Next slide">&#10095;</button>
+        <div class="carousel-indicators">
+            <span class="indicator active" onclick="currentSlide(1)" aria-label="Go to slide 1"></span>
+            <span class="indicator" onclick="currentSlide(2)" aria-label="Go to slide 2"></span>
+            <span class="indicator" onclick="currentSlide(3)" aria-label="Go to slide 3"></span>
+            <span class="indicator" onclick="currentSlide(4)" aria-label="Go to slide 4"></span>
+        </div>
+    </section>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Cybersecurity and IT Solutions Built for the Modern Age</h1>
+            <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Cybersecurity</h3>
+                    <p>Comprehensive protection against evolving threats. From firewalls to advanced threat detection, we safeguard your business.</p>
+                </div>
+                <div class="service-card">
+                    <h3>IT Consulting</h3>
+                    <p>Strategic IT advice to optimize your infrastructure. Ensure scalability, efficiency, and future-proofing for your operations.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Compliance Solutions</h3>
+                    <p>Navigate regulatory requirements with ease. We help you achieve and maintain compliance standards efficiently.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cloud Integration</h3>
+                    <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Newclear Computing</h2>
+                    <p>Newclear Computing Pty Ltd&reg; is a provider of cybersecurity and IT solutions designed for the modern business landscape.</p>
+                    <p>Our team focuses on practical, reliable services that keep organizations secure, compliant, and connected.</p>
+                </div>
+                <div class="about-image">
+                    <img src="logo.png" alt="Newclear Computing logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="contact-email">Email: <a href="mailto:info@newclear.co">info@newclear.co</a></p>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Newclear Computing Pty Ltd&reg;. All rights reserved. | Contact: <a href="mailto:info@newclear.co">info@newclear.co</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            const container = document.getElementById('carouselContainer');
+            const translateX = -index * 100;
+            container.style.transform = `translateX(${translateX}%)`;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+
+            indicators.forEach(ind => ind.classList.remove('active'));
+            indicators[index].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex >= totalSlides) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = totalSlides - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        let autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+
+        const carousel = document.getElementById('carousel');
+        carousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+        carousel.addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (name && email && message) {
+                alert("Thank you for your message. Please also email us at info@newclear.co.");
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+    </script>
 </body>
 </html>
