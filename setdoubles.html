@@ -20,7 +20,7 @@
 
     const PLAYERS = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
 
-    function PairSelect({ label, value, onChange, players }) {
+    function PairSelect({ label, value, onChange, players, validation }) {
       const handle = (key, v) => onChange({ ...value, [key]: v });
       const duplicateInPair = value.p1 && value.p1 === value.p2;
       return (
@@ -47,9 +47,11 @@
           <div className="text-xs md:text-sm">
             {duplicateInPair
               ? <span className="text-red-600">Players in a pair must be different.</span>
-              : (value.p1 && value.p2)
-                  ? <span className="text-green-700">Pair ready ✓</span>
-                  : <span className="text-gray-500">Choose two players.</span>}
+              : validation?.state === "error"
+                  ? <span className="text-red-600">{validation.message} ✗</span>
+                  : validation?.state === "ok"
+                      ? <span className="text-green-700">Pair ready ✓</span>
+                      : <span className="text-gray-500">Choose two players.</span>}
           </div>
         </div>
       );
@@ -88,6 +90,19 @@
       const warnDupWithinSet = Object.values(playersUsed).some(n => n>1);
       const setPair = (k, v) => onChange({ ...value, [k]: v });
       const clearSet = () => onChange({ A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} });
+      const pairValidation = (slotKey, sourceLabel) => {
+        const pair = value[slotKey];
+        if (!pair.p1 || !pair.p2) return { state: "idle" };
+        if (playersUsed[pair.p1] > 1 || playersUsed[pair.p2] > 1) {
+          return { state: "error", message: "Player used twice in this set" };
+        }
+        if (coverageFrom && sourceLabel) {
+          const source = [coverageFrom[sourceLabel].p1, coverageFrom[sourceLabel].p2].filter(Boolean);
+          const hit = source.some(name => name === pair.p1 || name === pair.p2);
+          if (source.length && !hit) return { state: "error", message: `Needs ${sourceLabel} player` };
+        }
+        return { state: "ok" };
+      };
 
       return (
         <div className="rounded-2xl border shadow-sm p-4 md:p-6 bg-white print:border-0 print:shadow-none">
@@ -96,9 +111,9 @@
             <button onClick={clearSet} className="text-xs md:text-sm px-3 py-1 rounded-2xl border hover:shadow">Clear set</button>
           </div>
           <div className="space-y-4">
-            <PairSelect label={`Pair ${pairLabels[0]}`} value={value.A} onChange={v=>setPair("A", v)} players={PLAYERS} />
-            <PairSelect label={`Pair ${pairLabels[1]}`} value={value.B} onChange={v=>setPair("B", v)} players={PLAYERS} />
-            <PairSelect label={`Pair ${pairLabels[2]}`} value={value.C} onChange={v=>setPair("C", v)} players={PLAYERS} />
+            <PairSelect label={`Pair ${pairLabels[0]}`} value={value.A} onChange={v=>setPair("A", v)} players={PLAYERS} validation={pairValidation("A", pairLabels[0])} />
+            <PairSelect label={`Pair ${pairLabels[1]}`} value={value.B} onChange={v=>setPair("B", v)} players={PLAYERS} validation={pairValidation("B", pairLabels[1])} />
+            <PairSelect label={`Pair ${pairLabels[2]}`} value={value.C} onChange={v=>setPair("C", v)} players={PLAYERS} validation={pairValidation("C", pairLabels[2])} />
           </div>
           <div className="mt-3 text-xs md:text-sm">
             {warnDupWithinSet
