@@ -18,7 +18,7 @@
   <script type="text/babel">
     const { useMemo, useState, useEffect } = React;
 
-    const PLAYERS = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
+    const DEFAULT_PLAYERS = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
 
     function PairSelect({ label, value, onChange, players, validation }) {
       const handle = (key, v) => onChange({ ...value, [key]: v });
@@ -82,7 +82,7 @@
 
     const labelsForSet = (mode, setNo) => DISPLAY_LABELS[mode]?.[setNo] || DISPLAY_LABELS.home[setNo];
 
-    function SetCard({ setNo, value, onChange, coverageFrom, pairLabels }) {
+    function SetCard({ setNo, value, onChange, coverageFrom, pairLabels, matchupNumbers, players }) {
       const playersUsed = useMemo(() => {
         const list = [value.A.p1,value.A.p2,value.B.p1,value.B.p2,value.C.p1,value.C.p2].filter(Boolean);
         const count = {}; list.forEach(p => count[p]=(count[p]||0)+1); return count;
@@ -107,13 +107,13 @@
       return (
         <div className="rounded-2xl border shadow-sm p-4 md:p-6 bg-white print:border-0 print:shadow-none">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-semibold">Set {setNo}</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Segment {setNo}</h2>
             <button onClick={clearSet} className="text-xs md:text-sm px-3 py-1 rounded-2xl border hover:shadow">Clear set</button>
           </div>
           <div className="space-y-4">
-            <PairSelect label={`Pair ${pairLabels[0]}`} value={value.A} onChange={v=>setPair("A", v)} players={PLAYERS} validation={pairValidation("A", pairLabels[0])} />
-            <PairSelect label={`Pair ${pairLabels[1]}`} value={value.B} onChange={v=>setPair("B", v)} players={PLAYERS} validation={pairValidation("B", pairLabels[1])} />
-            <PairSelect label={`Pair ${pairLabels[2]}`} value={value.C} onChange={v=>setPair("C", v)} players={PLAYERS} validation={pairValidation("C", pairLabels[2])} />
+            <PairSelect label={`Set ${matchupNumbers[0]} (Pair ${pairLabels[0]})`} value={value.A} onChange={v=>setPair("A", v)} players={players} validation={pairValidation("A", pairLabels[0])} />
+            <PairSelect label={`Set ${matchupNumbers[1]} (Pair ${pairLabels[1]})`} value={value.B} onChange={v=>setPair("B", v)} players={players} validation={pairValidation("B", pairLabels[1])} />
+            <PairSelect label={`Set ${matchupNumbers[2]} (Pair ${pairLabels[2]})`} value={value.C} onChange={v=>setPair("C", v)} players={players} validation={pairValidation("C", pairLabels[2])} />
           </div>
           <div className="mt-3 text-xs md:text-sm">
             {warnDupWithinSet
@@ -127,6 +127,16 @@
 
     function App() {
       const [mode, setMode] = useState("home");
+      const [players, setPlayers] = useState(() => {
+        try {
+          const raw = localStorage.getItem("darts_players");
+          const parsed = raw ? JSON.parse(raw) : null;
+          return Array.isArray(parsed) && parsed.length ? parsed : DEFAULT_PLAYERS;
+        } catch {
+          return DEFAULT_PLAYERS;
+        }
+      });
+      const [playersInput, setPlayersInput] = useState(players.join("\n"));
       const [sets, setSets] = useState({
         1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
         2: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
@@ -143,6 +153,9 @@
       };
 
       useEffect(() => { applyHomeRules(); /* once on load */ }, []);
+      useEffect(() => {
+        try { localStorage.setItem("darts_players", JSON.stringify(players)); } catch {}
+      }, [players]);
 
       const updateSet = (n, v) => setSets(s => ({ ...s, [n]: v }));
       const fmtPair = (p) => (p.p1 && p.p2 ? `${p.p1} & ${p.p2}` : "—");
@@ -155,11 +168,11 @@
       const homeStarLegs = new Set([1, 3, 5, 7, 9]);
       const awayStarLegs = new Set([2, 4, 6, 7, 8]);
       const lineupText = useMemo(() => {
-        const setLine = (n) => {
-          const labels = labelsForSet(mode, n);
-          return `SET ${n}: ${labels[0]}) ${fmtPair(sets[n].A)}  |  ${labels[1]}) ${fmtPair(sets[n].B)}  |  ${labels[2]}) ${fmtPair(sets[n].C)}`;
-        };
-        return [setLine(1), setLine(2), setLine(3)].join("\n");
+        return legRows.map((row) => {
+          const slotIndex = row.key === "A" ? 0 : row.key === "B" ? 1 : 2;
+          const label = labelsForSet(mode, row.setNo)[slotIndex];
+          return `SET ${row.leg} (${label}): ${fmtPair(sets[row.setNo][row.key])}`;
+        }).join("\n");
       }, [sets, mode]);
 
       const copy = async () => {
@@ -191,12 +204,28 @@
       };
 
       const printPage = () => window.print();
+      const parsePlayers = (text) => {
+        const parts = text.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+        return [...new Set(parts)];
+      };
+      const applyPlayers = () => {
+        const next = parsePlayers(playersInput);
+        if (!next.length) {
+          alert("Please enter at least one player name.");
+          return;
+        }
+        setPlayers(next);
+      };
+      const resetPlayers = () => {
+        setPlayers(DEFAULT_PLAYERS);
+        setPlayersInput(DEFAULT_PLAYERS.join("\n"));
+      };
 
       return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8">
           <style>{`@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #fff !important; } .no-print { display: none !important; } .hide-on-print { display: none !important; } .print-only { display: block !important; } .print\\:border-0 { border: 0 !important; } .print\\:shadow-none { box-shadow: none !important; } .print\\:bg-transparent { background: transparent !important; } } .print-only { display: none; }`}</style>
 
-          <div id="print-root" className="max-w-5xl mx-auto space-y-6 hide-on-print">
+	          <div id="print-root" className="max-w-5xl mx-auto space-y-6 hide-on-print">
             <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <h1 className="text-2xl md:text-3xl font-bold">Darts Doubles — 3-Set Lineup</h1>
               <div className="flex flex-wrap items-center gap-3 no-print">
@@ -213,9 +242,26 @@
               </div>
             </header>
 
-            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} pairLabels={labelsForSet(mode, 1)} />
-            <SetCard setNo={2} value={sets[2]} onChange={(v)=>updateSet(2, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 2)} />
-            <SetCard setNo={3} value={sets[3]} onChange={(v)=>updateSet(3, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 3)} />
+            <div className="rounded-2xl border bg-white p-4 md:p-6 no-print">
+              <div className="flex items-center justify-between gap-3 mb-2">
+                <h3 className="font-semibold">Player List</h3>
+                <div className="text-xs text-gray-500">{players.length} players active</div>
+              </div>
+              <p className="text-xs text-gray-500 mb-2">Paste one name per line (or comma-separated). Each captain can set their own team list on their device.</p>
+              <textarea
+                className="w-full rounded-xl border px-3 py-2 text-sm h-36"
+                value={playersInput}
+                onChange={(e)=>setPlayersInput(e.target.value)}
+              />
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button onClick={applyPlayers} className="px-3 py-2 rounded-2xl border hover:shadow">Apply player list</button>
+                <button onClick={resetPlayers} className="px-3 py-2 rounded-2xl border hover:shadow">Reset default list</button>
+              </div>
+            </div>
+
+            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} pairLabels={labelsForSet(mode, 1)} matchupNumbers={[1,2,3]} players={players} />
+            <SetCard setNo={2} value={sets[2]} onChange={(v)=>updateSet(2, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 2)} matchupNumbers={[4,5,6]} players={players} />
+            <SetCard setNo={3} value={sets[3]} onChange={(v)=>updateSet(3, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 3)} matchupNumbers={[7,8,9]} players={players} />
 
             <div className="rounded-2xl border bg-white p-4 md:p-6 space-y-3 print:border-0 print:shadow-none">
               <div className="flex items-center justify-between">
