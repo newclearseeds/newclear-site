@@ -248,6 +248,51 @@
             background: var(--panel);
         }
 
+        .essential-eight {
+            padding: 4rem 0;
+            background: #0a111f;
+        }
+
+        .essential-eight .section-title {
+            margin-bottom: 1.5rem;
+        }
+
+        .essential-eight .intro {
+            text-align: center;
+            max-width: 860px;
+            margin: 0 auto 2.5rem;
+            color: var(--muted);
+        }
+
+        .essential-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .essential-card {
+            background: var(--panel-2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #1b2a44;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+        }
+
+        .essential-card h3 {
+            color: var(--brand-blue-2);
+            margin-bottom: 0.6rem;
+        }
+
+        .essential-card p {
+            color: var(--muted);
+        }
+
+        .maturity-note {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--muted);
+        }
+
         .section-title {
             text-align: center;
             font-size: 2rem;
@@ -460,6 +505,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .essential-grid {
+                grid-template-columns: 1fr;
+            }
+
             .logo-wrap img {
                 width: 58px;
                 height: 58px;
@@ -499,6 +548,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#essential-eight">Essential Eight</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -576,6 +626,48 @@
                     <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="essential-eight" class="essential-eight">
+        <div class="container">
+            <h2 class="section-title">Australian ASD Essential Eight</h2>
+            <p class="intro">The Australian Signals Directorate’s Essential Eight is a practical baseline for reducing cyber risk. We help you design, implement, and continuously improve these controls to meet your business needs and regulatory expectations.</p>
+            <div class="essential-grid">
+                <div class="essential-card">
+                    <h3>Application Control</h3>
+                    <p>Allow only approved applications to run, blocking untrusted or malicious software and reducing the attack surface.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Patch Applications</h3>
+                    <p>Keep key applications updated to close known vulnerabilities that attackers routinely exploit.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Configure Office Macro Settings</h3>
+                    <p>Restrict macro execution to prevent malicious documents from running code on your systems.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>User Application Hardening</h3>
+                    <p>Harden browsers and common apps to limit risky features and reduce exposure to web‑based threats.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Restrict Administrative Privileges</h3>
+                    <p>Apply least‑privilege access and privileged access management to prevent abuse of admin rights.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Patch Operating Systems</h3>
+                    <p>Keep OS updates current to close critical security gaps across endpoints and servers.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Multi‑factor Authentication</h3>
+                    <p>Require MFA for users and administrators to reduce the impact of stolen credentials.</p>
+                </div>
+                <div class="essential-card">
+                    <h3>Regular Backups</h3>
+                    <p>Implement secure, tested backups to recover quickly from ransomware or data loss incidents.</p>
+                </div>
+            </div>
+            <p class="maturity-note">We can assess your current posture and align improvements to ASD maturity levels 1–3, providing a clear roadmap and measurable progress.</p>
         </div>
     </section>
 
