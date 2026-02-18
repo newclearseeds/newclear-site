@@ -13,18 +13,23 @@
         }
 
         :root {
-            --brand-dark: #0f2452;
-            --brand-blue: #1868c8;
-            --brand-blue-2: #0f4fa8;
-            --brand-green: #2f8f10;
+            --brand-dark: #05070d;
+            --brand-blue: #1870d0;
+            --brand-blue-2: #1aa7e8;
+            --brand-green: #3aa50b;
+            --brand-silver: #d9e1ee;
+            --panel: #0b1222;
+            --panel-2: #111a2d;
+            --text: #e6eef7;
+            --muted: #a7b4c5;
             --cta: var(--brand-green);
-            --cta-hover: #26770d;
+            --cta-hover: #2f8f10;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text);
             background-color: var(--brand-dark);
         }
 
@@ -63,6 +68,7 @@
             height: 78px;
             object-fit: contain;
             border-radius: 6px;
+            box-shadow: 0 0 22px rgba(26, 167, 232, 0.35);
         }
 
         .logo-text {
@@ -70,6 +76,7 @@
             font-weight: 700;
             line-height: 1.2;
             white-space: nowrap;
+            color: var(--brand-silver);
         }
 
         .nav-links {
@@ -164,7 +171,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(24, 104, 200, 0.8);
+            background: rgba(24, 112, 208, 0.85);
             color: white;
             border: none;
             padding: 1rem;
@@ -181,7 +188,7 @@
         }
 
         .carousel-nav:hover {
-            background: rgba(24, 104, 200, 1);
+            background: rgba(26, 167, 232, 1);
         }
 
         .carousel-nav.prev {
@@ -216,7 +223,7 @@
         }
 
         .hero {
-            background: linear-gradient(rgba(15, 36, 82, 0.92), rgba(24, 104, 200, 0.86)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
+            background: linear-gradient(rgba(5, 7, 13, 0.95), rgba(24, 112, 208, 0.6)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
             background-size: cover;
             color: white;
             text-align: center;
@@ -238,14 +245,14 @@
 
         .services {
             padding: 4rem 0;
-            background: white;
+            background: var(--panel);
         }
 
         .section-title {
             text-align: center;
             font-size: 2rem;
             margin-bottom: 3rem;
-            color: var(--brand-blue);
+            color: var(--brand-blue-2);
         }
 
         .services-grid {
@@ -255,11 +262,11 @@
         }
 
         .service-card {
-            background: #f8f9fa;
+            background: var(--panel-2);
             padding: 2rem;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -269,13 +276,17 @@
         }
 
         .service-card h3 {
-            color: var(--brand-blue);
+            color: var(--brand-blue-2);
             margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--muted);
         }
 
         .about {
             padding: 4rem 0;
-            background: #f0f4fb;
+            background: #0a111f;
         }
 
         .about-content {
@@ -286,12 +297,16 @@
         }
 
         .about-text h2 {
-            color: var(--brand-blue);
+            color: var(--brand-blue-2);
             margin-bottom: 1rem;
         }
 
+        .about-text p {
+            color: var(--muted);
+        }
+
         .about-image {
-            background: linear-gradient(135deg, var(--brand-blue-2), var(--brand-blue));
+            background: linear-gradient(135deg, rgba(26, 167, 232, 0.35), rgba(58, 165, 11, 0.25));
             height: 300px;
             border-radius: 10px;
             display: flex;
@@ -309,7 +324,7 @@
 
         .contact {
             padding: 4rem 0;
-            background: white;
+            background: var(--panel);
         }
 
         .contact-form {
@@ -320,11 +335,11 @@
         .contact-email {
             text-align: center;
             margin: 0 0 1.5rem;
-            color: #1f2937;
+            color: var(--muted);
         }
 
         .contact-email a {
-            color: var(--brand-blue);
+            color: var(--brand-blue-2);
             text-decoration: none;
             font-weight: 600;
         }
@@ -340,17 +355,19 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--brand-blue);
+            color: var(--brand-blue-2);
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #ddd;
+            border: 1px solid #1b2a44;
             border-radius: 5px;
             font-size: 1rem;
             font-family: inherit;
+            background: #0a1324;
+            color: var(--text);
         }
 
         .form-group textarea {
@@ -376,13 +393,13 @@
 
         footer {
             background: var(--brand-dark);
-            color: white;
+            color: var(--muted);
             text-align: center;
             padding: 2rem 0;
         }
 
         footer a {
-            color: #cbd5e1;
+            color: var(--brand-blue-2);
         }
 
         @media (max-width: 900px) {
