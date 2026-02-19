@@ -75,16 +75,27 @@
         .logo-wrap {
             display: flex;
             align-items: center;
-            gap: 0;
+            gap: 0.8rem;
             min-width: 0;
         }
 
         .logo-wrap img {
-            width: 108px;
-            height: 108px;
+            width: 112px;
+            height: 112px;
             object-fit: contain;
             border-radius: 6px;
             box-shadow: 0 0 22px rgba(26, 167, 232, 0.35);
+        }
+
+        .logo-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: #eaf2ff;
+            text-shadow: 0 1px 10px rgba(26, 167, 232, 0.2);
+            white-space: nowrap;
         }
 
         .nav-links {
@@ -509,8 +520,12 @@
             }
 
             .logo-wrap img {
-                width: 90px;
-                height: 90px;
+                width: 96px;
+                height: 96px;
+            }
+
+            .logo-text {
+                font-size: 1.15rem;
             }
         }
 
@@ -561,8 +576,12 @@
             }
 
             .logo-wrap img {
-                width: 76px;
-                height: 76px;
+                width: 84px;
+                height: 84px;
+            }
+
+            .logo-text {
+                font-size: 1rem;
             }
         }
 
@@ -601,6 +620,7 @@
         <nav class="container">
             <div class="logo-wrap">
                 <img src="logo.png" alt="Newclear Computing logo">
+                <div class="logo-text">Newclear Computing</div>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
