@@ -345,6 +345,44 @@
             color: var(--muted);
         }
 
+        .trust-strip {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            border: 1px solid #1b2a44;
+            border-radius: 12px;
+            background: #0a1324;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        .trust-title {
+            color: var(--brand-blue-2);
+            font-weight: 700;
+            margin-bottom: 0.9rem;
+        }
+
+        .trust-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: #0f1d35;
+            border: 1px solid #223453;
+            color: var(--brand-silver);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .trust-note {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
         .about {
             padding: 4rem 0;
             background: #0a111f;
@@ -364,6 +402,16 @@
 
         .about-text p {
             color: var(--muted);
+        }
+
+        .credentials-list {
+            margin-top: 1rem;
+            padding-left: 1.2rem;
+        }
+
+        .credentials-list li {
+            color: var(--muted);
+            margin-bottom: 0.6rem;
         }
 
         .about-image {
@@ -649,6 +697,16 @@
                     <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
                 </div>
             </div>
+            <div class="trust-strip">
+                <p class="trust-title">Trusted Platforms & Credentials</p>
+                <div class="trust-chips">
+                    <span class="chip">Huntress</span>
+                    <span class="chip">ThreatLocker</span>
+                    <span class="chip">Action1</span>
+                    <span class="chip">Microsoft 365 Security</span>
+                </div>
+                <p class="trust-note">Black Hat Las Vegas attendee. Advanced Hacking and Securing Windows Infrastructure certified. Advanced Cloud Incident Response in Azure and Microsoft 365 trained.</p>
+            </div>
         </div>
     </section>
 
@@ -701,6 +759,13 @@
                     <h2>About Newclear Computing</h2>
                     <p>Newclear Computing Pty Ltd&reg; is a provider of cybersecurity and IT solutions designed for the modern business landscape.</p>
                     <p>Our team focuses on practical, reliable services that keep organizations secure, compliant, and connected.</p>
+                    <p>Current security stack and professional development include:</p>
+                    <ul class="credentials-list">
+                        <li>Operational experience with Huntress, ThreatLocker, Action1, and Microsoft 365 Security.</li>
+                        <li>Black Hat Conference attendance in Las Vegas.</li>
+                        <li>Advanced Hacking and Securing Windows Infrastructure certificate.</li>
+                        <li>Advanced Cloud Incident Response in Azure and Microsoft 365 training.</li>
+                    </ul>
                 </div>
                 <div class="about-image">
                     <img src="logo.png" alt="Newclear Computing logo">
