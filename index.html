@@ -81,14 +81,59 @@
         }
 
         .logo-text {
-            font-size: 1.45rem;
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.07em;
             line-height: 1.1;
             text-transform: uppercase;
-            color: #eaf2ff;
-            text-shadow: 0 1px 10px rgba(26, 167, 232, 0.2);
             white-space: nowrap;
+            isolation: isolate;
+        }
+
+        .logo-text .brand-main,
+        .about-badge .brand-main {
+            background: linear-gradient(100deg, #f3f8ff 0%, #7fd6ff 45%, #42b4ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(66, 180, 255, 0.4);
+        }
+
+        .logo-text .brand-sub,
+        .about-badge .brand-sub {
+            background: linear-gradient(100deg, #e5f3ff 0%, #74e0ff 30%, #5ac47a 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 16px rgba(90, 196, 122, 0.35);
+        }
+
+        .logo-text::after,
+        .about-badge::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(26, 167, 232, 0), rgba(26, 167, 232, 0.95), rgba(58, 165, 11, 0.95), rgba(58, 165, 11, 0));
+            transform-origin: center;
+            animation: brand-glow 3.2s ease-in-out infinite;
+        }
+
+        @keyframes brand-glow {
+            0%, 100% {
+                opacity: 0.45;
+                transform: scaleX(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
         }
 
         .nav-links {
@@ -428,13 +473,16 @@
         }
 
         .about-badge {
-            color: #eaf2ff;
-            font-size: 1.6rem;
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45rem;
+            font-size: 1.7rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
             text-align: center;
-            text-shadow: 0 1px 10px rgba(26, 167, 232, 0.25);
+            line-height: 1.1;
         }
 
         .contact {
@@ -576,6 +624,10 @@
             .logo-text {
                 font-size: 1.1rem;
             }
+
+            .about-badge {
+                font-size: 1.25rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -612,7 +664,10 @@
     <header>
         <nav class="container">
             <div class="logo-wrap">
-                <div class="logo-text">Newclear Computing</div>
+                <div class="logo-text">
+                    <span class="brand-main">Newclear</span>
+                    <span class="brand-sub">Computing</span>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -766,7 +821,10 @@
                     </ul>
                 </div>
                 <div class="about-image">
-                    <div class="about-badge">Newclear Computing</div>
+                    <div class="about-badge">
+                        <span class="brand-main">Newclear</span>
+                        <span class="brand-sub">Computing</span>
+                    </div>
                 </div>
             </div>
         </div>
