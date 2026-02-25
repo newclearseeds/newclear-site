@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="bHwpCOXBBDpwP-1X-9h3agVhGaIuWoDQb28-wpSF_YI">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>Newclear Computing Pty Ltd - Cybersecurity and IT Solutions</title>
     <style>
@@ -14,35 +17,28 @@
         }
 
         :root {
-            --brand-dark: #05070d;
-            --brand-blue: #1870d0;
-            --brand-blue-2: #1aa7e8;
-            --brand-green: #3aa50b;
-            --brand-silver: #d9e1ee;
-            --panel: #0b1222;
-            --panel-2: #111a2d;
-            --text: #e6eef7;
-            --muted: #a7b4c5;
-            --cta: var(--brand-green);
-            --cta-hover: #2f8f10;
+            --brand-dark: #002664;
+            --brand-blue: #1f4f9a;
+            --brand-blue-2: #2e5299;
+            --brand-green: #006e53;
+            --brand-silver: #f2f2f2;
+            --panel: #ffffff;
+            --panel-2: #ffffff;
+            --text: #1f2933;
+            --muted: #4f5d6b;
+            --cta: #002664;
+            --cta-hover: #001f52;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Public Sans', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text);
-            background-color: var(--brand-dark);
+            background-color: #f2f4f7;
         }
 
         .matrix-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            mix-blend-mode: screen;
-            opacity: 0.18;
+            display: none;
         }
 
         body > *:not(canvas.matrix-canvas) {
@@ -57,7 +53,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-blue) 100%);
+            background: var(--brand-dark);
             color: white;
             padding: 1rem 0;
             position: sticky;
@@ -70,7 +66,7 @@
             display: none;
             position: relative;
             z-index: 200;
-            background: linear-gradient(90deg, #0b2a52, #145f8f, #1e8a67);
+            background: #d7153a;
             color: #f4fbff;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
@@ -119,42 +115,28 @@
             padding-right: 0.4em;
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: 0.07em;
+            letter-spacing: 0.02em;
             line-height: 1.1;
-            text-transform: uppercase;
+            text-transform: none;
             white-space: nowrap;
             isolation: isolate;
         }
 
         .logo-text .brand-main,
         .about-badge .brand-main {
-            background: linear-gradient(100deg, #f3f8ff 0%, #7fd6ff 45%, #42b4ff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(66, 180, 255, 0.4);
+            color: #ffffff;
+            text-shadow: none;
         }
 
         .logo-text .brand-sub,
         .about-badge .brand-sub {
-            background: linear-gradient(100deg, #e5f3ff 0%, #74e0ff 30%, #5ac47a 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 16px rgba(90, 196, 122, 0.35);
+            color: #d9e8ff;
+            text-shadow: none;
         }
 
         .logo-text::after,
         .about-badge::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -4px;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(26, 167, 232, 0), rgba(26, 167, 232, 0.95), rgba(58, 165, 11, 0.95), rgba(58, 165, 11, 0));
-            transform-origin: center;
-            animation: brand-glow 3.2s ease-in-out infinite;
+            display: none;
         }
 
         .brand-mark {
@@ -163,8 +145,8 @@
             top: -0.28em;
             font-size: 0.69em;
             line-height: 1;
-            color: #e9f4ff;
-            text-shadow: 0 0 12px rgba(127, 214, 255, 0.5);
+            color: #ffffff;
+            text-shadow: none;
         }
 
         @keyframes brand-glow {
@@ -214,7 +196,7 @@
             position: relative;
             height: 400px;
             overflow: hidden;
-            background: var(--brand-dark);
+            background: #d9dee5;
         }
 
         .carousel-container {
@@ -249,7 +231,7 @@
             color: white;
             z-index: 2;
             max-width: 80%;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 38, 100, 0.72);
             padding: 2rem;
             border-radius: 10px;
         }
@@ -270,7 +252,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(24, 112, 208, 0.85);
+            background: rgba(0, 38, 100, 0.85);
             color: white;
             border: none;
             padding: 1rem;
@@ -287,7 +269,7 @@
         }
 
         .carousel-nav:hover {
-            background: rgba(26, 167, 232, 1);
+            background: rgba(31, 79, 154, 1);
         }
 
         .carousel-nav.prev {
@@ -322,7 +304,7 @@
         }
 
         .hero {
-            background: linear-gradient(rgba(5, 7, 13, 0.95), rgba(24, 112, 208, 0.6)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
+            background: linear-gradient(rgba(0, 38, 100, 0.9), rgba(31, 79, 154, 0.75));
             background-size: cover;
             color: white;
             text-align: center;
@@ -349,7 +331,7 @@
 
         .essential-eight {
             padding: 4rem 0;
-            background: #0a111f;
+            background: #f7f9fc;
         }
 
         .essential-eight .section-title {
@@ -373,12 +355,12 @@
             background: var(--panel-2);
             padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid #1b2a44;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+            border: 1px solid #d7dce2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .essential-card h3 {
-            color: var(--brand-blue-2);
+            color: var(--brand-dark);
             margin-bottom: 0.6rem;
         }
 
@@ -410,7 +392,8 @@
             padding: 2rem;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+            border: 1px solid #d7dce2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -431,10 +414,10 @@
         .trust-strip {
             margin-top: 2rem;
             padding: 1.25rem;
-            border: 1px solid #1b2a44;
+            border: 1px solid #d7dce2;
             border-radius: 12px;
-            background: #0a1324;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            background: #f7f9fc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .trust-title {
@@ -454,9 +437,9 @@
             display: inline-block;
             padding: 0.35rem 0.7rem;
             border-radius: 999px;
-            background: #0f1d35;
-            border: 1px solid #223453;
-            color: var(--brand-silver);
+            background: #ebeff5;
+            border: 1px solid #d7dce2;
+            color: var(--brand-dark);
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -468,7 +451,7 @@
 
         .about {
             padding: 4rem 0;
-            background: #0a111f;
+            background: #ffffff;
         }
 
         .about-content {
@@ -498,9 +481,10 @@
         }
 
         .about-image {
-            background: linear-gradient(135deg, rgba(26, 167, 232, 0.35), rgba(58, 165, 11, 0.25));
+            background: linear-gradient(135deg, #e8eff8, #ffffff);
             height: 300px;
             border-radius: 10px;
+            border: 1px solid #d7dce2;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -523,7 +507,7 @@
             font-size: 1.7rem;
             font-weight: 800;
             letter-spacing: 0.07em;
-            text-transform: uppercase;
+            text-transform: none;
             text-align: center;
             line-height: 1.1;
         }
@@ -568,12 +552,12 @@
         .form-group textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #1b2a44;
+            border: 1px solid #cfd6de;
             border-radius: 5px;
             font-size: 1rem;
             font-family: inherit;
-            background: #0a1324;
-            color: var(--text);
+            background: #ffffff;
+            color: #1f2933;
         }
 
         .form-group textarea {
@@ -599,7 +583,7 @@
 
         footer {
             background: var(--brand-dark);
-            color: var(--muted);
+            color: #e6edf8;
             text-align: center;
             padding: 2rem 0;
         }
@@ -711,7 +695,7 @@
     <canvas class="matrix-canvas" id="matrixCanvas" aria-hidden="true"></canvas>
     <div id="siteAnnouncement" class="site-announcement" role="status" aria-live="polite">
         <div class="announcement-inner">
-            TEST
+            New member portal launching 9 March 2026.
             <a href="#" id="announcementLink">Find out more here</a>
         </div>
     </div>
