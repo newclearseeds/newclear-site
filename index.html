@@ -80,17 +80,38 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0.7rem 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
             text-align: center;
             font-weight: 600;
             font-size: 0.95rem;
             line-height: 1.3;
         }
 
-        .announcement-inner a {
+        .announcement-text a {
             color: #ffffff;
             font-weight: 800;
             text-decoration: underline;
             text-underline-offset: 2px;
+        }
+
+        .announcement-dismiss {
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            background: transparent;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 0.3rem 0.7rem;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+
+        .announcement-dismiss:hover {
+            background: rgba(255, 255, 255, 0.16);
         }
 
         nav {
@@ -610,6 +631,8 @@
             .announcement-inner {
                 font-size: 0.88rem;
                 padding: 0.75rem 15px;
+                flex-direction: column;
+                gap: 0.5rem;
             }
 
             .tech-carousel {
@@ -695,8 +718,11 @@
     <canvas class="matrix-canvas" id="matrixCanvas" aria-hidden="true"></canvas>
     <div id="siteAnnouncement" class="site-announcement" role="status" aria-live="polite">
         <div class="announcement-inner">
-            New member portal launching 9 March 2026.
-            <a href="#" id="announcementLink">Find out more here</a>
+            <span class="announcement-text">
+                New member portal launching 9 March 2026.
+                <a href="#" id="announcementLink">Find out more here</a>
+            </span>
+            <button id="announcementDismiss" class="announcement-dismiss" type="button" aria-label="Dismiss announcement">Dismiss</button>
         </div>
     </div>
     <header>
@@ -900,11 +926,20 @@
 
     <script>
         const announcementStartDate = new Date('2026-02-25T00:00:00');
+        const announcementEndDate = new Date('2026-04-30T23:59:59');
+        const announcementDismissKey = 'newclear_member_portal_announcement_dismissed';
         const now = new Date();
         const announcement = document.getElementById('siteAnnouncement');
-        if (now >= announcementStartDate) {
+        const dismissButton = document.getElementById('announcementDismiss');
+        const isDismissed = localStorage.getItem(announcementDismissKey) === '1';
+        if (now >= announcementStartDate && now <= announcementEndDate && !isDismissed) {
             announcement.classList.add('show');
-            document.body.classList.add('has-announcement');
+        }
+        if (dismissButton) {
+            dismissButton.addEventListener('click', function () {
+                localStorage.setItem(announcementDismissKey, '1');
+                announcement.classList.remove('show');
+            });
         }
 
         let currentSlideIndex = 0;
