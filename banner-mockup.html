@@ -7,6 +7,9 @@
   <style>
     :root {
       --navy: #002664;
+      --nsw-blue: #003a8c;
+      --nsw-blue-dark: #002664;
+      --nsw-yellow: #ffd100;
       --page: #f4f6f8;
       --text: #1e2933;
       --stone-cool-grey-8: #797d83;
@@ -33,11 +36,12 @@
     }
 
     .header {
-      background: var(--navy);
+      background: linear-gradient(180deg, var(--nsw-blue) 0%, var(--nsw-blue-dark) 100%);
       color: #fff;
       padding: 1rem 1.25rem;
       font-size: 1.1rem;
       font-weight: 700;
+      border-top: 4px solid var(--nsw-yellow);
     }
 
     .nav {
@@ -130,6 +134,22 @@
     .b4 a { color: var(--navy); }
     .b4 .dismiss { color: var(--navy); border: 1px solid var(--navy); }
 
+    .b5 {
+      background: #ffffff;
+      color: var(--nsw-blue-dark);
+      border-bottom: 4px solid var(--nsw-yellow);
+      border-top: 1px solid #d7e1f0;
+    }
+    .b5 a { color: var(--nsw-blue); }
+    .b5 .dismiss {
+      color: var(--nsw-blue-dark);
+      border: 1px solid var(--nsw-blue-dark);
+      background: #ffffff;
+    }
+    .b5 .dismiss:hover {
+      background: #e9f0fb;
+    }
+
     @media (max-width: 700px) {
       .banner {
         flex-direction: column;
@@ -185,6 +205,18 @@
       <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
     </div>
     <div class="hero"><h2>Example Page Content</h2><p>Formal and restrained; less attention-grabbing than the other options.</p></div>
+  </div>
+
+  <div class="label">Option 5: NSW Style Blue + Yellow + White</div>
+  <div class="site-shell">
+    <div class="banner b5">
+      <span>New member portal launching 9 March 2026. <a href="#">Find out more here</a></span>
+      <button class="dismiss" type="button">Dismiss</button>
+    </div>
+    <div class="header">NSW Bar style header
+      <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
+    </div>
+    <div class="hero"><h2>Example Page Content</h2><p>This uses the blue/yellow/white direction and keeps a formal government/legal look.</p></div>
   </div>
 </body>
 </html>
