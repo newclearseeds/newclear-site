@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcement Banner Mockups</title>
+  <style>
+    :root {
+      --navy: #002664;
+      --page: #f4f6f8;
+      --text: #1e2933;
+      --stone-cool-grey-8: #797d83;
+      --yellow: #ffd400;
+      --black: #111111;
+      --white: #ffffff;
+      --red: #d7153a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: "Public Sans", Arial, sans-serif;
+    }
+
+    .site-shell {
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+      border: 1px solid #d6dbe1;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    }
+
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      opacity: 0.95;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      padding: 1.6rem 1.25rem 2rem;
+      background: linear-gradient(180deg, #f8fafc, #eef2f7);
+      border-top: 1px solid #dbe2ea;
+    }
+
+    .hero h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+      color: #0f2d5c;
+    }
+
+    .hero p { margin: 0; color: #44515e; }
+
+    .banner {
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .banner a {
+      font-weight: 800;
+      text-underline-offset: 2px;
+    }
+
+    .dismiss {
+      font: inherit;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .label {
+      max-width: 1200px;
+      margin: 1.3rem auto 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #2f3a46;
+      padding: 0 0.2rem;
+    }
+
+    .b1 {
+      background: var(--stone-cool-grey-8);
+      color: var(--white);
+      border-bottom: 1px solid #676b70;
+    }
+    .b1 a { color: var(--white); }
+    .b1 .dismiss { color: var(--white); border: 1px solid var(--white); }
+
+    .b2 {
+      background: var(--black);
+      color: var(--white);
+      border-bottom: 1px solid var(--yellow);
+    }
+    .b2 a { color: var(--yellow); }
+    .b2 .dismiss { color: var(--yellow); border: 1px solid var(--yellow); }
+
+    .b3 {
+      background: var(--red);
+      color: var(--white);
+      border-bottom: 1px solid #b6112f;
+    }
+    .b3 a { color: var(--white); }
+    .b3 .dismiss { color: var(--white); border: 1px solid rgba(255,255,255,0.9); }
+
+    .b4 {
+      background: var(--white);
+      color: #1f2933;
+      border-bottom: 2px solid var(--navy);
+    }
+    .b4 a { color: var(--navy); }
+    .b4 .dismiss { color: var(--navy); border: 1px solid var(--navy); }
+
+    @media (max-width: 700px) {
+      .banner {
+        flex-direction: column;
+        padding: 0.85rem 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="label">Option 1: All Stone Cool Grey 8 (#797d83)</div>
+  <div class="site-shell">
+    <div class="banner b1">
+      <span>New member portal launching 9 March 2026. <a href="#">Find out more here</a></span>
+      <button class="dismiss" type="button">Dismiss</button>
+    </div>
+    <div class="header">NSW Bar style header
+      <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
+    </div>
+    <div class="hero"><h2>Example Page Content</h2><p>This approximates how the banner sits above a formal government/legal style header.</p></div>
+  </div>
+
+  <div class="label">Option 2: Black + Yellow High Contrast</div>
+  <div class="site-shell">
+    <div class="banner b2">
+      <span>New member portal launching 9 March 2026. <a href="#">Find out more here</a></span>
+      <button class="dismiss" type="button">Dismiss</button>
+    </div>
+    <div class="header">NSW Bar style header
+      <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
+    </div>
+    <div class="hero"><h2>Example Page Content</h2><p>Most visible option, strongest contrast, more promotional in tone.</p></div>
+  </div>
+
+  <div class="label">Option 3: Alert Red (Current Government Alert Style)</div>
+  <div class="site-shell">
+    <div class="banner b3">
+      <span>New member portal launching 9 March 2026. <a href="#">Find out more here</a></span>
+      <button class="dismiss" type="button">Dismiss</button>
+    </div>
+    <div class="header">NSW Bar style header
+      <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
+    </div>
+    <div class="hero"><h2>Example Page Content</h2><p>Clear callout style, but may imply urgency rather than general announcement.</p></div>
+  </div>
+
+  <div class="label">Option 4: White + Navy (Subtle/Official)</div>
+  <div class="site-shell">
+    <div class="banner b4">
+      <span>New member portal launching 9 March 2026. <a href="#">Find out more here</a></span>
+      <button class="dismiss" type="button">Dismiss</button>
+    </div>
+    <div class="header">NSW Bar style header
+      <div class="nav"><span>Home</span><span>Membership</span><span>Events</span><span>CPD</span><span>Contact</span></div>
+    </div>
+    <div class="hero"><h2>Example Page Content</h2><p>Formal and restrained; less attention-grabbing than the other options.</p></div>
+  </div>
+</body>
+</html>
