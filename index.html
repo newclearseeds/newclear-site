@@ -66,14 +66,9 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        body.has-announcement header {
-            top: 48px;
-        }
-
         .site-announcement {
             display: none;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 200;
             background: linear-gradient(90deg, #0b2a52, #145f8f, #1e8a67);
             color: #f4fbff;
@@ -626,10 +621,6 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-            }
-
-            body.has-announcement header {
-                top: 58px;
             }
 
             .announcement-inner {
