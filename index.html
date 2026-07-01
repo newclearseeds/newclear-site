@@ -308,6 +308,58 @@
             background: var(--panel);
         }
 
+        .assessment {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #0d2942, #0a111f);
+        }
+
+        .assessment-content {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            border: 1px solid #24517a;
+            border-radius: 14px;
+            background: rgba(10, 19, 36, 0.88);
+            text-align: center;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .assessment-content h2 {
+            color: var(--brand-blue-2);
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .assessment-content > p {
+            max-width: 720px;
+            margin: 0 auto 1.5rem;
+            color: var(--muted);
+        }
+
+        .assessment-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 0 0 2rem;
+            padding: 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        .assessment-list li {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #0f1d35;
+            color: var(--text);
+        }
+
+        .assessment-list li::before {
+            content: "✓";
+            margin-right: 0.55rem;
+            color: #69d331;
+            font-weight: 800;
+        }
+
         .essential-eight {
             padding: 4rem 0;
             background: #0a111f;
@@ -431,21 +483,6 @@
             margin-bottom: 0.9rem;
             color: var(--text);
             font-weight: 600;
-        }
-
-        .tool-highlight {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #223453;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .tool-highlight a {
-            color: var(--brand-blue-2);
-            font-weight: 700;
-            text-decoration: underline;
-            text-underline-offset: 2px;
         }
 
         .about {
@@ -646,6 +683,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .assessment-list {
+                grid-template-columns: 1fr;
+            }
+
             .site-logo {
                 width: min(58vw, 260px);
             }
@@ -700,11 +741,11 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#assessment">Free Review</a></li>
                 <li><a href="#essential-eight">Essential Eight</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="#contact" class="cta-button">Contact Us</a>
+            <a href="#contact" class="cta-button">Book a Security Review</a>
         </nav>
     </header>
 
@@ -751,9 +792,9 @@
 
     <section id="home" class="hero">
         <div class="container">
-            <h1>Cybersecurity and IT Solutions Built for the Modern Age</h1>
-            <p>Helping businesses stay secure, compliant, and connected with practical cybersecurity and IT solutions, including ThreatLocker and Huntress through Newclear Computing.</p>
-            <a href="#contact" class="cta-button">Get Started Today</a>
+            <h1>Reduce Cyber Risk Without Building an Internal Security Team</h1>
+            <p>Practical protection for Australian businesses, delivered with ThreatLocker, Huntress, Microsoft 365 security, and an Essential Eight-aligned roadmap.</p>
+            <a href="#contact" class="cta-button">Book a Free 30-Minute Security Review</a>
         </div>
     </section>
 
@@ -762,20 +803,20 @@
             <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <h3>Cybersecurity</h3>
-                    <p>Comprehensive protection against evolving threats. From firewalls to advanced threat detection, we safeguard your business.</p>
+                    <h3>ThreatLocker Application Control</h3>
+                    <p>Control which applications can run and apply least privilege policies that reduce the attack surface across your endpoints.</p>
                 </div>
                 <div class="service-card">
-                    <h3>IT Consulting</h3>
-                    <p>Strategic IT advice to optimize your infrastructure. Ensure scalability, efficiency, and future-proofing for your operations.</p>
+                    <h3>Huntress Managed Security</h3>
+                    <p>Strengthen endpoint protection with managed detection, investigation, and response backed by the Huntress platform.</p>
                 </div>
                 <div class="service-card">
                     <h3>Compliance Solutions</h3>
                     <p>Navigate regulatory requirements with ease. We help you achieve and maintain compliance standards efficiently.</p>
                 </div>
                 <div class="service-card">
-                    <h3>Cloud Integration</h3>
-                    <p>Seamless migration and management of cloud services. Stay connected and agile in a digital-first world.</p>
+                    <h3>Microsoft 365 Security</h3>
+                    <p>Harden identities, email, access, and cloud configuration to reduce common Microsoft 365 security risks.</p>
                 </div>
             </div>
             <div class="trust-strip">
@@ -788,8 +829,21 @@
                     <span class="chip">Microsoft 365 Security</span>
                 </div>
                 <p class="trust-note">Black Hat Las Vegas attendee. Advanced Hacking and Securing Windows Infrastructure certified. Advanced Cloud Incident Response in Azure and Microsoft 365 trained.</p>
-                <p class="tool-highlight">Useful for secure testing workflows: <a href="https://temp-mail.org/en" target="_blank" rel="noopener noreferrer">Temp Mail</a> is a quick disposable inbox that helps reduce spam, protect primary email accounts, and speed up sign-up/form validation tests.</p>
-                <p class="tool-highlight">For macOS hygiene and endpoint upkeep: <a href="https://github.com/tw93/Mole" target="_blank" rel="noopener noreferrer">Mole</a> helps identify and remove unused files and clutter so systems stay cleaner and easier to maintain.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="assessment" class="assessment">
+        <div class="container">
+            <div class="assessment-content">
+                <h2>Start With a Free 30-Minute Security Review</h2>
+                <p>A focused conversation about your current risks, priorities, and practical next steps—without a generic sales presentation.</p>
+                <ul class="assessment-list">
+                    <li>Identify your highest-priority security gaps</li>
+                    <li>Review Essential Eight alignment</li>
+                    <li>Discuss a clear, achievable action plan</li>
+                </ul>
+                <a href="#contact" class="cta-button">Book Your Security Review</a>
             </div>
         </div>
     </section>
@@ -841,8 +895,8 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>About Newclear Computing</h2>
-                    <p>Newclear Computing Pty Ltd is a provider of cybersecurity and IT solutions designed for the modern business landscape.</p>
-                    <p>Our team focuses on practical, reliable services that keep organizations secure, compliant, and connected.</p>
+                    <p>Newclear Computing helps Australian businesses turn complex cyber risks into clear, practical improvements.</p>
+                    <p>We focus on useful advice, dependable implementation, and long-term security relationships—not one-off product sales.</p>
                     <p>Current security stack and professional development include:</p>
                     <ul class="credentials-list">
                         <li>Reseller solutions for ThreatLocker and Huntress.</li>
@@ -861,8 +915,8 @@
 
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <p class="contact-email">Email: <a href="mailto:info@newclear.co">info@newclear.co</a></p>
+            <h2 class="section-title">Book Your Free Security Review</h2>
+            <p class="contact-email">Tell us what you are concerned about. Submitting this form opens a prepared email to <a href="mailto:info@newclear.co">info@newclear.co</a>.</p>
             <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -873,10 +927,10 @@
                     <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <label for="message">What would you like to improve?</label>
+                    <textarea id="message" name="message" placeholder="For example: Essential Eight readiness, endpoint protection, Microsoft 365 security, or a current concern." required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" class="submit-btn">Prepare Security Review Email</button>
             </form>
         </div>
     </section>
@@ -941,8 +995,9 @@
             const message = document.getElementById('message').value.trim();
 
             if (name && email && message) {
-                alert("Thank you for your message. Please also email us at info@newclear.co.");
-                this.reset();
+                const subject = encodeURIComponent(`Free security review request from ${name}`);
+                const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nSecurity priorities or concerns:\n${message}`);
+                window.location.href = `mailto:info@newclear.co?subject=${subject}&body=${body}`;
             } else {
                 alert('Please fill in all fields.');
             }
