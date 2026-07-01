@@ -80,19 +80,10 @@
             min-width: 0;
         }
 
-        .logo-text {
-            position: relative;
-            display: inline-flex;
-            align-items: baseline;
-            gap: 0.45rem;
-            padding-right: 0.4em;
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            line-height: 1.1;
-            text-transform: none;
-            white-space: nowrap;
-            isolation: isolate;
+        .site-logo {
+            display: block;
+            width: clamp(220px, 28vw, 390px);
+            height: auto;
         }
 
         .logo-text .brand-main,
@@ -435,6 +426,12 @@
             font-size: 0.95rem;
         }
 
+        .reseller-note {
+            margin-bottom: 0.9rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
         .tool-highlight {
             margin-top: 1rem;
             padding-top: 1rem;
@@ -492,8 +489,8 @@
         }
 
         .about-image img {
-            max-width: 260px;
-            width: 78%;
+            max-width: 560px;
+            width: 100%;
             height: auto;
             object-fit: contain;
         }
@@ -597,8 +594,8 @@
                 gap: 1rem;
             }
 
-            .logo-text {
-                font-size: 1.25rem;
+            .site-logo {
+                width: clamp(210px, 32vw, 300px);
             }
         }
 
@@ -648,8 +645,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .logo-text {
-                font-size: 1.1rem;
+            .site-logo {
+                width: min(58vw, 260px);
             }
 
             .about-badge {
@@ -677,6 +674,10 @@
             .carousel-nav.next {
                 right: 10px;
             }
+
+            .site-logo {
+                width: min(56vw, 220px);
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -691,11 +692,9 @@
     <header>
         <nav class="container">
             <div class="logo-wrap">
-                <div class="logo-text">
-                    <span class="brand-main">Newclear</span>
-                    <span class="brand-sub">Computing</span>
-                    <span class="brand-mark" aria-label="Registered trademark">®</span>
-                </div>
+                <a href="#home" aria-label="Newclear Computing home">
+                    <img class="site-logo" src="assets/newclear-computing-logo.png" alt="Newclear Computing">
+                </a>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -752,7 +751,7 @@
     <section id="home" class="hero">
         <div class="container">
             <h1>Cybersecurity and IT Solutions Built for the Modern Age</h1>
-            <p>Cybersecurity and IT Solutions built for the modern age. Helping businesses stay secure, compliant, and connected.</p>
+            <p>Helping businesses stay secure, compliant, and connected with practical cybersecurity and IT solutions, including ThreatLocker and Huntress through Newclear Computing.</p>
             <a href="#contact" class="cta-button">Get Started Today</a>
         </div>
     </section>
@@ -780,6 +779,7 @@
             </div>
             <div class="trust-strip">
                 <p class="trust-title">Trusted Platforms & Credentials</p>
+                <p class="reseller-note">Newclear Computing is a reseller for ThreatLocker and Huntress.</p>
                 <div class="trust-chips">
                     <span class="chip">Huntress</span>
                     <span class="chip">ThreatLocker</span>
@@ -844,18 +844,15 @@
                     <p>Our team focuses on practical, reliable services that keep organizations secure, compliant, and connected.</p>
                     <p>Current security stack and professional development include:</p>
                     <ul class="credentials-list">
-                        <li>Operational experience with Huntress, ThreatLocker, Action1, and Microsoft 365 Security.</li>
+                        <li>Reseller solutions for ThreatLocker and Huntress.</li>
+                        <li>Operational experience with Action1 and Microsoft 365 Security.</li>
                         <li>Black Hat Conference attendance in Las Vegas.</li>
                         <li>Advanced Hacking and Securing Windows Infrastructure certificate.</li>
                         <li>Advanced Cloud Incident Response in Azure and Microsoft 365 training.</li>
                     </ul>
                 </div>
                 <div class="about-image">
-                    <div class="about-badge">
-                        <span class="brand-main">Newclear</span>
-                        <span class="brand-sub">Computing</span>
-                        <span class="brand-mark" aria-label="Registered trademark">®</span>
-                    </div>
+                    <img src="assets/newclear-computing-logo.png" alt="Newclear Computing logo">
                 </div>
             </div>
         </div>

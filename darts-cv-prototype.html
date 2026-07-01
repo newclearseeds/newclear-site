@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darts CV-First Prototype</title>
+  <style>
+    :root {
+      --bg: #0b1118;
+      --panel: #132030;
+      --panel-2: #182a3f;
+      --text: #e7eef8;
+      --muted: #9db0c5;
+      --accent: #2ed3a4;
+      --accent-2: #3a8dff;
+      --danger: #ef6a6a;
+      --warn: #ffc15a;
+      --ring: rgba(58, 141, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top right, #1a2940 0%, var(--bg) 45%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border: 1px solid rgba(180, 210, 240, 0.2);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1rem;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(180, 210, 240, 0.2);
+      letter-spacing: 0.03em;
+    }
+
+    .frame-wrap {
+      position: relative;
+      background: #070d14;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      max-height: calc(100vh - 120px);
+    }
+
+    #video,
+    #overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #overlay {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+
+    .controls {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    button {
+      border: 1px solid rgba(200, 230, 255, 0.25);
+      background: #203348;
+      color: var(--text);
+      padding: 9px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      background: linear-gradient(90deg, #1f7cf2, #23ba99);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .danger {
+      background: #4a2831;
+      border-color: rgba(239, 106, 106, 0.5);
+    }
+
+    .config {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+      border-top: 1px solid rgba(180, 210, 240, 0.15);
+      margin-top: 4px;
+      padding-top: 10px;
+    }
+
+    label {
+      display: grid;
+      grid-template-columns: 180px 1fr 44px;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .status {
+      font-size: 0.95rem;
+      line-height: 1.35;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(200, 230, 255, 0.12);
+      color: #d3e6ff;
+    }
+
+    .status.warn {
+      border-color: rgba(255, 193, 90, 0.6);
+      color: #ffe3ad;
+    }
+
+    .status.error {
+      border-color: rgba(239, 106, 106, 0.6);
+      color: #ffd0d0;
+    }
+
+    .score {
+      padding: 10px 12px;
+      border-top: 1px solid rgba(180, 210, 240, 0.15);
+      display: grid;
+      gap: 8px;
+    }
+
+    .big {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #eafff8;
+      letter-spacing: 0.04em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 6px 4px;
+      border-bottom: 1px solid rgba(180, 210, 240, 0.12);
+    }
+
+    .tip {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .pill {
+      border: 1px solid rgba(180, 210, 240, 0.25);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      color: #d9ecff;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <section class="card">
+      <h2>Camera + Board Calibration</h2>
+      <div class="frame-wrap">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+      </div>
+      <div class="controls">
+        <div class="row">
+          <button id="startCamera" class="primary">Start Camera</button>
+          <button id="calibrateBtn">Calibrate Board (2 Clicks)</button>
+        </div>
+        <div class="row">
+          <button id="baselineBtn" disabled>Capture Baseline</button>
+          <button id="detectBtn" class="primary" disabled>Detect Throw</button>
+        </div>
+        <div class="row">
+          <button id="resetThrowBtn">Reset For Next Throw</button>
+          <button id="clearHitsBtn" class="danger">Clear Hits</button>
+        </div>
+
+        <div class="config">
+          <label>
+            Difference threshold
+            <input id="threshold" type="range" min="10" max="120" step="1" value="40" />
+            <span id="thresholdValue">40</span>
+          </label>
+          <label>
+            Min blob size
+            <input id="minBlob" type="range" min="20" max="800" step="10" value="140" />
+            <span id="minBlobValue">140</span>
+          </label>
+          <label>
+            Board rotation (deg)
+            <input id="rotation" type="range" min="-18" max="18" step="1" value="0" />
+            <span id="rotationValue">0</span>
+          </label>
+        </div>
+
+        <div id="status" class="status">Press <strong>Start Camera</strong>, then click center of board and the outer double ring to calibrate.</div>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2>Scoring Output</h2>
+      <div class="score">
+        <div>Latest result</div>
+        <div id="latestScore" class="big">-</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Score</th>
+              <th>Type</th>
+              <th>Wedge</th>
+            </tr>
+          </thead>
+          <tbody id="hitsTableBody"></tbody>
+        </table>
+        <div class="tip">
+          CV-first prototype notes:<br />
+          1. Keep camera fixed on a tripod.<br />
+          2. Use even front lighting (avoid glare).<br />
+          3. Capture baseline with no dart in board.<br />
+          4. For each throw: throw dart, wait still, press Detect Throw.
+        </div>
+        <div class="legend">
+          <span class="pill">Yellow: calibration points</span>
+          <span class="pill">Blue: board circle</span>
+          <span class="pill">Red: detected tip</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const video = document.getElementById("video");
+    const overlay = document.getElementById("overlay");
+    const ctx = overlay.getContext("2d");
+
+    const startCameraBtn = document.getElementById("startCamera");
+    const calibrateBtn = document.getElementById("calibrateBtn");
+    const baselineBtn = document.getElementById("baselineBtn");
+    const detectBtn = document.getElementById("detectBtn");
+    const resetThrowBtn = document.getElementById("resetThrowBtn");
+    const clearHitsBtn = document.getElementById("clearHitsBtn");
+
+    const thresholdInput = document.getElementById("threshold");
+    const thresholdValue = document.getElementById("thresholdValue");
+    const minBlobInput = document.getElementById("minBlob");
+    const minBlobValue = document.getElementById("minBlobValue");
+    const rotationInput = document.getElementById("rotation");
+    const rotationValue = document.getElementById("rotationValue");
+
+    const statusEl = document.getElementById("status");
+    const latestScoreEl = document.getElementById("latestScore");
+    const hitsTableBody = document.getElementById("hitsTableBody");
+
+    const processCanvas = document.createElement("canvas");
+    const processCtx = processCanvas.getContext("2d", { willReadFrequently: true });
+
+    const state = {
+      stream: null,
+      calibrated: false,
+      calibrationMode: false,
+      calibrationClicks: [],
+      center: null,
+      radius: null,
+      baselineGray: null,
+      inThrowCycle: false,
+      detectedTip: null,
+      hits: [],
+    };
+
+    const WEDGE_VALUES = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
+    const RING = {
+      innerBull: 6.35 / 170,
+      outerBull: 15.9 / 170,
+      tripleInner: 99 / 170,
+      tripleOuter: 107 / 170,
+      doubleInner: 162 / 170,
+      doubleOuter: 1,
+    };
+
+    function setStatus(msg, tone = "normal") {
+      statusEl.className = `status${tone === "normal" ? "" : ` ${tone}`}`;
+      statusEl.innerHTML = msg;
+    }
+
+    function updateSliders() {
+      thresholdValue.textContent = thresholdInput.value;
+      minBlobValue.textContent = minBlobInput.value;
+      rotationValue.textContent = rotationInput.value;
+    }
+
+    function setupProcessingCanvas() {
+      const width = 320;
+      const height = Math.round(width * (video.videoHeight / video.videoWidth || 0.75));
+      processCanvas.width = width;
+      processCanvas.height = height;
+    }
+
+    function toProcessCoords(x, y) {
+      return {
+        x: (x / overlay.width) * processCanvas.width,
+        y: (y / overlay.height) * processCanvas.height,
+      };
+    }
+
+    function toOverlayCoords(x, y) {
+      return {
+        x: (x / processCanvas.width) * overlay.width,
+        y: (y / processCanvas.height) * overlay.height,
+      };
+    }
+
+    function getGrayFrame() {
+      processCtx.drawImage(video, 0, 0, processCanvas.width, processCanvas.height);
+      const image = processCtx.getImageData(0, 0, processCanvas.width, processCanvas.height);
+      const data = image.data;
+      const gray = new Uint8ClampedArray(processCanvas.width * processCanvas.height);
+
+      for (let i = 0, px = 0; i < data.length; i += 4, px += 1) {
+        gray[px] = (data[i] * 77 + data[i + 1] * 150 + data[i + 2] * 29) >> 8;
+      }
+      return gray;
+    }
+
+    function getBoardMask() {
+      if (!state.calibrated) {
+        return null;
+      }
+      const center = toProcessCoords(state.center.x, state.center.y);
+      const radius = (state.radius / overlay.width) * processCanvas.width;
+      const mask = new Uint8Array(processCanvas.width * processCanvas.height);
+      const r2 = radius * radius;
+
+      for (let y = 0; y < processCanvas.height; y += 1) {
+        for (let x = 0; x < processCanvas.width; x += 1) {
+          const dx = x - center.x;
+          const dy = y - center.y;
+          if (dx * dx + dy * dy <= r2) {
+            mask[y * processCanvas.width + x] = 1;
+          }
+        }
+      }
+      return mask;
+    }
+
+    function detectLargestBlob(diffMask) {
+      const w = processCanvas.width;
+      const h = processCanvas.height;
+      const visited = new Uint8Array(w * h);
+      const minSize = Number(minBlobInput.value);
+      const queue = new Int32Array(w * h);
+
+      let best = null;
+
+      for (let start = 0; start < diffMask.length; start += 1) {
+        if (!diffMask[start] || visited[start]) {
+          continue;
+        }
+
+        let qHead = 0;
+        let qTail = 0;
+        queue[qTail++] = start;
+        visited[start] = 1;
+
+        let count = 0;
+        let sumX = 0;
+        let sumY = 0;
+
+        while (qHead < qTail) {
+          const idx = queue[qHead++];
+          const x = idx % w;
+          const y = Math.floor(idx / w);
+
+          count += 1;
+          sumX += x;
+          sumY += y;
+
+          const neighbors = [idx - 1, idx + 1, idx - w, idx + w];
+          for (let n = 0; n < neighbors.length; n += 1) {
+            const nb = neighbors[n];
+            if (nb < 0 || nb >= diffMask.length || visited[nb] || !diffMask[nb]) {
+              continue;
+            }
+
+            const nx = nb % w;
+            const ny = Math.floor(nb / w);
+            if (Math.abs(nx - x) + Math.abs(ny - y) !== 1) {
+              continue;
+            }
+
+            visited[nb] = 1;
+            queue[qTail++] = nb;
+          }
+        }
+
+        if (count < minSize) {
+          continue;
+        }
+
+        if (!best || count > best.count) {
+          best = { count, x: sumX / count, y: sumY / count };
+        }
+      }
+
+      return best;
+    }
+
+    function scoreFromPoint(overlayX, overlayY) {
+      const dx = overlayX - state.center.x;
+      const dy = overlayY - state.center.y;
+      const normR = Math.sqrt(dx * dx + dy * dy) / state.radius;
+
+      if (normR > RING.doubleOuter) {
+        return { score: 0, region: "Miss", wedge: "-" };
+      }
+      if (normR <= RING.innerBull) {
+        return { score: 50, region: "Inner Bull", wedge: "Bull" };
+      }
+      if (normR <= RING.outerBull) {
+        return { score: 25, region: "Outer Bull", wedge: "Bull" };
+      }
+
+      const rotationRad = (Number(rotationInput.value) * Math.PI) / 180;
+      const angleClockwiseFromTop = ((Math.atan2(dx, -dy) - rotationRad) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      const wedgeSize = (Math.PI * 2) / 20;
+      const wedgeIdx = Math.floor((angleClockwiseFromTop + wedgeSize / 2) / wedgeSize) % 20;
+      const base = WEDGE_VALUES[wedgeIdx];
+
+      if (normR >= RING.doubleInner) {
+        return { score: base * 2, region: "Double", wedge: String(base) };
+      }
+      if (normR >= RING.tripleInner && normR <= RING.tripleOuter) {
+        return { score: base * 3, region: "Triple", wedge: String(base) };
+      }
+      return { score: base, region: "Single", wedge: String(base) };
+    }
+
+    function redrawOverlay() {
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+      if (state.center && state.radius) {
+        ctx.strokeStyle = "rgba(80, 170, 255, 0.95)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(state.center.x, state.center.y, state.radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      state.calibrationClicks.forEach((pt, idx) => {
+        ctx.fillStyle = "#ffe38a";
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#111";
+        ctx.font = "12px sans-serif";
+        ctx.fillText(String(idx + 1), pt.x + 8, pt.y - 8);
+      });
+
+      if (state.detectedTip) {
+        ctx.fillStyle = "rgba(255, 88, 88, 0.95)";
+        ctx.beginPath();
+        ctx.arc(state.detectedTip.x, state.detectedTip.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function renderHits() {
+      hitsTableBody.innerHTML = "";
+      state.hits.forEach((hit, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${idx + 1}</td><td>${hit.score}</td><td>${hit.region}</td><td>${hit.wedge}</td>`;
+        hitsTableBody.appendChild(tr);
+      });
+    }
+
+    async function startCamera() {
+      if (state.stream) {
+        return;
+      }
+
+      try {
+        state.stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "environment",
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+          },
+          audio: false,
+        });
+
+        video.srcObject = state.stream;
+        await video.play();
+
+        overlay.width = video.videoWidth;
+        overlay.height = video.videoHeight;
+        setupProcessingCanvas();
+
+        baselineBtn.disabled = false;
+        setStatus("Camera started. Click <strong>Calibrate Board</strong> and mark center + outer double ring.");
+      } catch (error) {
+        setStatus(`Camera error: ${error.message}`, "error");
+      }
+    }
+
+    function captureBaseline() {
+      if (!state.calibrated) {
+        setStatus("Calibrate first (2 clicks: center, outer ring).", "warn");
+        return;
+      }
+      state.baselineGray = getGrayFrame();
+      state.inThrowCycle = true;
+      detectBtn.disabled = false;
+      state.detectedTip = null;
+      redrawOverlay();
+      setStatus("Baseline captured. Throw dart, wait until still, then press <strong>Detect Throw</strong>.");
+    }
+
+    function detectThrow() {
+      if (!state.baselineGray) {
+        setStatus("Capture baseline first.", "warn");
+        return;
+      }
+
+      const current = getGrayFrame();
+      const boardMask = getBoardMask();
+      const threshold = Number(thresholdInput.value);
+      const diff = new Uint8Array(current.length);
+
+      for (let i = 0; i < current.length; i += 1) {
+        if (boardMask && !boardMask[i]) {
+          continue;
+        }
+        const d = Math.abs(current[i] - state.baselineGray[i]);
+        if (d >= threshold) {
+          diff[i] = 1;
+        }
+      }
+
+      const blob = detectLargestBlob(diff);
+      if (!blob) {
+        setStatus("No dart-like blob detected. Increase lighting or lower threshold.", "warn");
+        return;
+      }
+
+      const overlayPt = toOverlayCoords(blob.x, blob.y);
+      state.detectedTip = overlayPt;
+      redrawOverlay();
+
+      const scored = scoreFromPoint(overlayPt.x, overlayPt.y);
+      state.hits.push(scored);
+      latestScoreEl.textContent = `${scored.score} (${scored.region})`;
+      renderHits();
+      // Promote current frame to baseline so next detect targets only the newly added dart.
+      state.baselineGray = current;
+
+      setStatus(`Detected dart at x=${overlayPt.x.toFixed(0)}, y=${overlayPt.y.toFixed(0)}. Score: <strong>${scored.score}</strong>.`);
+    }
+
+    function resetThrowCycle() {
+      state.baselineGray = null;
+      state.inThrowCycle = false;
+      detectBtn.disabled = true;
+      state.detectedTip = null;
+      redrawOverlay();
+      setStatus("Throw cycle reset. Press <strong>Capture Baseline</strong> again before next detect.");
+    }
+
+    function clearHits() {
+      state.hits = [];
+      renderHits();
+      latestScoreEl.textContent = "-";
+      setStatus("Cleared scored hits.");
+    }
+
+    startCameraBtn.addEventListener("click", startCamera);
+
+    calibrateBtn.addEventListener("click", () => {
+      if (!state.stream) {
+        setStatus("Start camera first.", "warn");
+        return;
+      }
+      state.calibrationMode = true;
+      state.calibrationClicks = [];
+      state.center = null;
+      state.radius = null;
+      state.calibrated = false;
+      state.baselineGray = null;
+      detectBtn.disabled = true;
+      setStatus("Calibration mode: click board center, then click the outer double ring.");
+      redrawOverlay();
+    });
+
+    overlay.addEventListener("click", (event) => {
+      if (!state.calibrationMode) {
+        return;
+      }
+
+      const rect = overlay.getBoundingClientRect();
+      const scaleX = overlay.width / rect.width;
+      const scaleY = overlay.height / rect.height;
+
+      const x = (event.clientX - rect.left) * scaleX;
+      const y = (event.clientY - rect.top) * scaleY;
+
+      state.calibrationClicks.push({ x, y });
+
+      if (state.calibrationClicks.length === 2) {
+        const [c, r] = state.calibrationClicks;
+        const dx = r.x - c.x;
+        const dy = r.y - c.y;
+        const radius = Math.sqrt(dx * dx + dy * dy);
+
+        if (radius < 25) {
+          setStatus("Calibration radius too small. Try again with accurate outer ring click.", "error");
+          state.calibrationClicks = [];
+          redrawOverlay();
+          return;
+        }
+
+        state.center = c;
+        state.radius = radius;
+        state.calibrated = true;
+        state.calibrationMode = false;
+        state.calibrationClicks = [];
+        setStatus("Calibration complete. Press <strong>Capture Baseline</strong> with an empty board.");
+      }
+
+      redrawOverlay();
+    });
+
+    baselineBtn.addEventListener("click", captureBaseline);
+    detectBtn.addEventListener("click", detectThrow);
+    resetThrowBtn.addEventListener("click", resetThrowCycle);
+    clearHitsBtn.addEventListener("click", clearHits);
+
+    thresholdInput.addEventListener("input", updateSliders);
+    minBlobInput.addEventListener("input", updateSliders);
+    rotationInput.addEventListener("input", updateSliders);
+
+    updateSliders();
+    redrawOverlay();
+  </script>
+</body>
+</html>

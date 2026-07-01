@@ -1,0 +1,11 @@
+{
+  "Manufacturer": "Lenovo",
+  "ModelName": "ThinkPad T14 Gen 5",
+  "MachineTypes": [
+    "21ML",
+    "21MM"
+  ],
+  "WindowsVersion": "Windows 11",
+  "DriverPackUrl": "https://download.lenovo.com/pccbbs/mobiles/example-driver-pack.exe",
+  "Notes": "Replace DriverPackUrl with the current Lenovo SCCM/Enterprise driver pack URL for the exact machine type."
+}

@@ -1,0 +1,33 @@
+{
+  "ClientName": "Contoso-MSP-Example",
+  "WorkspacePath": "C:\\OSDCloud\\Workspaces\\Contoso-Win11",
+  "WorkspaceTemplateName": "Contoso-Win11",
+  "Windows": {
+    "Version": "Windows 11",
+    "Build": "Latest",
+    "Edition": "Pro",
+    "Language": "en-us",
+    "License": "Retail"
+  },
+  "Media": {
+    "StartOSDCloudGUI": true,
+    "CloudDrivers": [
+      "WiFi",
+      "USB"
+    ]
+  },
+  "Autopilot": {
+    "GroupTag": "CONTOSO-LENOVO-HYBRID",
+    "DeploymentProfileName": "AP-Win11-Hybrid-Contoso",
+    "TargetGroupName": "Autopilot - Contoso Lenovo"
+  },
+  "HybridJoin": {
+    "DomainJoinProfileName": "DJ-Contoso-Workstations",
+    "OUPath": "OU=Workstations,OU=Contoso,DC=contoso,DC=local",
+    "IntuneConnectorServer": "CONTOSO-INTUNECONN01"
+  },
+  "SetupComplete": {
+    "Enabled": false,
+    "SourceDirectory": "C:\\OSDCloudFactory\\SetupComplete\\Contoso"
+  }
+}
