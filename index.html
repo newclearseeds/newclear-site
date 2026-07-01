@@ -19,6 +19,7 @@
             --brand-blue-2: #1aa7e8;
             --brand-green: #3aa50b;
             --brand-silver: #d9e1ee;
+            --logo-bg: #102a43;
             --panel: #0b1222;
             --panel-2: #111a2d;
             --text: #e6eef7;
@@ -57,7 +58,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-blue) 100%);
+            background: var(--logo-bg);
             color: white;
             padding: 1rem 0;
             position: sticky;
@@ -84,6 +85,8 @@
             display: block;
             width: clamp(220px, 28vw, 390px);
             height: auto;
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 96%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 96%, transparent 100%);
         }
 
         .logo-text .brand-main,
@@ -479,7 +482,7 @@
         }
 
         .about-image {
-            background: linear-gradient(135deg, rgba(26, 167, 232, 0.35), rgba(58, 165, 11, 0.25));
+            background: var(--logo-bg);
             height: 300px;
             border-radius: 10px;
             display: flex;
@@ -493,6 +496,8 @@
             width: 100%;
             height: auto;
             object-fit: contain;
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 96%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 96%, transparent 100%);
         }
 
         .about-badge {
