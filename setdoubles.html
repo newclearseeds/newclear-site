@@ -91,6 +91,21 @@
       line-height: 1.3;
       text-transform: uppercase;
     }
+    .team-update-note {
+      margin-bottom: 1rem;
+      padding: 0.9rem 1rem;
+      border-left: 4px solid var(--dc-yellow);
+      border-radius: 0.75rem;
+      background: rgba(196, 216, 235, 0.42);
+      color: var(--dc-navy);
+      font-size: 0.875rem;
+    }
+    .team-update-note a {
+      color: var(--dc-red);
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
     html.dark body,
     html.dark .bg-gray-50 {
       background-color: #0b1722 !important;
@@ -110,6 +125,8 @@
     html.dark h2,
     html.dark h3 { color: var(--dc-blue-light); }
     html.dark .association-name { color: #ff8b84; }
+    html.dark .team-update-note { background: rgba(16, 34, 50, 0.72); color: #f3f7fb; }
+    html.dark .team-update-note a { color: #ff8b84; }
     html.dark .text-gray-700 { color: #f3f7fb !important; }
     html.dark .text-gray-500 { color: var(--dc-blue-light) !important; }
     html.dark .text-red-600 { color: #fca5a5 !important; }
@@ -404,6 +421,9 @@
             </header>
 
             <div className="rounded-2xl border bg-white p-4 md:p-6 no-print">
+              <div className="team-update-note">
+                Want your team’s players preloaded? Email <a href="mailto:dcovell@newclear.co?subject=Set%20Doubles%20team%20player%20list">dcovell@newclear.co</a> and I’ll add them while the DartConnect API integration is being worked out.
+              </div>
               <div className="flex items-center justify-between gap-3 mb-2">
                 <h3 className="font-semibold">Player List</h3>
                 <div className="text-xs text-gray-500">{players.length} players active</div>
