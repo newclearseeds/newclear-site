@@ -92,7 +92,6 @@
       text-transform: uppercase;
     }
     .team-update-note {
-      margin-bottom: 1rem;
       padding: 0.9rem 1rem;
       border-left: 4px solid var(--dc-yellow);
       border-radius: 0.75rem;
@@ -106,6 +105,31 @@
       text-decoration: underline;
       text-underline-offset: 2px;
     }
+    .news-disclosure {
+      overflow: hidden;
+      border: 1px solid var(--dc-blue-light);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.70);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 24px rgba(37, 67, 95, 0.08);
+    }
+    .news-toggle {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      border: 0 !important;
+      border-radius: 0;
+      padding: 0.8rem 1rem;
+      text-align: left;
+    }
+    .news-chevron {
+      display: inline-block;
+      transition: transform 180ms ease;
+    }
+    .news-chevron.open { transform: rotate(180deg); }
+    .news-panel { padding: 0.75rem; }
     html.dark body,
     html.dark .bg-gray-50 {
       background-color: #0b1722 !important;
@@ -127,6 +151,7 @@
     html.dark .association-name { color: #ff8b84; }
     html.dark .team-update-note { background: rgba(16, 34, 50, 0.72); color: #f3f7fb; }
     html.dark .team-update-note a { color: #ff8b84; }
+    html.dark .news-disclosure { background: rgba(37, 67, 95, 0.72); border-color: #58748c; }
     html.dark .text-gray-700 { color: #f3f7fb !important; }
     html.dark .text-gray-500 { color: var(--dc-blue-light) !important; }
     html.dark .text-red-600 { color: #fca5a5 !important; }
@@ -279,6 +304,7 @@
 
     function App() {
       const [mode, setMode] = useState("home");
+      const [newsOpen, setNewsOpen] = useState(false);
       const [darkMode, setDarkMode] = useState(() => {
         try {
           const saved = localStorage.getItem("darts_dark_mode");
@@ -383,6 +409,7 @@
         setPlayers(DEFAULT_PLAYERS);
         setPlayersInput(DEFAULT_PLAYERS.join("\n"));
       };
+      const contactAddress = window.atob("ZGNvdmVsbEBuZXdjbGVhci5jbw==");
 
       return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -420,10 +447,27 @@
               </div>
             </header>
 
+            <section className="news-disclosure no-print" aria-label="News">
+              <button
+                type="button"
+                className="news-toggle"
+                onClick={()=>setNewsOpen(v=>!v)}
+                aria-expanded={newsOpen}
+                aria-controls="news-panel"
+              >
+                <span>News</span>
+                <span className={`news-chevron ${newsOpen ? "open" : ""}`} aria-hidden="true">⌄</span>
+              </button>
+              {newsOpen && (
+                <div id="news-panel" className="news-panel">
+                  <div className="team-update-note">
+                    Want your team’s players preloaded? Email <a href={`mailto:${contactAddress}?subject=Set%20Doubles%20team%20player%20list`}>{contactAddress}</a> and I’ll add them while the DartConnect API integration is being worked out.
+                  </div>
+                </div>
+              )}
+            </section>
+
             <div className="rounded-2xl border bg-white p-4 md:p-6 no-print">
-              <div className="team-update-note">
-                Want your team’s players preloaded? Email <a href="mailto:dcovell@newclear.co?subject=Set%20Doubles%20team%20player%20list">dcovell@newclear.co</a> and I’ll add them while the DartConnect API integration is being worked out.
-              </div>
               <div className="flex items-center justify-between gap-3 mb-2">
                 <h3 className="font-semibold">Player List</h3>
                 <div className="text-xs text-gray-500">{players.length} players active</div>
