@@ -195,7 +195,10 @@
   <script type="text/babel">
     const { useMemo, useState, useEffect } = React;
 
-    const DEFAULT_PLAYERS = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
+    const TEAM_ROSTERS = {
+      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"],
+    };
+    const DEFAULT_TEAM = "Bombardiers";
 
     function PairSelect({ label, value, onChange, players, validation }) {
       const handle = (key, v) => onChange({ ...value, [key]: v });
@@ -312,15 +315,19 @@
         } catch {}
         return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
       });
-      const [players, setPlayers] = useState(() => {
+      const initialPlayers = useMemo(() => {
         try {
           const raw = localStorage.getItem("darts_players");
           const parsed = raw ? JSON.parse(raw) : null;
-          return Array.isArray(parsed) && parsed.length ? parsed : DEFAULT_PLAYERS;
+          return Array.isArray(parsed) && parsed.length ? parsed : TEAM_ROSTERS[DEFAULT_TEAM];
         } catch {
-          return DEFAULT_PLAYERS;
+          return TEAM_ROSTERS[DEFAULT_TEAM];
         }
-      });
+      }, []);
+      const [players, setPlayers] = useState(initialPlayers);
+      const [selectedTeam, setSelectedTeam] = useState(() =>
+        JSON.stringify(initialPlayers) === JSON.stringify(TEAM_ROSTERS[DEFAULT_TEAM]) ? DEFAULT_TEAM : "Custom"
+      );
       const [playersInput, setPlayersInput] = useState(players.join("\n"));
       const [sets, setSets] = useState({
         1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
@@ -404,10 +411,24 @@
           return;
         }
         setPlayers(next);
+        setSelectedTeam("Custom");
       };
       const resetPlayers = () => {
-        setPlayers(DEFAULT_PLAYERS);
-        setPlayersInput(DEFAULT_PLAYERS.join("\n"));
+        setSelectedTeam(DEFAULT_TEAM);
+        setPlayers(TEAM_ROSTERS[DEFAULT_TEAM]);
+        setPlayersInput(TEAM_ROSTERS[DEFAULT_TEAM].join("\n"));
+      };
+      const selectTeam = (teamName) => {
+        setSelectedTeam(teamName);
+        const roster = TEAM_ROSTERS[teamName];
+        if (!roster) return;
+        setPlayers(roster);
+        setPlayersInput(roster.join("\n"));
+        setSets({
+          1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+          2: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+          3: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        });
       };
       const contactAddress = window.atob("ZGNvdmVsbEBuZXdjbGVhci5jbw==");
 
@@ -471,6 +492,18 @@
               <div className="flex items-center justify-between gap-3 mb-2">
                 <h3 className="font-semibold">Player List</h3>
                 <div className="text-xs text-gray-500">{players.length} players active</div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <label htmlFor="team-select" className="text-sm font-semibold">Team</label>
+                <select
+                  id="team-select"
+                  className="rounded-2xl border px-3 py-2"
+                  value={selectedTeam}
+                  onChange={(e)=>selectTeam(e.target.value)}
+                >
+                  {Object.keys(TEAM_ROSTERS).map(team => <option key={team} value={team}>{team}</option>)}
+                  <option value="Custom">Custom</option>
+                </select>
               </div>
               <p className="text-xs text-gray-500 mb-2">Paste one name per line (or comma-separated). Each captain can set their own team list on their device.</p>
               <textarea
