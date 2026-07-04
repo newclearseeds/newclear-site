@@ -16,33 +16,102 @@
     } catch {}
   </script>
   <style>
+    :root {
+      --dc-red: #ae1108;
+      --dc-red-dark: #8e1212;
+      --dc-navy: #25435f;
+      --dc-blue-light: #c4d8eb;
+      --dc-yellow: #ffc107;
+      --dc-page: #eef3f7;
+    }
     html { color-scheme: light; }
     html.dark { color-scheme: dark; }
+    body,
+    .bg-gray-50 { background-color: var(--dc-page) !important; color: var(--dc-navy); }
+    body { border-top: 6px solid var(--dc-red); }
+    h1, h2, h3 { color: var(--dc-navy); }
+    .bg-white { background-color: #fff !important; }
+    .bg-gray-100 { background-color: #e4edf5 !important; }
+    .border { border-color: var(--dc-blue-light) !important; }
+    select,
+    textarea {
+      background-color: #fff;
+      border-color: var(--dc-blue-light);
+      color: var(--dc-navy);
+    }
+    button {
+      background-color: var(--dc-red);
+      border-color: var(--dc-red-dark) !important;
+      color: #fff;
+      font-weight: 600;
+    }
+    button:hover { background-color: var(--dc-red-dark); }
+    button:focus-visible,
+    select:focus,
+    textarea:focus {
+      outline: 3px solid var(--dc-yellow);
+      outline-offset: 2px;
+    }
+    .text-gray-700 { color: var(--dc-navy) !important; }
+    .text-gray-500 { color: #526b80 !important; }
+    .association-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 0;
+    }
+    .association-logo {
+      width: 84px;
+      height: 84px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      border: 3px solid var(--dc-red);
+      border-radius: 18px;
+      background: #000;
+    }
+    .association-name {
+      max-width: 520px;
+      color: var(--dc-red);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.055em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
     html.dark body,
-    html.dark .bg-gray-50 { background-color: #0f172a !important; color: #e5e7eb; }
-    html.dark .bg-white { background-color: #1e293b !important; }
-    html.dark .bg-gray-100 { background-color: #111827 !important; }
-    html.dark .border { border-color: #475569 !important; }
-    html.dark .text-gray-700 { color: #e5e7eb !important; }
-    html.dark .text-gray-500 { color: #94a3b8 !important; }
+    html.dark .bg-gray-50 { background-color: #102232 !important; color: #f3f7fb; }
+    html.dark .bg-white { background-color: var(--dc-navy) !important; }
+    html.dark .bg-gray-100 { background-color: #172f43 !important; }
+    html.dark .border { border-color: #58748c !important; }
+    html.dark h1,
+    html.dark h2,
+    html.dark h3 { color: var(--dc-blue-light); }
+    html.dark .association-name { color: #ff8b84; }
+    html.dark .text-gray-700 { color: #f3f7fb !important; }
+    html.dark .text-gray-500 { color: var(--dc-blue-light) !important; }
     html.dark .text-red-600 { color: #fca5a5 !important; }
     html.dark .text-green-700 { color: #86efac !important; }
     html.dark .text-amber-700 { color: #fcd34d !important; }
     html.dark select,
-    html.dark textarea,
+    html.dark textarea {
+      background-color: #102232;
+      border-color: #58748c;
+      color: #f3f7fb;
+    }
     html.dark button {
-      background-color: #0f172a;
-      border-color: #475569;
-      color: #e5e7eb;
+      background-color: var(--dc-red);
+      border-color: #d25a53 !important;
+      color: #fff;
     }
-    html.dark select:focus,
-    html.dark textarea:focus,
-    html.dark button:focus-visible {
-      outline: 2px solid #38bdf8;
-      outline-offset: 2px;
+    html.dark button:hover { background-color: var(--dc-red-dark); }
+    html.dark option { background-color: #102232; color: #f3f7fb; }
+    @media (max-width: 640px) {
+      .association-brand { gap: 0.75rem; }
+      .association-logo { width: 68px; height: 68px; border-radius: 14px; }
+      .association-name { font-size: 0.68rem; letter-spacing: 0.035em; }
     }
-    html.dark option { background-color: #0f172a; color: #e5e7eb; }
     @media print {
+      body { border-top: 0; }
       html.dark body { background: #fff !important; color: #000 !important; }
       html.dark .print-only,
       html.dark .print-only * { color: #000 !important; }
@@ -280,7 +349,13 @@
 
 	          <div id="print-root" className="max-w-5xl mx-auto space-y-6 hide-on-print">
             <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <h1 className="text-2xl md:text-3xl font-bold">Darts Doubles — 3-Set Lineup</h1>
+              <div className="association-brand">
+                <img className="association-logo" src="assets/balmain-darts-logo.png" alt="Balmain and Districts Amateur Darts Association tiger logo" />
+                <div>
+                  <div className="association-name">Balmain &amp; Districts Amateur Darts Association</div>
+                  <h1 className="text-2xl md:text-3xl font-bold">Darts Doubles — 3-Set Lineup</h1>
+                </div>
+              </div>
               <div className="flex flex-wrap items-center gap-3 no-print">
                 <button
                   type="button"
@@ -335,7 +410,13 @@
           </div>
 
           <div className="print-only">
-            <h1 style={{fontSize: "28px", fontWeight: 700, marginBottom: "16px"}}>A GRADE TEAM SHEET</h1>
+            <div style={{display: "flex", alignItems: "center", gap: "14px", marginBottom: "18px"}}>
+              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "72px", height: "72px", objectFit: "contain", background: "#000", borderRadius: "12px"}} />
+              <div>
+                <div style={{fontSize: "16px", fontWeight: 700, marginBottom: "3px"}}>Balmain &amp; Districts Amateur Darts Association</div>
+                <h1 style={{fontSize: "28px", fontWeight: 700}}>A GRADE TEAM SHEET</h1>
+              </div>
+            </div>
             <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "12px"}}>The set number on the sheet MUST match the set number on DartConnect</div>
             <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "12px"}}>Asterisk (*) throws first - In leg 3, the team that threw 2nd in leg one goes for the bull</div>
             <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "20px"}}>Doubles - Best of 3 x 601</div>
