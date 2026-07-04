@@ -6,6 +6,48 @@
   <title>Darts Doubles — 3-Set Lineup</title>
   <!-- Tailwind (CDN play mode; fine for quick use) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    try {
+      const savedTheme = localStorage.getItem("darts_dark_mode");
+      const useDark = savedTheme === null
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+        : savedTheme === "true";
+      document.documentElement.classList.toggle("dark", useDark);
+    } catch {}
+  </script>
+  <style>
+    html { color-scheme: light; }
+    html.dark { color-scheme: dark; }
+    html.dark body,
+    html.dark .bg-gray-50 { background-color: #0f172a !important; color: #e5e7eb; }
+    html.dark .bg-white { background-color: #1e293b !important; }
+    html.dark .bg-gray-100 { background-color: #111827 !important; }
+    html.dark .border { border-color: #475569 !important; }
+    html.dark .text-gray-700 { color: #e5e7eb !important; }
+    html.dark .text-gray-500 { color: #94a3b8 !important; }
+    html.dark .text-red-600 { color: #fca5a5 !important; }
+    html.dark .text-green-700 { color: #86efac !important; }
+    html.dark .text-amber-700 { color: #fcd34d !important; }
+    html.dark select,
+    html.dark textarea,
+    html.dark button {
+      background-color: #0f172a;
+      border-color: #475569;
+      color: #e5e7eb;
+    }
+    html.dark select:focus,
+    html.dark textarea:focus,
+    html.dark button:focus-visible {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    html.dark option { background-color: #0f172a; color: #e5e7eb; }
+    @media print {
+      html.dark body { background: #fff !important; color: #000 !important; }
+      html.dark .print-only,
+      html.dark .print-only * { color: #000 !important; }
+    }
+  </style>
 </head>
 <body class="bg-gray-50">
   <div id="root"></div>
@@ -127,6 +169,13 @@
 
     function App() {
       const [mode, setMode] = useState("home");
+      const [darkMode, setDarkMode] = useState(() => {
+        try {
+          const saved = localStorage.getItem("darts_dark_mode");
+          if (saved !== null) return saved === "true";
+        } catch {}
+        return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+      });
       const [players, setPlayers] = useState(() => {
         try {
           const raw = localStorage.getItem("darts_players");
@@ -153,6 +202,10 @@
       };
 
       useEffect(() => { applyHomeRules(); /* once on load */ }, []);
+      useEffect(() => {
+        document.documentElement.classList.toggle("dark", darkMode);
+        try { localStorage.setItem("darts_dark_mode", String(darkMode)); } catch {}
+      }, [darkMode]);
       useEffect(() => {
         try { localStorage.setItem("darts_players", JSON.stringify(players)); } catch {}
       }, [players]);
@@ -229,6 +282,15 @@
             <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <h1 className="text-2xl md:text-3xl font-bold">Darts Doubles — 3-Set Lineup</h1>
               <div className="flex flex-wrap items-center gap-3 no-print">
+                <button
+                  type="button"
+                  onClick={()=>setDarkMode(v=>!v)}
+                  className="px-3 py-2 rounded-2xl border hover:shadow"
+                  aria-pressed={darkMode}
+                  aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
+                >
+                  {darkMode ? "☀ Light" : "☾ Dark"}
+                </button>
                 <label className="text-sm">Mode</label>
                 <select className="rounded-2xl border px-3 py-2" value={mode} onChange={(e)=>setMode(e.target.value)}>
                   <option value="home">Home</option>
