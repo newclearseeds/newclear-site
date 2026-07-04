@@ -171,6 +171,10 @@
             background: var(--cta-hover);
         }
 
+        .cta-label-mobile {
+            display: none;
+        }
+
         .tech-carousel {
             position: relative;
             height: 400px;
@@ -656,8 +660,41 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 0.65rem 0;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+
             .nav-links {
                 display: none;
+            }
+
+            .logo-wrap {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .logo-wrap a {
+                display: block;
+                min-width: 0;
+            }
+
+            header .cta-button {
+                flex: 0 0 auto;
+                padding: 0.48rem 0.72rem;
+                font-size: 0.82rem;
+                white-space: nowrap;
+            }
+
+            .cta-label-desktop {
+                display: none;
+            }
+
+            .cta-label-mobile {
+                display: inline;
             }
 
             .tech-carousel {
@@ -706,7 +743,13 @@
             }
 
             .site-logo {
-                width: min(58vw, 260px);
+                width: min(50vw, 220px);
+            }
+
+            .about-image {
+                height: auto;
+                min-height: 190px;
+                padding: 1rem;
             }
 
             .about-badge {
@@ -736,7 +779,7 @@
             }
 
             .site-logo {
-                width: min(56vw, 220px);
+                width: min(49vw, 195px);
             }
         }
 
@@ -763,7 +806,7 @@
                 <li><a href="#essential-eight">Essential Eight</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
-            <a href="#contact" class="cta-button">Book a Security Review</a>
+            <a href="#contact" class="cta-button"><span class="cta-label-desktop">Book a Security Review</span><span class="cta-label-mobile">Free Review</span></a>
         </nav>
     </header>
 
