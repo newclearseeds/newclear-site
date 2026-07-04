@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Darts Doubles — 3-Set Lineup</title>
+  <title>Doubles</title>
   <!-- Tailwind (CDN play mode; fine for quick use) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -27,11 +27,24 @@
     html { color-scheme: light; }
     html.dark { color-scheme: dark; }
     body,
-    .bg-gray-50 { background-color: var(--dc-page) !important; color: var(--dc-navy); }
-    body { border-top: 6px solid var(--dc-red); }
+    .bg-gray-50 {
+      background-color: var(--dc-page) !important;
+      background-image:
+        radial-gradient(circle at 8% 0%, rgba(174, 17, 8, 0.14), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(37, 67, 95, 0.20), transparent 34%),
+        linear-gradient(145deg, #f8fafc 0%, #eaf1f7 55%, #dce8f2 100%) !important;
+      background-attachment: fixed !important;
+      color: var(--dc-navy);
+    }
+    body { border-top: 5px solid var(--dc-red); }
     h1, h2, h3 { color: var(--dc-navy); }
-    .bg-white { background-color: #fff !important; }
-    .bg-gray-100 { background-color: #e4edf5 !important; }
+    .bg-white {
+      background-color: rgba(255, 255, 255, 0.88) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 32px rgba(37, 67, 95, 0.10);
+    }
+    .bg-gray-100 { background-color: rgba(228, 237, 245, 0.78) !important; }
     .border { border-color: var(--dc-blue-light) !important; }
     select,
     textarea {
@@ -61,11 +74,11 @@
       min-width: 0;
     }
     .association-logo {
-      width: 84px;
-      height: 84px;
+      width: 116px;
+      height: 116px;
       flex: 0 0 auto;
       object-fit: contain;
-      border: 3px solid var(--dc-red);
+      border: 0;
       border-radius: 18px;
       background: #000;
     }
@@ -79,8 +92,18 @@
       text-transform: uppercase;
     }
     html.dark body,
-    html.dark .bg-gray-50 { background-color: #102232 !important; color: #f3f7fb; }
-    html.dark .bg-white { background-color: var(--dc-navy) !important; }
+    html.dark .bg-gray-50 {
+      background-color: #0b1722 !important;
+      background-image:
+        radial-gradient(circle at 8% 0%, rgba(174, 17, 8, 0.24), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(196, 216, 235, 0.12), transparent 32%),
+        linear-gradient(145deg, #0b1722 0%, #10283a 58%, #09131d 100%) !important;
+      color: #f3f7fb;
+    }
+    html.dark .bg-white {
+      background-color: rgba(37, 67, 95, 0.80) !important;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.28);
+    }
     html.dark .bg-gray-100 { background-color: #172f43 !important; }
     html.dark .border { border-color: #58748c !important; }
     html.dark h1,
@@ -107,11 +130,12 @@
     html.dark option { background-color: #102232; color: #f3f7fb; }
     @media (max-width: 640px) {
       .association-brand { gap: 0.75rem; }
-      .association-logo { width: 68px; height: 68px; border-radius: 14px; }
+      .association-logo { width: 88px; height: 88px; border-radius: 14px; }
       .association-name { font-size: 0.68rem; letter-spacing: 0.035em; }
     }
     @media print {
       body { border-top: 0; }
+      .bg-gray-50 { background: #fff !important; background-image: none !important; }
       html.dark body { background: #fff !important; color: #000 !important; }
       html.dark .print-only,
       html.dark .print-only * { color: #000 !important; }
@@ -353,7 +377,7 @@
                 <img className="association-logo" src="assets/balmain-darts-logo.png" alt="Balmain and Districts Amateur Darts Association tiger logo" />
                 <div>
                   <div className="association-name">Balmain &amp; Districts Amateur Darts Association</div>
-                  <h1 className="text-2xl md:text-3xl font-bold">Darts Doubles — 3-Set Lineup</h1>
+                  <h1 className="text-lg md:text-xl font-bold">Doubles</h1>
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3 no-print">
@@ -411,7 +435,7 @@
 
           <div className="print-only">
             <div style={{display: "flex", alignItems: "center", gap: "14px", marginBottom: "18px"}}>
-              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "72px", height: "72px", objectFit: "contain", background: "#000", borderRadius: "12px"}} />
+              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "92px", height: "92px", objectFit: "contain", background: "#000", borderRadius: "12px"}} />
               <div>
                 <div style={{fontSize: "16px", fontWeight: 700, marginBottom: "3px"}}>Balmain &amp; Districts Amateur Darts Association</div>
                 <h1 style={{fontSize: "28px", fontWeight: 700}}>A GRADE TEAM SHEET</h1>
