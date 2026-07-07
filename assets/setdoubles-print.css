@@ -3,10 +3,26 @@
 }
 
 @media print {
+    @page {
+        margin: 12mm;
+    }
+
+    html,
     body {
         background: #fff !important;
+        background-image: none !important;
+        color: #000 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+    }
+
+    #root,
+    .min-h-screen,
+    .print-only {
+        background: #fff !important;
+        background-color: #fff !important;
+        background-image: none !important;
+        color: #000 !important;
     }
 
     .no-print,
@@ -16,6 +32,21 @@
 
     .print-only {
         display: block !important;
+    }
+
+    .print-only * {
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .print-only table,
+    .print-only thead,
+    .print-only tbody,
+    .print-only tr,
+    .print-only th,
+    .print-only td {
+        background: #fff !important;
     }
 
     .print\:border-0 {
