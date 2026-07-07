@@ -1,0 +1,32 @@
+.print-only {
+    display: none;
+}
+
+@media print {
+    body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .no-print,
+    .hide-on-print {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    .print\:border-0 {
+        border: 0 !important;
+    }
+
+    .print\:shadow-none {
+        box-shadow: none !important;
+    }
+
+    .print\:bg-transparent {
+        background: transparent !important;
+    }
+}
