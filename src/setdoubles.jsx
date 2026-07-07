@@ -183,27 +183,18 @@
 
       const toCsv = () => {
         const rows = [
-          ["Balmain & Districts Amateur Darts Association"],
-          ["A GRADE TEAM SHEET"],
-          ["The set number on the sheet MUST match the set number on DartConnect"],
-          ["Asterisk (*) throws first - In leg 3, the team that threw 2nd in leg one goes for the bull"],
-          ["Doubles - Best of 3 x 601"],
+          ["Mode", mode.toUpperCase()],
           [],
-          ["Set", "", "Players (H)", "Result", "Result", "Players (A)", "", "Set"],
+          ["Set", "Pair", "Player 1", "Player 2"],
           ...legRows.map((row) => {
             const slotIndex = row.key === "A" ? 0 : row.key === "B" ? 1 : 2;
-            const homePair = labelsForSet("home", row.setNo)[slotIndex] + (homeStarLegs.has(row.leg) ? "*" : "");
-            const awayPair = labelsForSet("away", row.setNo)[slotIndex] + (awayStarLegs.has(row.leg) ? "*" : "");
-            const selectedPlayers = fmtPairPrint(sets[row.setNo][row.key]);
+            const pair = labelsForSet(mode, row.setNo)[slotIndex];
+            const selectedPlayers = sets[row.setNo][row.key];
             return [
               `SET ${row.leg}`,
-              homePair,
-              mode === "home" ? selectedPlayers : "",
-              "",
-              "",
-              mode === "away" ? selectedPlayers : "",
-              awayPair,
-              `SET ${row.leg}`,
+              pair,
+              selectedPlayers.p1 || "",
+              selectedPlayers.p2 || "",
             ];
           }),
         ];
@@ -213,7 +204,7 @@
         }).join(",")).join("\n");
         const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a"); a.href = url; a.download = `a_grade_team_sheet_${mode}.csv`; a.click();
+        const a = document.createElement("a"); a.href = url; a.download = `darts_lineup_${mode}.csv`; a.click();
         URL.revokeObjectURL(url);
       };
 
