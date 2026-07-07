@@ -9,16 +9,23 @@
 
     html,
     body {
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
         background: #fff !important;
         background-image: none !important;
         color: #000 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        -webkit-print-color-adjust: economy;
+        print-color-adjust: economy;
     }
 
     #root,
-    .min-h-screen,
-    .print-only {
+    .min-h-screen {
+        min-height: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: #fff !important;
         background-color: #fff !important;
         background-image: none !important;
@@ -32,12 +39,24 @@
 
     .print-only {
         display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
     }
 
     .print-only * {
         color: #000 !important;
+        background-color: transparent !important;
+        background-image: none !important;
         box-shadow: none !important;
         text-shadow: none !important;
+    }
+
+    .print-only img {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
     }
 
     .print-only table,
