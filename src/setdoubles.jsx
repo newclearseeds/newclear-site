@@ -196,14 +196,14 @@
             const awayPair = labelsForSet("away", row.setNo)[slotIndex] + (awayStarLegs.has(row.leg) ? "*" : "");
             const selectedPlayers = fmtPairPrint(sets[row.setNo][row.key]);
             return [
-              `#${row.leg}`,
+              `SET ${row.leg}`,
               homePair,
               mode === "home" ? selectedPlayers : "",
               "",
               "",
               mode === "away" ? selectedPlayers : "",
               awayPair,
-              `#${row.leg}`,
+              `SET ${row.leg}`,
             ];
           }),
         ];
@@ -349,7 +349,7 @@
 
           <div className="print-only">
             <div style={{display: "flex", alignItems: "center", gap: "14px", marginBottom: "18px"}}>
-              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "92px", height: "92px", objectFit: "contain", background: "#000", borderRadius: "12px"}} />
+              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "92px", height: "92px", objectFit: "contain"}} />
               <div>
                 <div style={{fontSize: "16px", fontWeight: 700, marginBottom: "3px"}}>Balmain &amp; Districts Amateur Darts Association</div>
                 <h1 style={{fontSize: "28px", fontWeight: 700}}>A GRADE TEAM SHEET</h1>
@@ -380,14 +380,14 @@
                   const players = fmtPairPrint(sets[row.setNo][row.key]);
                   return (
                     <tr key={row.leg}>
-                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>#{row.leg}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>SET {row.leg}</td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}>{homePair}</td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}>{mode === "home" ? players : ""}</td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}></td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}></td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}>{mode === "away" ? players : ""}</td>
                       <td style={{border: "1px solid #333", padding: "8px 8px"}}>{awayPair}</td>
-                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>#{row.leg}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>SET {row.leg}</td>
                     </tr>
                   );
                 })}
