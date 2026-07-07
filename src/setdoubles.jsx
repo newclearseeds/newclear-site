@@ -1,0 +1,402 @@
+    const { useMemo, useState, useEffect } = React;
+
+    const TEAM_ROSTERS = {
+      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"],
+    };
+    const DEFAULT_TEAM = "Bombardiers";
+
+    function PairSelect({ label, value, onChange, players, validation }) {
+      const handle = (key, v) => onChange({ ...value, [key]: v });
+      const duplicateInPair = value.p1 && value.p1 === value.p2;
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+          <div className="text-sm font-medium text-gray-700">{label}</div>
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <label className="block text-xs text-gray-500 mb-1">Player 1</label>
+              <select className="w-full rounded-2xl border px-3 py-2 shadow-sm"
+                value={value.p1} onChange={(e)=>handle("p1", e.target.value)}>
+                <option value="">— Select —</option>
+                {players.map(p => <option key={p} value={p} disabled={value.p2===p}>{p}</option>)}
+              </select>
+            </div>
+            <div className="flex-1">
+              <label className="block text-xs text-gray-500 mb-1">Player 2</label>
+              <select className="w-full rounded-2xl border px-3 py-2 shadow-sm"
+                value={value.p2} onChange={(e)=>handle("p2", e.target.value)}>
+                <option value="">— Select —</option>
+                {players.map(p => <option key={p} value={p} disabled={value.p1===p}>{p}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="text-xs md:text-sm">
+            {duplicateInPair
+              ? <span className="text-red-600">Players in a pair must be different.</span>
+              : validation?.state === "error"
+                  ? <span className="text-red-600">{validation.message} ✗</span>
+                  : validation?.state === "ok"
+                      ? <span className="text-green-700">Pair ready ✓</span>
+                      : <span className="text-gray-500">Choose two players.</span>}
+          </div>
+        </div>
+      );
+    }
+
+    function CoverageHint({ setValue, fromSet1, pairLabels }) {
+      if (!fromSet1) return null;
+      const slots = [["A", pairLabels[0]], ["B", pairLabels[1]], ["C", pairLabels[2]]];
+      const missing = slots.flatMap(([slotKey, set1Label]) => {
+        const sourceNames = [fromSet1[set1Label].p1, fromSet1[set1Label].p2].filter(Boolean);
+        if (!sourceNames.length) return [];
+        const targetNames = [setValue[slotKey].p1, setValue[slotKey].p2].filter(Boolean);
+        return sourceNames.some(n => targetNames.includes(n)) ? [] : [`${set1Label}: ${sourceNames.join(" / ")}`];
+      });
+      const ok = missing.length === 0;
+      return (
+        <div className={`text-xs mt-2 ${ok ? "text-green-700" : "text-amber-700"}`}>
+          {ok ? "Coverage ok (each pair includes someone from its Set 1 label)"
+              : `Missing coverage from → ${missing.join("; ")}`}
+        </div>
+      );
+    }
+
+    const DISPLAY_LABELS = {
+      home: { 1: ["A","B","C"], 2: ["A","C","B"], 3: ["C","A","B"] },
+      away: { 1: ["A","B","C"], 2: ["B","A","C"], 3: ["B","C","A"] },
+    };
+
+    const labelsForSet = (mode, setNo) => DISPLAY_LABELS[mode]?.[setNo] || DISPLAY_LABELS.home[setNo];
+
+    function SetCard({ setNo, value, onChange, coverageFrom, pairLabels, matchupNumbers, players }) {
+      const playersUsed = useMemo(() => {
+        const list = [value.A.p1,value.A.p2,value.B.p1,value.B.p2,value.C.p1,value.C.p2].filter(Boolean);
+        const count = {}; list.forEach(p => count[p]=(count[p]||0)+1); return count;
+      }, [value]);
+      const warnDupWithinSet = Object.values(playersUsed).some(n => n>1);
+      const setPair = (k, v) => onChange({ ...value, [k]: v });
+      const clearSet = () => onChange({ A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} });
+      const pairValidation = (slotKey, sourceLabel) => {
+        const pair = value[slotKey];
+        if (!pair.p1 || !pair.p2) return { state: "idle" };
+        if (playersUsed[pair.p1] > 1 || playersUsed[pair.p2] > 1) {
+          return { state: "error", message: "Player used twice in this set" };
+        }
+        if (coverageFrom && sourceLabel) {
+          const source = [coverageFrom[sourceLabel].p1, coverageFrom[sourceLabel].p2].filter(Boolean);
+          const hit = source.some(name => name === pair.p1 || name === pair.p2);
+          if (source.length && !hit) return { state: "error", message: `Needs ${sourceLabel} player` };
+        }
+        return { state: "ok" };
+      };
+
+      return (
+        <div className="rounded-2xl border shadow-sm p-4 md:p-6 bg-white print:border-0 print:shadow-none">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-semibold">Segment {setNo}</h2>
+            <button onClick={clearSet} className="text-xs md:text-sm px-3 py-1 rounded-2xl border hover:shadow">Clear set</button>
+          </div>
+          <div className="space-y-4">
+            <PairSelect label={`Set ${matchupNumbers[0]} (Pair ${pairLabels[0]})`} value={value.A} onChange={v=>setPair("A", v)} players={players} validation={pairValidation("A", pairLabels[0])} />
+            <PairSelect label={`Set ${matchupNumbers[1]} (Pair ${pairLabels[1]})`} value={value.B} onChange={v=>setPair("B", v)} players={players} validation={pairValidation("B", pairLabels[1])} />
+            <PairSelect label={`Set ${matchupNumbers[2]} (Pair ${pairLabels[2]})`} value={value.C} onChange={v=>setPair("C", v)} players={players} validation={pairValidation("C", pairLabels[2])} />
+          </div>
+          <div className="mt-3 text-xs md:text-sm">
+            {warnDupWithinSet
+              ? <div className="text-amber-700">Heads up: Someone is picked more than once in this set.</div>
+              : <div className="text-gray-500">Tip: Spread players across pairs as needed.</div>}
+          </div>
+          {coverageFrom && <CoverageHint setValue={value} fromSet1={coverageFrom} pairLabels={pairLabels} />}
+        </div>
+      );
+    }
+
+    function App() {
+      const [mode, setMode] = useState("home");
+      const [newsOpen, setNewsOpen] = useState(false);
+      const [darkMode, setDarkMode] = useState(() => {
+        try {
+          const saved = localStorage.getItem("darts_dark_mode");
+          if (saved !== null) return saved === "true";
+        } catch {}
+        return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+      });
+      const initialPlayers = useMemo(() => {
+        try {
+          const raw = localStorage.getItem("darts_players");
+          const parsed = raw ? JSON.parse(raw) : null;
+          return Array.isArray(parsed) && parsed.length ? parsed : TEAM_ROSTERS[DEFAULT_TEAM];
+        } catch {
+          return TEAM_ROSTERS[DEFAULT_TEAM];
+        }
+      }, []);
+      const [players, setPlayers] = useState(initialPlayers);
+      const [selectedTeam, setSelectedTeam] = useState(() =>
+        JSON.stringify(initialPlayers) === JSON.stringify(TEAM_ROSTERS[DEFAULT_TEAM]) ? DEFAULT_TEAM : "Custom"
+      );
+      const [playersInput, setPlayersInput] = useState(players.join("\n"));
+      const [sets, setSets] = useState({
+        1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        2: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        3: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+      });
+
+      const applyHomeRules = () => {
+        const s1 = sets[1]; setMode("home");
+        setSets(prev => ({ ...prev, 2:{A:s1.A,B:s1.C,C:s1.B}, 3:{A:s1.C,B:s1.A,C:s1.B} }));
+      };
+      const applyAwayRules = () => {
+        const s1 = sets[1]; setMode("away");
+        setSets(prev => ({ ...prev, 2:{A:s1.B,B:s1.A,C:s1.C}, 3:{A:s1.B,B:s1.C,C:s1.A} }));
+      };
+
+      useEffect(() => { applyHomeRules(); /* once on load */ }, []);
+      useEffect(() => {
+        document.documentElement.classList.toggle("dark", darkMode);
+        try { localStorage.setItem("darts_dark_mode", String(darkMode)); } catch {}
+      }, [darkMode]);
+      useEffect(() => {
+        try { localStorage.setItem("darts_players", JSON.stringify(players)); } catch {}
+      }, [players]);
+
+      const updateSet = (n, v) => setSets(s => ({ ...s, [n]: v }));
+      const fmtPair = (p) => (p.p1 && p.p2 ? `${p.p1} & ${p.p2}` : "—");
+      const fmtPairPrint = (p) => (p.p1 && p.p2 ? `${p.p1} & ${p.p2}` : "");
+      const legRows = useMemo(() => ([
+        { leg: 1, setNo: 1, key: "A" }, { leg: 2, setNo: 1, key: "B" }, { leg: 3, setNo: 1, key: "C" },
+        { leg: 4, setNo: 2, key: "A" }, { leg: 5, setNo: 2, key: "B" }, { leg: 6, setNo: 2, key: "C" },
+        { leg: 7, setNo: 3, key: "A" }, { leg: 8, setNo: 3, key: "B" }, { leg: 9, setNo: 3, key: "C" },
+      ]), []);
+      const homeStarLegs = new Set([1, 3, 5, 7, 9]);
+      const awayStarLegs = new Set([2, 4, 6, 7, 8]);
+      const lineupText = useMemo(() => {
+        return legRows.map((row) => {
+          const slotIndex = row.key === "A" ? 0 : row.key === "B" ? 1 : 2;
+          const label = labelsForSet(mode, row.setNo)[slotIndex];
+          return `SET ${row.leg} (${label}): ${fmtPair(sets[row.setNo][row.key])}`;
+        }).join("\n");
+      }, [sets, mode]);
+
+      const copy = async () => {
+        try { await navigator.clipboard.writeText(lineupText); alert("Copied lineup to clipboard!"); }
+        catch { alert("Could not copy. Select the text and copy manually."); }
+      };
+
+      const toCsv = () => {
+        const rows = [
+          ["Balmain & Districts Amateur Darts Association"],
+          ["A GRADE TEAM SHEET"],
+          ["The set number on the sheet MUST match the set number on DartConnect"],
+          ["Asterisk (*) throws first - In leg 3, the team that threw 2nd in leg one goes for the bull"],
+          ["Doubles - Best of 3 x 601"],
+          [],
+          ["Set", "", "Players (H)", "Result", "Result", "Players (A)", "", "Set"],
+          ...legRows.map((row) => {
+            const slotIndex = row.key === "A" ? 0 : row.key === "B" ? 1 : 2;
+            const homePair = labelsForSet("home", row.setNo)[slotIndex] + (homeStarLegs.has(row.leg) ? "*" : "");
+            const awayPair = labelsForSet("away", row.setNo)[slotIndex] + (awayStarLegs.has(row.leg) ? "*" : "");
+            const selectedPlayers = fmtPairPrint(sets[row.setNo][row.key]);
+            return [
+              `#${row.leg}`,
+              homePair,
+              mode === "home" ? selectedPlayers : "",
+              "",
+              "",
+              mode === "away" ? selectedPlayers : "",
+              awayPair,
+              `#${row.leg}`,
+            ];
+          }),
+        ];
+        const csv = rows.map(r => r.map(cell => {
+          const v = String(cell ?? "");
+          return (v.includes(",")||v.includes('"')||v.includes("\n")) ? `"${v.replaceAll('"','""')}"` : v;
+        }).join(",")).join("\n");
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a"); a.href = url; a.download = `a_grade_team_sheet_${mode}.csv`; a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      const printPage = () => window.print();
+      const parsePlayers = (text) => {
+        const parts = text.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+        return [...new Set(parts)];
+      };
+      const applyPlayers = () => {
+        const next = parsePlayers(playersInput);
+        if (!next.length) {
+          alert("Please enter at least one player name.");
+          return;
+        }
+        setPlayers(next);
+        setSelectedTeam("Custom");
+      };
+      const resetPlayers = () => {
+        setSelectedTeam(DEFAULT_TEAM);
+        setPlayers(TEAM_ROSTERS[DEFAULT_TEAM]);
+        setPlayersInput(TEAM_ROSTERS[DEFAULT_TEAM].join("\n"));
+      };
+      const selectTeam = (teamName) => {
+        setSelectedTeam(teamName);
+        const roster = TEAM_ROSTERS[teamName];
+        if (!roster) return;
+        setPlayers(roster);
+        setPlayersInput(roster.join("\n"));
+        setSets({
+          1: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+          2: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+          3: { A:{p1:"",p2:""}, B:{p1:"",p2:""}, C:{p1:"",p2:""} },
+        });
+      };
+      const contactAddress = window.atob("ZGNvdmVsbEBuZXdjbGVhci5jbw==");
+
+      return (
+        <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+
+	          <div id="print-root" className="max-w-5xl mx-auto space-y-6 hide-on-print">
+            <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div className="association-brand">
+                <img className="association-logo" src="assets/balmain-darts-logo.png" alt="Balmain and Districts Amateur Darts Association tiger logo" />
+                <div>
+                  <div className="association-name">Balmain &amp; Districts Amateur Darts Association</div>
+                  <h1 className="text-lg md:text-xl font-bold">Set Doubles</h1>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 no-print">
+                <button
+                  type="button"
+                  onClick={()=>setDarkMode(v=>!v)}
+                  className="px-3 py-2 rounded-2xl border hover:shadow"
+                  aria-pressed={darkMode}
+                  aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
+                >
+                  {darkMode ? "☀ Light" : "☾ Dark"}
+                </button>
+                <label className="text-sm">Mode</label>
+                <select className="rounded-2xl border px-3 py-2" value={mode} onChange={(e)=>setMode(e.target.value)}>
+                  <option value="home">Home</option>
+                  <option value="away">Away</option>
+                </select>
+                <button onClick={applyHomeRules} className="px-3 py-2 rounded-2xl border hover:shadow">Apply HOME rules</button>
+                <button onClick={applyAwayRules} className="px-3 py-2 rounded-2xl border hover:shadow">Apply AWAY rules</button>
+                <button onClick={copy} className="px-3 py-2 rounded-2xl border hover:shadow">Copy</button>
+                <button onClick={toCsv} className="px-3 py-2 rounded-2xl border hover:shadow">Export CSV</button>
+                <button onClick={printPage} className="px-3 py-2 rounded-2xl border hover:shadow">Print / Save PDF</button>
+              </div>
+            </header>
+
+            <section className="news-disclosure no-print" aria-label="News">
+              <button
+                type="button"
+                className="news-toggle"
+                onClick={()=>setNewsOpen(v=>!v)}
+                aria-expanded={newsOpen}
+                aria-controls="news-panel"
+              >
+                <span>News</span>
+                <span className={`news-chevron ${newsOpen ? "open" : ""}`} aria-hidden="true">⌄</span>
+              </button>
+              {newsOpen && (
+                <div id="news-panel" className="news-panel">
+                  <div className="team-update-note">
+                    Want your team’s players preloaded? Email <a href={`mailto:${contactAddress}?subject=Set%20Doubles%20team%20player%20list`}>{contactAddress}</a> and I’ll add them while the DartConnect API integration is being worked out.
+                  </div>
+                </div>
+              )}
+            </section>
+
+            <div className="rounded-2xl border bg-white p-4 md:p-6 no-print">
+              <div className="flex items-center justify-between gap-3 mb-2">
+                <h3 className="font-semibold">Player List</h3>
+                <div className="text-xs text-gray-500">{players.length} players active</div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <label htmlFor="team-select" className="text-sm font-semibold">Team</label>
+                <select
+                  id="team-select"
+                  className="rounded-2xl border px-3 py-2"
+                  value={selectedTeam}
+                  onChange={(e)=>selectTeam(e.target.value)}
+                >
+                  {Object.keys(TEAM_ROSTERS).map(team => <option key={team} value={team}>{team}</option>)}
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <p className="text-xs text-gray-500 mb-2">Paste one name per line (or comma-separated). Each captain can set their own team list on their device.</p>
+              <textarea
+                className="w-full rounded-xl border px-3 py-2 text-sm h-36"
+                value={playersInput}
+                onChange={(e)=>setPlayersInput(e.target.value)}
+              />
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button onClick={applyPlayers} className="px-3 py-2 rounded-2xl border hover:shadow">Apply player list</button>
+                <button onClick={resetPlayers} className="px-3 py-2 rounded-2xl border hover:shadow">Reset default list</button>
+              </div>
+            </div>
+
+            <SetCard setNo={1} value={sets[1]} onChange={(v)=>updateSet(1, v)} pairLabels={labelsForSet(mode, 1)} matchupNumbers={[1,2,3]} players={players} />
+            <SetCard setNo={2} value={sets[2]} onChange={(v)=>updateSet(2, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 2)} matchupNumbers={[4,5,6]} players={players} />
+            <SetCard setNo={3} value={sets[3]} onChange={(v)=>updateSet(3, v)} coverageFrom={sets[1]} pairLabels={labelsForSet(mode, 3)} matchupNumbers={[7,8,9]} players={players} />
+
+            <div className="rounded-2xl border bg-white p-4 md:p-6 space-y-3 print:border-0 print:shadow-none">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold">Summary ({mode.toUpperCase()})</h3>
+              </div>
+              <pre className="text-sm bg-gray-100 rounded-xl p-3 overflow-x-auto whitespace-pre-wrap print:bg-transparent">{lineupText}</pre>
+              <div className="text-xs text-gray-500">Coverage rule: In Sets 2 & 3, each pair slot must include at least one player from the corresponding Set 1 pair label. Use Apply HOME/AWAY to auto-fill, then tweak as needed.</div>
+            </div>
+          </div>
+
+          <div className="print-only">
+            <div style={{display: "flex", alignItems: "center", gap: "14px", marginBottom: "18px"}}>
+              <img src="assets/balmain-darts-logo.png" alt="" style={{width: "92px", height: "92px", objectFit: "contain", background: "#000", borderRadius: "12px"}} />
+              <div>
+                <div style={{fontSize: "16px", fontWeight: 700, marginBottom: "3px"}}>Balmain &amp; Districts Amateur Darts Association</div>
+                <h1 style={{fontSize: "28px", fontWeight: 700}}>A GRADE TEAM SHEET</h1>
+              </div>
+            </div>
+            <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "12px"}}>The set number on the sheet MUST match the set number on DartConnect</div>
+            <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "12px"}}>Asterisk (*) throws first - In leg 3, the team that threw 2nd in leg one goes for the bull</div>
+            <div style={{fontSize: "16px", fontWeight: 600, marginBottom: "20px"}}>Doubles - Best of 3 x 601</div>
+
+            <table style={{width: "100%", borderCollapse: "collapse", fontSize: "20px"}}>
+              <thead>
+                <tr>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "6%"}}>Set</th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "6%"}}></th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "32%"}}>Players (H)</th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "9%"}}>Result</th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "9%"}}>Result</th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "32%"}}>Players (A)</th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "6%"}}></th>
+                  <th style={{border: "1px solid #333", padding: "8px 6px", width: "6%"}}>Set</th>
+                </tr>
+              </thead>
+              <tbody>
+                {legRows.map((row, idx) => {
+                  const slotIndex = row.key === "A" ? 0 : row.key === "B" ? 1 : 2;
+                  const homePair = labelsForSet("home", row.setNo)[slotIndex] + (homeStarLegs.has(row.leg) ? "*" : "");
+                  const awayPair = labelsForSet("away", row.setNo)[slotIndex] + (awayStarLegs.has(row.leg) ? "*" : "");
+                  const players = fmtPairPrint(sets[row.setNo][row.key]);
+                  return (
+                    <tr key={row.leg}>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>#{row.leg}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>{homePair}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>{mode === "home" ? players : ""}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}></td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}></td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>{mode === "away" ? players : ""}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>{awayPair}</td>
+                      <td style={{border: "1px solid #333", padding: "8px 8px"}}>#{row.leg}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
