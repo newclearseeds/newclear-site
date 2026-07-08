@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Microsoft Intune">
+  <circle cx="32" cy="32" r="28" fill="#0078d4"/>
+  <rect x="18" y="22" width="28" height="20" rx="3" fill="#fff"/>
+  <rect x="22" y="26" width="20" height="3" rx="1.5" fill="#0078d4"/>
+  <rect x="22" y="32" width="14" height="3" rx="1.5" fill="#50e6ff"/>
+  <path fill="#fff" d="M40 38h6v4h-6z"/>
+</svg>
