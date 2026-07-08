@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Datto SaaS Protection">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#199eda"/>
+  <path fill="#fff" d="M20 40V24h8c5.5 0 9 3.2 9 8s-3.5 8-9 8h-8zm6.5-12.5V36H28c3 0 4.8-1.6 4.8-4.3S31 27.5 28 27.5h-1.5z"/>
+  <path fill="#b8e6ff" d="M42 22c4 0 7 2.5 7 6v2H38v-1c0-1.5-1-2.5-2.5-2.5S33 27.5 33 29v9h-5V24h9v1c1.2-2 3.2-3 5-3z"/>
+</svg>
