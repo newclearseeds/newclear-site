@@ -233,12 +233,13 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        .carousel-slide--ai .carousel-overlay {
+        .carousel-slide--ai .carousel-overlay,
+        .carousel-slide--security .carousel-overlay {
             top: 42%;
             padding: 1.6rem 2rem;
         }
 
-        .carousel-ai-logos {
+        .carousel-brand-logos {
             position: absolute;
             bottom: 58px;
             left: 50%;
@@ -248,10 +249,10 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.75rem;
-            width: min(92%, 760px);
+            width: min(94%, 960px);
         }
 
-        .ai-brand-pill {
+        .brand-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.55rem;
@@ -267,7 +268,7 @@
             backdrop-filter: blur(8px);
         }
 
-        .ai-brand-pill img {
+        .brand-pill img {
             width: 26px;
             height: 26px;
             object-fit: contain;
@@ -882,22 +883,23 @@
                 display: none;
             }
 
-            .carousel-slide--ai .carousel-overlay {
+            .carousel-slide--ai .carousel-overlay,
+            .carousel-slide--security .carousel-overlay {
                 top: 38%;
                 padding: 1.1rem 1.25rem;
             }
 
-            .carousel-ai-logos {
+            .carousel-brand-logos {
                 bottom: 48px;
                 gap: 0.45rem;
             }
 
-            .ai-brand-pill {
+            .brand-pill {
                 padding: 0.35rem 0.7rem;
                 font-size: 0.78rem;
             }
 
-            .ai-brand-pill img {
+            .brand-pill img {
                 width: 20px;
                 height: 20px;
             }
@@ -1008,11 +1010,29 @@
 
     <section class="tech-carousel" id="carousel" aria-label="Technology highlights">
         <div class="carousel-container" id="carouselContainer">
-            <div class="carousel-slide active">
-                <img src="assets/carousel-1.jpg" alt="Advanced Cybersecurity Network">
+            <div class="carousel-slide carousel-slide--security active">
+                <img src="assets/carousel-1.jpg" alt="Advanced network security with Ubiquiti, Huntress, ThreatLocker, and Microsoft Defender">
+                <div class="carousel-brand-logos" aria-label="Network security platforms">
+                    <div class="brand-pill">
+                        <img src="assets/security-logos/ubiquiti.svg" alt="" width="26" height="26">
+                        <span>Ubiquiti UniFi</span>
+                    </div>
+                    <div class="brand-pill">
+                        <img src="assets/security-logos/huntress.svg" alt="" width="26" height="26">
+                        <span>Huntress</span>
+                    </div>
+                    <div class="brand-pill">
+                        <img src="assets/security-logos/threatlocker.svg" alt="" width="26" height="26">
+                        <span>ThreatLocker</span>
+                    </div>
+                    <div class="brand-pill">
+                        <img src="assets/security-logos/defender.svg" alt="" width="26" height="26">
+                        <span>Microsoft Defender</span>
+                    </div>
+                </div>
                 <div class="carousel-overlay">
                     <h2>Advanced Network Security</h2>
-                    <p>Real-time threat detection and protection for enterprise networks</p>
+                    <p>Ubiquiti UniFi, Huntress, ThreatLocker, and Microsoft Defender — layered protection for modern networks</p>
                 </div>
             </div>
             <div class="carousel-slide">
@@ -1024,16 +1044,16 @@
             </div>
             <div class="carousel-slide carousel-slide--ai">
                 <img src="assets/carousel-3.jpg" alt="AI platforms including Microsoft Copilot, ChatGPT, and Claude">
-                <div class="carousel-ai-logos" aria-label="Supported AI platforms">
-                    <div class="ai-brand-pill">
+                <div class="carousel-brand-logos" aria-label="Supported AI platforms">
+                    <div class="brand-pill">
                         <img src="assets/ai-logos/copilot.svg" alt="" width="26" height="26">
                         <span>Microsoft Copilot</span>
                     </div>
-                    <div class="ai-brand-pill">
+                    <div class="brand-pill">
                         <img src="assets/ai-logos/chatgpt.svg" alt="" width="26" height="26">
                         <span>OpenAI ChatGPT</span>
                     </div>
-                    <div class="ai-brand-pill">
+                    <div class="brand-pill">
                         <img src="assets/ai-logos/claude.svg" alt="" width="26" height="26">
                         <span>Anthropic Claude</span>
                     </div>
