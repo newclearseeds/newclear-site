@@ -49,6 +49,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+const securityReviewForm = document.getElementById('securityReviewForm');
+if (securityReviewForm) {
+    securityReviewForm.addEventListener('submit', (event) => {
+        const honeypot = securityReviewForm.querySelector('#website');
+        if (honeypot && honeypot.value.trim()) {
+            event.preventDefault();
+        }
+    });
+}
+
 const canvas = document.getElementById('matrixCanvas');
 const context = canvas.getContext('2d');
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$@#%&*';
