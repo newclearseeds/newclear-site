@@ -49,21 +49,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-document.getElementById('contactForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    if (name && email && message) {
-        const subject = encodeURIComponent(`Free security review request from ${name}`);
-        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nSecurity priorities or concerns:\n${message}`);
-        window.location.href = `mailto:info@newclear.co?subject=${subject}&body=${body}`;
-    } else {
-        alert('Please fill in all fields.');
-    }
-});
-
 const canvas = document.getElementById('matrixCanvas');
 const context = canvas.getContext('2d');
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$@#%&*';
