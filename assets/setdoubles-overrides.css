@@ -1,0 +1,36 @@
+.main-site-link,
+.mode-control {
+  background: #bbf7d0;
+  border: 1px solid #4ade80;
+  color: #14532d;
+}
+
+.main-site-link {
+  font-weight: 700;
+}
+
+.main-site-link:hover {
+  background: #86efac;
+}
+
+.mode-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.75rem;
+  border-radius: 1rem;
+}
+
+html .mode-control select,
+html.dark .mode-control select {
+  background: #dcfce7;
+  border-color: #4ade80;
+  color: #14532d;
+}
+
+@media print {
+  .main-site-link,
+  .mode-control {
+    display: none;
+  }
+}

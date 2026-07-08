@@ -254,7 +254,7 @@
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3 no-print">
-                <a href="index.html" className="px-3 py-2 rounded-2xl border hover:shadow" aria-label="Return to the Newclear Computing main site">
+                <a href="index.html" className="main-site-link px-3 py-2 rounded-2xl border hover:shadow" aria-label="Return to the Newclear Computing main site">
                   ← Newclear Main Site
                 </a>
                 <button
@@ -266,11 +266,13 @@
                 >
                   {darkMode ? "☀ Light" : "☾ Dark"}
                 </button>
-                <label className="text-sm">Mode</label>
-                <select className="rounded-2xl border px-3 py-2" value={mode} onChange={(e)=>setMode(e.target.value)}>
-                  <option value="home">Home</option>
-                  <option value="away">Away</option>
-                </select>
+                <div className="mode-control">
+                  <label className="text-sm" htmlFor="game-mode">Mode</label>
+                  <select id="game-mode" className="rounded-2xl border px-3 py-2" value={mode} onChange={(e)=>setMode(e.target.value)}>
+                    <option value="home">Home</option>
+                    <option value="away">Away</option>
+                  </select>
+                </div>
                 <button onClick={applyHomeRules} className="px-3 py-2 rounded-2xl border hover:shadow">Apply HOME rules</button>
                 <button onClick={applyAwayRules} className="px-3 py-2 rounded-2xl border hover:shadow">Apply AWAY rules</button>
                 <button onClick={copy} className="px-3 py-2 rounded-2xl border hover:shadow">Copy</button>
