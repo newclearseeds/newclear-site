@@ -254,6 +254,9 @@
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3 no-print">
+                <a href="index.html" className="px-3 py-2 rounded-2xl border hover:shadow" aria-label="Return to the Newclear Computing main site">
+                  ← Newclear Main Site
+                </a>
                 <button
                   type="button"
                   onClick={()=>setDarkMode(v=>!v)}
