@@ -368,6 +368,46 @@
             font-weight: 800;
         }
 
+        .next-steps {
+            padding: 4rem 0;
+            background: var(--brand-dark);
+        }
+
+        .next-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .next-step {
+            padding: 1.75rem;
+            border: 1px solid #1b2a44;
+            border-radius: 12px;
+            background: var(--panel-2);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            color: white;
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-blue));
+            font-weight: 800;
+        }
+
+        .next-step h3 {
+            margin-bottom: 0.6rem;
+            color: var(--brand-blue-2);
+        }
+
+        .next-step p {
+            color: var(--muted);
+        }
+
         .essential-eight {
             padding: 4rem 0;
             background: #0a111f;
@@ -465,6 +505,37 @@
 
         .service-card p {
             color: var(--muted);
+        }
+
+        .learn-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.55rem;
+            margin-top: 1.2rem;
+        }
+
+        .learn-link {
+            display: inline-block;
+            padding: 0.38rem 0.7rem;
+            border: 1px solid rgba(26, 167, 232, 0.45);
+            border-radius: 999px;
+            color: #7fd6ff;
+            background: rgba(24, 112, 208, 0.12);
+            font-size: 0.82rem;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .learn-link:hover {
+            border-color: var(--brand-green);
+            color: white;
+            background: rgba(58, 165, 11, 0.2);
+        }
+
+        .learn-link:focus-visible {
+            outline: 3px solid rgba(127, 214, 255, 0.85);
+            outline-offset: 2px;
         }
 
         .trust-strip {
@@ -700,6 +771,10 @@
             .site-logo {
                 width: clamp(210px, 32vw, 300px);
             }
+
+            .next-steps-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -924,15 +999,56 @@
                 </div>
                 <div class="service-card">
                     <h3>Microsoft 365 Security</h3>
-                    <p>Harden identities, email, access, and cloud configuration to reduce common Microsoft 365 security risks.</p>
+                    <p>Review MFA, Conditional Access, administrator roles, email protection, sharing, Secure Score, audit settings, and risky sign-ins.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-xdr/microsoft-secure-score" target="_blank" rel="noopener noreferrer">Microsoft Secure Score</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <h3>Microsoft 365 Copilot, Notebooks &amp; Agents</h3>
+                    <p>Prepare data and permissions, identify practical Copilot use cases, build focused Notebooks and agents, and apply sensible governance.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/microsoft-365-copilot" target="_blank" rel="noopener noreferrer">Copilot &amp; Notebooks</a>
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/copilot/agents" target="_blank" rel="noopener noreferrer">Copilot Agents</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <h3>Microsoft 365 Licensing Optimisation</h3>
+                    <p>Review assigned licences and usage reports, remove avoidable waste, right-size subscriptions, and identify opportunities to reduce ongoing licensing costs.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/microsoft-365/admin/usage-analytics/usage-analytics?view=o365-worldwide" target="_blank" rel="noopener noreferrer">Microsoft 365 Usage Analytics</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <h3>Windows Endpoint Security &amp; Compliance</h3>
+                    <p>Configure Intune compliance, Windows LAPS, BitLocker, Microsoft Defender, firewall, update policies, and security reporting across managed devices.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-windows-settings" target="_blank" rel="noopener noreferrer">Intune Compliance</a>
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview" target="_blank" rel="noopener noreferrer">Windows LAPS</a>
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/" target="_blank" rel="noopener noreferrer">BitLocker</a>
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint" target="_blank" rel="noopener noreferrer">Defender for Endpoint</a>
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Microsoft Defender for Endpoint</h3>
                     <p>Deploy and manage endpoint detection and response across Windows, macOS, and Linux devices.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint" target="_blank" rel="noopener noreferrer">Microsoft Learn</a>
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Ubiquiti UniFi Dream Machine</h3>
                     <p>Design, deploy, and manage secure UniFi networks using Dream Machine gateways, switching, and wireless infrastructure.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Website Security &amp; Cloudflare</h3>
+                    <p>Check website security headers, identify missing browser protections, and use Cloudflare to strengthen them safely.</p>
+                    <div class="learn-links">
+                        <a class="learn-link" href="https://www.newclear.com.au/security-headers-cloudflare.html">Read Our DIY Guide</a>
+                        <a class="learn-link" href="https://securityheaders.com/" target="_blank" rel="noopener noreferrer">Check Security Headers</a>
+                        <a class="learn-link" href="https://developers.cloudflare.com/rules/transform/managed-transforms/" target="_blank" rel="noopener noreferrer">Cloudflare Managed Transforms</a>
+                        <a class="learn-link" href="https://developers.cloudflare.com/rules/transform/response-header-modification/" target="_blank" rel="noopener noreferrer">Response Header Rules</a>
+                    </div>
                 </div>
                 <div class="service-card">
                     <h3>Microsoft 365 Backup</h3>
@@ -1042,6 +1158,29 @@
         </div>
     </section>
 
+    <section class="next-steps" aria-labelledby="next-steps-title">
+        <div class="container">
+            <h2 class="section-title" id="next-steps-title">What Happens Next</h2>
+            <div class="next-steps-grid">
+                <article class="next-step">
+                    <div class="step-number" aria-hidden="true">1</div>
+                    <h3>Tell Us Your Priorities</h3>
+                    <p>Send a short enquiry about your security, Microsoft 365, licensing, compliance, or AI productivity goals.</p>
+                </article>
+                <article class="next-step">
+                    <div class="step-number" aria-hidden="true">2</div>
+                    <h3>Focused 30-Minute Review</h3>
+                    <p>We discuss your environment, current risks, business constraints, and the improvements that will deliver the most value.</p>
+                </article>
+                <article class="next-step">
+                    <div class="step-number" aria-hidden="true">3</div>
+                    <h3>Practical Next-Step Plan</h3>
+                    <p>You receive clear priorities and options for implementation, without a generic sales presentation or unnecessary complexity.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Book Your Free Security Review</h2>
@@ -1072,14 +1211,14 @@
                     <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
                 </div>
                 <button type="submit" class="submit-btn">Request My Free Security Review</button>
-                <p class="form-note">Your enquiry is securely processed by Jotform.</p>
+                <p class="form-note">Your enquiry is processed by Jotform. By submitting, you acknowledge our <a href="privacy.html">Privacy Policy</a>.</p>
             </form>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Newclear Computing Pty Ltd. All rights reserved. | Contact: <a href="mailto:info@newclear.co">info@newclear.co</a></p>
+            <p>&copy; 2026 Newclear Computing Pty Ltd. All rights reserved. | Contact: <a href="mailto:info@newclear.co">info@newclear.co</a> | <a href="privacy.html">Privacy Policy</a></p>
             <p class="footer-tools"><a href="setdoubles.html">Set Doubles</a></p>
         </div>
     </footer>
