@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Anthropic Claude">
+  <g fill="#d97757" transform="translate(32 32)">
+    <path d="M0-22 L6.5-11 0 0 6.5 11 0 22 -6.5 11 0 0 -6.5-11z"/>
+    <path d="M19-11 L25.5 0 19 11 12.5 0z" opacity=".85"/>
+    <path d="M-19-11 L-12.5 0 -19 11 -25.5 0z" opacity=".85"/>
+    <path d="M0-14 L4-7 0 0 -4-7z" fill="#f4c4a8"/>
+    <path d="M14 0 L18 7 14 14 10 7z" fill="#f4c4a8"/>
+    <path d="M-14 0 L-10 7 -14 14 -18 7z" fill="#f4c4a8"/>
+    <path d="M0 7 L4 14 0 21 -4 14z" fill="#f4c4a8"/>
+  </g>
+</svg>

@@ -233,6 +233,47 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
+        .carousel-slide--ai .carousel-overlay {
+            top: 42%;
+            padding: 1.6rem 2rem;
+        }
+
+        .carousel-ai-logos {
+            position: absolute;
+            bottom: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            width: min(92%, 760px);
+        }
+
+        .ai-brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.45rem 0.95rem;
+            border: 1px solid rgba(127, 214, 255, 0.28);
+            border-radius: 999px;
+            background: rgba(10, 19, 36, 0.82);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+            color: var(--text);
+            font-size: 0.92rem;
+            font-weight: 650;
+            letter-spacing: 0.01em;
+            backdrop-filter: blur(8px);
+        }
+
+        .ai-brand-pill img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
         .carousel-nav {
             position: absolute;
             top: 50%;
@@ -841,6 +882,26 @@
                 display: none;
             }
 
+            .carousel-slide--ai .carousel-overlay {
+                top: 38%;
+                padding: 1.1rem 1.25rem;
+            }
+
+            .carousel-ai-logos {
+                bottom: 48px;
+                gap: 0.45rem;
+            }
+
+            .ai-brand-pill {
+                padding: 0.35rem 0.7rem;
+                font-size: 0.78rem;
+            }
+
+            .ai-brand-pill img {
+                width: 20px;
+                height: 20px;
+            }
+
             .carousel-nav {
                 padding: 0.5rem;
                 font-size: 1.2rem;
@@ -961,11 +1022,25 @@
                     <p>Comprehensive cloud infrastructure protection with multi-layered security</p>
                 </div>
             </div>
-            <div class="carousel-slide">
-                <img src="assets/carousel-3.jpg" alt="AI and Compliance Solutions">
+            <div class="carousel-slide carousel-slide--ai">
+                <img src="assets/carousel-3.jpg" alt="AI platforms including Microsoft Copilot, ChatGPT, and Claude">
+                <div class="carousel-ai-logos" aria-label="Supported AI platforms">
+                    <div class="ai-brand-pill">
+                        <img src="assets/ai-logos/copilot.svg" alt="" width="26" height="26">
+                        <span>Microsoft Copilot</span>
+                    </div>
+                    <div class="ai-brand-pill">
+                        <img src="assets/ai-logos/chatgpt.svg" alt="" width="26" height="26">
+                        <span>OpenAI ChatGPT</span>
+                    </div>
+                    <div class="ai-brand-pill">
+                        <img src="assets/ai-logos/claude.svg" alt="" width="26" height="26">
+                        <span>Anthropic Claude</span>
+                    </div>
+                </div>
                 <div class="carousel-overlay">
                     <h2>AI &amp; Compliance Solutions</h2>
-                    <p>Intelligent automation and regulatory compliance for modern businesses</p>
+                    <p>Microsoft Copilot, OpenAI ChatGPT, and Anthropic Claude — governed for secure enterprise use</p>
                 </div>
             </div>
             <div class="carousel-slide">
