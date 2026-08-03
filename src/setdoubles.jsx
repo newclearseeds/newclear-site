@@ -1,8 +1,9 @@
     const { useMemo, useState, useEffect } = React;
 
     const TEAM_ROSTERS = {
-      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"],
+      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick Foulds","Patrick","Wayne"],
     };
+    const PREVIOUS_DEFAULT_ROSTER = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
     const DEFAULT_TEAM = "Bombardiers";
 
     function PairSelect({ label, value, onChange, players, validation }) {
@@ -124,7 +125,11 @@
         try {
           const raw = localStorage.getItem("darts_players");
           const parsed = raw ? JSON.parse(raw) : null;
-          return Array.isArray(parsed) && parsed.length ? parsed : TEAM_ROSTERS[DEFAULT_TEAM];
+          if (Array.isArray(parsed) && parsed.length) {
+            const wasPreviousDefault = JSON.stringify(parsed) === JSON.stringify(PREVIOUS_DEFAULT_ROSTER);
+            return wasPreviousDefault ? TEAM_ROSTERS[DEFAULT_TEAM] : parsed;
+          }
+          return TEAM_ROSTERS[DEFAULT_TEAM];
         } catch {
           return TEAM_ROSTERS[DEFAULT_TEAM];
         }
