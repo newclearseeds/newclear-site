@@ -1,9 +1,12 @@
     const { useMemo, useState, useEffect } = React;
 
     const TEAM_ROSTERS = {
-      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick Foulds","Patrick","Wayne"],
+      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick","Patrick","Wayne"],
     };
-    const PREVIOUS_DEFAULT_ROSTER = ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"];
+    const PREVIOUS_DEFAULT_ROSTERS = [
+      ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"],
+      ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick Foulds","Patrick","Wayne"],
+    ];
     const DEFAULT_TEAM = "Bombardiers";
 
     function PairSelect({ label, value, onChange, players, validation }) {
@@ -126,7 +129,9 @@
           const raw = localStorage.getItem("darts_players");
           const parsed = raw ? JSON.parse(raw) : null;
           if (Array.isArray(parsed) && parsed.length) {
-            const wasPreviousDefault = JSON.stringify(parsed) === JSON.stringify(PREVIOUS_DEFAULT_ROSTER);
+            const wasPreviousDefault = PREVIOUS_DEFAULT_ROSTERS.some(
+              roster => JSON.stringify(parsed) === JSON.stringify(roster)
+            );
             return wasPreviousDefault ? TEAM_ROSTERS[DEFAULT_TEAM] : parsed;
           }
           return TEAM_ROSTERS[DEFAULT_TEAM];
