@@ -1,11 +1,12 @@
     const { useMemo, useState, useEffect } = React;
 
     const TEAM_ROSTERS = {
-      Bombardiers: ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick","Patrick","Wayne"],
+      Bombardiers: ["BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick","Wayne"],
     };
     const PREVIOUS_DEFAULT_ROSTERS = [
       ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Patrick","Wayne"],
       ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick Foulds","Patrick","Wayne"],
+      ["Ben","BurwoodSpare","Darren","Dean","Debby","Elton","Gabor","Grant","Kalien","Liam","Mark","Neil","Nick","Patrick","Wayne"],
     ];
     const DEFAULT_TEAM = "Bombardiers";
 
