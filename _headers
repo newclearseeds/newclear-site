@@ -1,0 +1,18 @@
+# Applied by the Cloudflare Worker only. GitHub Pages does not read this file.
+#
+# A full Content-Security-Policy is not set here. Several pages already send
+# their own CSP in a meta tag, and a response header is enforced as well as
+# that meta policy. One site-wide policy would break the darts pages that load
+# Tailwind, React, and Babel from CDNs, and the camera prototype. Those pages
+# keep the CSP they already declare.
+#
+# frame-ancestors is ignored inside a meta tag, so clickjacking protection is
+# set here. Strict-Transport-Security is left to the Cloudflare dashboard:
+# includeSubDomains / preload is unsafe until every hostname is HTTPS.
+
+/*
+	X-Content-Type-Options: nosniff
+	Referrer-Policy: strict-origin-when-cross-origin
+	X-Frame-Options: DENY
+	Content-Security-Policy: frame-ancestors 'none'
+	Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=()
