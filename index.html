@@ -10,1105 +10,11 @@
     <link rel="icon" href="favicon.ico" sizes="32x32">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <title>Newclear Computing Pty Ltd - Cybersecurity and IT Solutions</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --brand-dark: #05070d;
-            --brand-blue: #1870d0;
-            --brand-blue-2: #1aa7e8;
-            --brand-green: #3aa50b;
-            --brand-silver: #d9e1ee;
-            --logo-bg: #102a43;
-            --panel: #0b1222;
-            --panel-2: #111a2d;
-            --text: #e6eef7;
-            --muted: #a7b4c5;
-            --cta: var(--brand-green);
-            --cta-hover: #2f8f10;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: var(--brand-dark);
-        }
-
-        .matrix-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            mix-blend-mode: screen;
-            opacity: 0.18;
-        }
-
-        body > *:not(canvas.matrix-canvas):not(header) {
-            position: relative;
-            z-index: 1;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: var(--logo-bg);
-            color: white;
-            padding: 0.7rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .site-nav {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem 1.25rem;
-            min-height: 64px;
-        }
-
-        .logo-wrap {
-            display: flex;
-            align-items: center;
-            flex: 1 1 auto;
-            min-width: 0;
-            margin-right: auto;
-        }
-
-        .logo-wrap a {
-            display: block;
-            min-width: 0;
-            max-width: 100%;
-            line-height: 0;
-        }
-
-        .site-logo {
-            display: block;
-            height: 62px;
-            width: auto;
-            max-width: 100%;
-        }
-
-        .nav-toggle {
-            display: none;
-            flex: 0 0 auto;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            margin: 0;
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 8px;
-            background: transparent;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .nav-toggle:focus-visible {
-            outline: 3px solid rgba(127, 214, 255, 0.9);
-            outline-offset: 2px;
-        }
-
-        .nav-toggle-bars,
-        .nav-toggle-bars::before,
-        .nav-toggle-bars::after {
-            display: block;
-            width: 18px;
-            height: 2px;
-            border-radius: 1px;
-            background: #fff;
-            position: relative;
-        }
-
-        .nav-toggle-bars::before,
-        .nav-toggle-bars::after {
-            content: "";
-            position: absolute;
-            left: 0;
-        }
-
-        .nav-toggle-bars::before { top: -6px; }
-        .nav-toggle-bars::after { top: 6px; }
-
-        .site-nav.is-open .nav-toggle-bars { background: transparent; }
-
-        .site-nav.is-open .nav-toggle-bars::before {
-            top: 0;
-            transform: rotate(45deg);
-        }
-
-        .site-nav.is-open .nav-toggle-bars::after {
-            top: 0;
-            transform: rotate(-45deg);
-        }
-
-        .logo-text .brand-main,
-        .about-badge .brand-main {
-            background: linear-gradient(100deg, #f3f8ff 0%, #7fd6ff 45%, #42b4ff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(66, 180, 255, 0.4);
-        }
-
-        .logo-text .brand-sub,
-        .about-badge .brand-sub {
-            background: linear-gradient(100deg, #e5f3ff 0%, #74e0ff 30%, #5ac47a 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 16px rgba(90, 196, 122, 0.35);
-        }
-
-        .logo-text::after,
-        .about-badge::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -4px;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(26, 167, 232, 0), rgba(26, 167, 232, 0.95), rgba(58, 165, 11, 0.95), rgba(58, 165, 11, 0));
-            transform-origin: center;
-            animation: brand-glow 3.2s ease-in-out infinite;
-        }
-
-        .brand-mark {
-            position: absolute;
-            right: 0;
-            top: -0.28em;
-            font-size: 0.69em;
-            line-height: 1;
-            color: #e9f4ff;
-            text-shadow: 0 0 12px rgba(127, 214, 255, 0.5);
-        }
-
-        @keyframes brand-glow {
-            0%, 100% {
-                opacity: 0.45;
-                transform: scaleX(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: scaleX(1);
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            flex: 0 0 auto;
-            list-style: none;
-            align-items: center;
-            gap: clamp(0.7rem, 1.15vw, 1.35rem);
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            white-space: nowrap;
-            font-size: 0.95rem;
-            line-height: 1.2;
-            padding: 0.35rem 0;
-            transition: opacity 0.3s;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        .cta-button {
-            background: var(--cta);
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
-            display: inline-block;
-            flex: 0 0 auto;
-            white-space: nowrap;
-        }
-
-        .cta-button:hover {
-            background: var(--cta-hover);
-        }
-
-        .cta-label-mobile {
-            display: none;
-        }
-
-        .tech-carousel {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            background: var(--brand-dark);
-        }
-
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            z-index: 2;
-            max-width: 80%;
-            background: rgba(0, 0, 0, 0.45);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-
-        .carousel-overlay h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .carousel-overlay p {
-            font-size: 1.2rem;
-            margin-bottom: 0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        .carousel-slide--ai .carousel-overlay,
-        .carousel-slide--security .carousel-overlay,
-        .carousel-slide--cloud .carousel-overlay,
-        .carousel-slide--infra .carousel-overlay {
-            top: 42%;
-            padding: 1.6rem 2rem;
-        }
-
-        .carousel-brand-logos {
-            position: absolute;
-            bottom: 58px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            width: min(96%, 1040px);
-        }
-
-        .brand-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.55rem;
-            padding: 0.45rem 0.95rem;
-            border: 1px solid rgba(127, 214, 255, 0.28);
-            border-radius: 999px;
-            background: rgba(10, 19, 36, 0.82);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
-            color: var(--text);
-            font-size: 0.92rem;
-            font-weight: 650;
-            letter-spacing: 0.01em;
-            backdrop-filter: blur(8px);
-        }
-
-        .brand-pill img {
-            width: 26px;
-            height: 26px;
-            object-fit: contain;
-            flex: 0 0 auto;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(24, 112, 208, 0.85);
-            color: white;
-            border: none;
-            padding: 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-            z-index: 3;
-            transition: background 0.3s;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-nav:hover {
-            background: rgba(26, 167, 232, 1);
-        }
-
-        .carousel-nav.prev {
-            left: 20px;
-        }
-
-        .carousel-nav.next {
-            right: 20px;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 3;
-        }
-
-        .indicator {
-            width: 12px;
-            height: 12px;
-            padding: 0;
-            border: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .indicator.active {
-            background: var(--cta);
-        }
-
-        .hero {
-            background: linear-gradient(rgba(5, 7, 13, 0.95), rgba(24, 112, 208, 0.6)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
-            background-size: cover;
-            color: white;
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        section[id] {
-            scroll-margin-top: 6.5rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 760px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .services {
-            padding: 4rem 0;
-            background: var(--panel);
-        }
-
-        .assessment {
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #0d2942, #0a111f);
-        }
-
-        .assessment-content {
-            max-width: 920px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            border: 1px solid #24517a;
-            border-radius: 14px;
-            background: rgba(10, 19, 36, 0.88);
-            text-align: center;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
-        }
-
-        .assessment-content h2 {
-            color: var(--brand-blue-2);
-            font-size: 2rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .assessment-content > p {
-            max-width: 720px;
-            margin: 0 auto 1.5rem;
-            color: var(--muted);
-        }
-
-        .assessment-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin: 0 0 2rem;
-            padding: 0;
-            list-style: none;
-            text-align: left;
-        }
-
-        .assessment-list li {
-            padding: 1rem;
-            border-radius: 8px;
-            background: #0f1d35;
-            color: var(--text);
-        }
-
-        .assessment-list li::before {
-            content: "✓";
-            margin-right: 0.55rem;
-            color: #69d331;
-            font-weight: 800;
-        }
-
-        .next-steps {
-            padding: 4rem 0;
-            background: var(--brand-dark);
-        }
-
-        .next-steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.5rem;
-        }
-
-        .next-step {
-            padding: 1.75rem;
-            border: 1px solid #1b2a44;
-            border-radius: 12px;
-            background: var(--panel-2);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
-        }
-
-        .step-number {
-            display: grid;
-            place-items: center;
-            width: 42px;
-            height: 42px;
-            margin-bottom: 1rem;
-            border-radius: 50%;
-            color: white;
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-blue));
-            font-weight: 800;
-        }
-
-        .next-step h3 {
-            margin-bottom: 0.6rem;
-            color: var(--brand-blue-2);
-        }
-
-        .next-step p {
-            color: var(--muted);
-        }
-
-        .essential-eight {
-            padding: 4rem 0;
-            background: #0a111f;
-        }
-
-        .essential-eight .section-title {
-            margin-bottom: 1.5rem;
-        }
-
-        .essential-eight .intro {
-            text-align: center;
-            max-width: 860px;
-            margin: 0 auto 2.5rem;
-            color: var(--muted);
-        }
-
-        .framework-update {
-            max-width: 860px;
-            margin: -1rem auto 2.5rem;
-            padding: 1rem 1.25rem;
-            border-left: 4px solid var(--brand-blue-2);
-            border-radius: 6px;
-            background: #0f1d35;
-            color: var(--muted);
-        }
-
-        .framework-update strong {
-            color: var(--text);
-        }
-
-        .framework-update a {
-            color: var(--brand-blue-2);
-        }
-
-        .essential-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .essential-card {
-            background: var(--panel-2);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #1b2a44;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-        }
-
-        .essential-card h3 {
-            color: var(--brand-blue-2);
-            margin-bottom: 0.6rem;
-        }
-
-        .essential-card p {
-            color: var(--muted);
-        }
-
-        .maturity-note {
-            margin-top: 2rem;
-            text-align: center;
-            color: var(--muted);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: var(--brand-blue-2);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: var(--panel-2);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card h3 {
-            color: var(--brand-blue-2);
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--muted);
-        }
-
-        .learn-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.55rem;
-            margin-top: 1.2rem;
-        }
-
-        .learn-link {
-            display: inline-block;
-            padding: 0.38rem 0.7rem;
-            border: 1px solid rgba(26, 167, 232, 0.45);
-            border-radius: 999px;
-            color: #7fd6ff;
-            background: rgba(24, 112, 208, 0.12);
-            font-size: 0.82rem;
-            font-weight: 650;
-            text-decoration: none;
-        }
-
-        .learn-link:hover {
-            border-color: var(--brand-green);
-            color: white;
-            background: rgba(58, 165, 11, 0.2);
-        }
-
-        .learn-link:focus-visible {
-            outline: 3px solid rgba(127, 214, 255, 0.85);
-            outline-offset: 2px;
-        }
-
-        .trust-strip {
-            margin-top: 2rem;
-            padding: 1.25rem;
-            border: 1px solid #1b2a44;
-            border-radius: 12px;
-            background: #0a1324;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-        }
-
-        .trust-title {
-            color: var(--brand-blue-2);
-            font-weight: 700;
-            margin-bottom: 0.9rem;
-        }
-
-        .trust-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 0.9rem;
-        }
-
-        .chip {
-            display: inline-block;
-            padding: 0.35rem 0.7rem;
-            border-radius: 999px;
-            background: #0f1d35;
-            border: 1px solid #223453;
-            color: var(--brand-silver);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .trust-note {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .reseller-note {
-            margin-bottom: 0.9rem;
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .about {
-            padding: 4rem 0;
-            background: #0a111f;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            color: var(--brand-blue-2);
-            margin-bottom: 1rem;
-        }
-
-        .about-text p {
-            color: var(--muted);
-        }
-
-        .credentials-list {
-            margin-top: 1rem;
-            padding-left: 1.2rem;
-        }
-
-        .credentials-list li {
-            color: var(--muted);
-            margin-bottom: 0.6rem;
-        }
-
-        .about-image {
-            background: var(--logo-bg);
-            height: auto;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .about-image img {
-            max-width: 560px;
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .about-badge {
-            position: relative;
-            display: inline-flex;
-            align-items: baseline;
-            gap: 0.45rem;
-            padding-right: 0.4em;
-            font-size: 1.7rem;
-            font-weight: 800;
-            letter-spacing: 0.07em;
-            text-transform: none;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        .contact {
-            padding: 4rem 0;
-            background: var(--panel);
-        }
-
-        .contact-form {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 2rem;
-            border: 1px solid rgba(127, 214, 255, 0.18);
-            border-radius: 16px;
-            background: linear-gradient(145deg, rgba(17, 26, 45, 0.98), rgba(7, 12, 23, 0.98));
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
-        }
-
-        .contact-email {
-            text-align: center;
-            margin: 0 0 1.5rem;
-            color: var(--muted);
-        }
-
-        .contact-email a {
-            color: var(--brand-blue-2);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .contact-email a:hover {
-            text-decoration: underline;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--brand-blue-2);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #1b2a44;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            background: #0a1324;
-            color: var(--text);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: rgba(26, 167, 232, 0.65);
-            box-shadow: 0 0 0 3px rgba(24, 112, 208, 0.18);
-        }
-
-        .form-group textarea {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-blue));
-            color: white;
-            padding: 1rem 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            width: 100%;
-            box-shadow: 0 10px 24px rgba(24, 112, 208, 0.25), 0 0 18px rgba(58, 165, 11, 0.14);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #4cbd18, var(--brand-blue-2));
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(24, 112, 208, 0.34), 0 0 24px rgba(58, 165, 11, 0.2);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:focus-visible {
-            outline: 3px solid rgba(127, 214, 255, 0.9);
-            outline-offset: 3px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-        }
-
-        .form-note {
-            margin-top: 0.9rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .form-honeypot {
-            position: absolute;
-            left: -10000px;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-        }
-
-        footer {
-            background: var(--brand-dark);
-            color: var(--muted);
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        footer a {
-            color: var(--brand-blue-2);
-        }
-
-        .footer-logo {
-            display: block;
-            height: 56px;
-            width: auto;
-            max-width: min(100%, 280px);
-            margin: 0 auto 1rem;
-        }
-
-        .footer-logo-link {
-            display: inline-block;
-            line-height: 0;
-        }
-
-        .footer-tools {
-            margin-top: 0.5rem;
-        }
-
-        @media (max-width: 1180px) {
-            .nav-toggle {
-                display: inline-flex;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                z-index: 2;
-                top: 100%;
-                left: 0;
-                right: 0;
-                margin: 0;
-                padding: 0.25rem 1.25rem 0.75rem;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0;
-                background: var(--logo-bg);
-                border-top: 1px solid rgba(255, 255, 255, 0.12);
-                box-shadow: 0 16px 28px rgba(0, 0, 0, 0.28);
-            }
-
-            .site-nav.is-open .nav-links {
-                display: flex;
-            }
-
-            .nav-links li {
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 0.85rem 0;
-                font-size: 1rem;
-            }
-
-            .site-logo {
-                height: 50px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .next-steps-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 0.65rem 0;
-            }
-
-            .site-nav {
-                gap: 0.6rem;
-            }
-
-            header .cta-button {
-                flex: 0 0 auto;
-                padding: 0.48rem 0.72rem;
-                font-size: 0.82rem;
-                white-space: nowrap;
-            }
-
-            .cta-label-desktop {
-                display: none;
-            }
-
-            .cta-label-mobile {
-                display: inline;
-            }
-
-            .tech-carousel {
-                height: 300px;
-            }
-
-            .carousel-overlay h2 {
-                font-size: 1.8rem;
-            }
-
-            .carousel-overlay p {
-                font-size: 1rem;
-                display: none;
-            }
-
-            .carousel-slide--ai .carousel-overlay,
-            .carousel-slide--security .carousel-overlay,
-            .carousel-slide--cloud .carousel-overlay,
-            .carousel-slide--infra .carousel-overlay {
-                top: 38%;
-                padding: 1.1rem 1.25rem;
-            }
-
-            .carousel-brand-logos {
-                bottom: 48px;
-                gap: 0.45rem;
-            }
-
-            .brand-pill {
-                padding: 0.35rem 0.7rem;
-                font-size: 0.78rem;
-            }
-
-            .brand-pill img {
-                width: 20px;
-                height: 20px;
-            }
-
-            .carousel-nav {
-                padding: 0.5rem;
-                font-size: 1.2rem;
-                width: 40px;
-                height: 40px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .essential-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .assessment-list {
-                grid-template-columns: 1fr;
-            }
-
-            .site-logo {
-                height: 46px;
-            }
-
-            .footer-logo {
-                height: 48px;
-            }
-
-            .about-image {
-                padding: 1.25rem 1rem;
-            }
-
-            .about-badge {
-                font-size: 1.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .hero {
-                padding: 2.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .carousel-nav.prev {
-                left: 10px;
-            }
-
-            .carousel-nav.next {
-                right: 10px;
-            }
-
-            .site-logo {
-                height: 42px;
-            }
-
-            .footer-logo {
-                height: 44px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .matrix-canvas {
-                display: none;
-            }
-        }
-    </style>
+    <meta name="theme-color" content="#070b14">
+    <link rel="stylesheet" href="assets/site.css?v=20261101-2">
+    <link rel="stylesheet" href="assets/home.css?v=20261101-2">
 </head>
-<body>
-    <canvas class="matrix-canvas" id="matrixCanvas" aria-hidden="true"></canvas>
+<body class="page-home">
     <header>
         <nav class="container site-nav" aria-label="Primary">
             <div class="logo-wrap">
@@ -1249,10 +155,51 @@
     </section>
 
     <section id="home" class="hero">
-        <div class="container">
-            <h1>Reduce Cyber Risk Without Building an Internal Security Team</h1>
-            <p>Practical protection for Australian businesses, delivered with ThreatLocker, Huntress, Microsoft 365 security, and an Essential Eight-aligned roadmap.</p>
-            <a href="#contact" class="cta-button">Book a Free 30-Minute Security Review</a>
+        <div class="container hero-layout">
+            <div class="hero-copy">
+                <p class="node-kicker">Newclear Computing · Cybersecurity</p>
+                <h1>Reduce Cyber Risk Without Building an Internal Security Team</h1>
+                <p>Practical protection for Australian businesses, delivered with ThreatLocker, Huntress, Microsoft 365 security, and an Essential Eight-aligned roadmap.</p>
+                <a href="#contact" class="cta-button">Book a Free 30-Minute Security Review</a>
+            </div>
+            <div class="hero-graph" aria-hidden="true">
+                <div class="graph-hub">
+                    <div class="graph-node graph-node-hub">
+                        <span class="node-kicker">Input</span>
+                        <strong>Security review</strong>
+                        <small>30 minutes · priorities</small>
+                    </div>
+                </div>
+                <svg class="hero-wires" viewBox="0 0 120 400" preserveAspectRatio="none" focusable="false">
+                    <path class="wire-base" d="M2 200 C 58 200, 62 46, 118 46" />
+                    <path class="wire-base wire-base-green" d="M2 200 C 48 200, 72 200, 118 200" />
+                    <path class="wire-base" d="M2 200 C 58 200, 62 354, 118 354" />
+                    <path class="wire" d="M2 200 C 58 200, 62 46, 118 46" />
+                    <path class="wire wire-green" d="M2 200 C 48 200, 72 200, 118 200" />
+                    <path class="wire" d="M2 200 C 58 200, 62 354, 118 354" />
+                    <circle class="wire-dot" cx="2" cy="200" r="3.4" />
+                    <circle class="wire-dot" cx="118" cy="46" r="3.4" />
+                    <circle class="wire-dot wire-dot-green" cx="118" cy="200" r="3.4" />
+                    <circle class="wire-dot" cx="118" cy="354" r="3.4" />
+                </svg>
+                <div class="graph-stack">
+                    <div class="graph-node">
+                        <span class="node-kicker">Node 01 · App</span>
+                        <strong>ThreatLocker</strong>
+                        <small>Allowlisting and ringfencing</small>
+                    </div>
+                    <div class="graph-node graph-node-green">
+                        <span class="node-kicker">Node 02 · Detect</span>
+                        <strong>Huntress</strong>
+                        <small>Managed detection and response</small>
+                    </div>
+                    <div class="graph-node">
+                        <span class="node-kicker">Node 03 · Identity</span>
+                        <strong>Microsoft 365</strong>
+                        <small>MFA, email, and access</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1260,7 +207,8 @@
         <div class="container">
             <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 01 · App</span>
                     <h3>ThreatLocker Application Control</h3>
                     <p>Control which applications can run and apply least privilege policies that reduce the attack surface across your endpoints.</p>
                     <p>Approved software can still be abused. ThreatLocker Ringfencing limits what trusted applications such as 7-Zip, WinRAR, Microsoft Office, and PowerShell can access or launch, reducing the risk of ransomware and data theft.</p>
@@ -1269,22 +217,26 @@
                         <a class="learn-link" href="https://www.threatlocker.com/blog/the-dangers-of-7-zip-and-winrar" target="_blank" rel="noopener noreferrer">Why 7-Zip and WinRAR Need Protection</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 02 · Detect</span>
                     <h3>Huntress Managed Security</h3>
                     <p>Strengthen endpoint protection with managed detection, investigation, and response backed by the Huntress platform.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 03 · Comply</span>
                     <h3>Compliance Solutions</h3>
                     <p>Navigate regulatory requirements with ease. We help you achieve and maintain compliance standards efficiently.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 04 · Identity</span>
                     <h3>Microsoft 365 Security</h3>
                     <p>Review MFA, Conditional Access, administrator roles, email protection, sharing, Secure Score, audit settings, and risky sign-ins.</p>
                     <div class="learn-links">
                         <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-xdr/microsoft-secure-score" target="_blank" rel="noopener noreferrer">Microsoft Secure Score</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 05 · AI</span>
                     <h3>Secure AI Productivity, Notebooks &amp; Agents</h3>
                     <p>Prepare data and permissions, identify practical use cases for Microsoft Copilot, OpenAI, and Anthropic tools, and apply sensible governance. ThreatLocker can restrict file access, child processes, registry access, and network destinations used by agentic tools such as Claude Code and OpenAI Codex.</p>
                     <div class="learn-links">
@@ -1294,14 +246,16 @@
                         <a class="learn-link" href="https://www.threatlocker.com/blog/shadow-ai-the-risks-it-poses-to-your-environment" target="_blank" rel="noopener noreferrer">Control ChatGPT &amp; Shadow AI</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 06 · Licence</span>
                     <h3>Microsoft 365 Licensing Optimisation</h3>
                     <p>Review assigned licences and usage reports, remove avoidable waste, right-size subscriptions, and identify opportunities to reduce ongoing licensing costs.</p>
                     <div class="learn-links">
                         <a class="learn-link" href="https://learn.microsoft.com/en-us/microsoft-365/admin/usage-analytics/usage-analytics?view=o365-worldwide" target="_blank" rel="noopener noreferrer">Microsoft 365 Usage Analytics</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 07 · Endpoint</span>
                     <h3>Windows Endpoint Security &amp; Compliance</h3>
                     <p>Configure Intune compliance, Windows LAPS, BitLocker, Microsoft Defender, firewall, update policies, and security reporting across managed devices.</p>
                     <div class="learn-links">
@@ -1311,18 +265,21 @@
                         <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint" target="_blank" rel="noopener noreferrer">Defender for Endpoint</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 08 · EDR</span>
                     <h3>Microsoft Defender for Endpoint</h3>
                     <p>Deploy and manage endpoint detection and response across Windows, macOS, and Linux devices.</p>
                     <div class="learn-links">
                         <a class="learn-link" href="https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint" target="_blank" rel="noopener noreferrer">Microsoft Learn</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 09 · Network</span>
                     <h3>Ubiquiti UniFi Dream Machine</h3>
                     <p>Design, deploy, and manage secure UniFi networks using Dream Machine gateways, switching, and wireless infrastructure.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 10 · Web</span>
                     <h3>Website Security &amp; Cloudflare</h3>
                     <p>Check website security headers, identify missing browser protections, and use Cloudflare to strengthen them safely.</p>
                     <div class="learn-links">
@@ -1332,12 +289,13 @@
                         <a class="learn-link" href="https://developers.cloudflare.com/rules/transform/response-header-modification/" target="_blank" rel="noopener noreferrer">Response Header Rules</a>
                     </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card node">
+                    <span class="node-kicker" aria-hidden="true">Node 11 · Backup</span>
                     <h3>Microsoft 365 Backup</h3>
                     <p>Protect Microsoft 365 email and business data with Datto SaaS Protection and Veeam backup solutions.</p>
                 </div>
             </div>
-            <div class="trust-strip">
+            <div class="trust-strip node">
                 <p class="trust-title">Trusted Platforms & Credentials</p>
                 <p class="reseller-note">Newclear Computing is a reseller for ThreatLocker and Huntress.</p>
                 <div class="trust-chips">
@@ -1358,7 +316,7 @@
 
     <section id="assessment" class="assessment">
         <div class="container">
-            <div class="assessment-content">
+            <div class="assessment-content node">
                 <h2>Start With a Free 30-Minute Security Review</h2>
                 <p>A focused conversation about your current risks, priorities, and practical next steps—without a generic sales presentation.</p>
                 <ul class="assessment-list">
@@ -1377,35 +335,43 @@
             <p class="intro">The Australian Signals Directorate’s Essential Eight is a practical baseline for reducing cyber risk. We help you design, implement, and continuously improve these controls to meet your business needs and regulatory expectations.</p>
             <p class="framework-update"><strong>Essential Eight is evolving.</strong> In June 2026, ASD began consultation on a proposed new <em>Essentials series</em> that would expand the current framework for contemporary technology environments. Essential Eight remains the current framework while consultation continues, and we will help clients align existing controls with the new guidance as it develops. <a href="https://www.cyber.gov.au/about-us/view-all-content/news/consultation-on-evolution-of-essential-eight" target="_blank" rel="noopener noreferrer">Read the ASD announcement</a>.</p>
             <div class="essential-grid">
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-01 · Application</span>
                     <h3>Application Control</h3>
                     <p>Allow only approved applications to run, blocking untrusted or malicious software and reducing the attack surface.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-02 · Patch apps</span>
                     <h3>Patch Applications</h3>
                     <p>Keep key applications updated to close known vulnerabilities that attackers routinely exploit.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-03 · Macros</span>
                     <h3>Configure Office Macro Settings</h3>
                     <p>Restrict macro execution to prevent malicious documents from running code on your systems.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-04 · Hardening</span>
                     <h3>User Application Hardening</h3>
                     <p>Harden browsers and common apps to limit risky features and reduce exposure to web‑based threats.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-05 · Admin rights</span>
                     <h3>Restrict Administrative Privileges</h3>
                     <p>Apply least‑privilege access and privileged access management to prevent abuse of admin rights.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-06 · Patch OS</span>
                     <h3>Patch Operating Systems</h3>
                     <p>Keep OS updates current to close critical security gaps across endpoints and servers.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-07 · MFA</span>
                     <h3>Multi‑factor Authentication</h3>
                     <p>Require MFA for users and administrators to reduce the impact of stolen credentials.</p>
                 </div>
-                <div class="essential-card">
+                <div class="essential-card node">
+                    <span class="node-kicker" aria-hidden="true">E8-08 · Backups</span>
                     <h3>Regular Backups</h3>
                     <p>Implement secure, tested backups to recover quickly from ransomware or data loss incidents.</p>
                 </div>
@@ -1433,7 +399,7 @@
                         <li>Advanced Cloud Incident Response in Azure and Microsoft 365 training.</li>
                     </ul>
                 </div>
-                <div class="about-image">
+                <div class="about-image node">
                     <img src="assets/logo.svg" width="676" height="168" alt="Newclear Computing logo">
                 </div>
             </div>
@@ -1444,17 +410,17 @@
         <div class="container">
             <h2 class="section-title" id="next-steps-title">What Happens Next</h2>
             <div class="next-steps-grid">
-                <article class="next-step">
+                <article class="next-step node">
                     <div class="step-number" aria-hidden="true">1</div>
                     <h3>Tell Us Your Priorities</h3>
                     <p>Send a short enquiry about your security, Microsoft 365, licensing, compliance, or AI productivity goals.</p>
                 </article>
-                <article class="next-step">
+                <article class="next-step node">
                     <div class="step-number" aria-hidden="true">2</div>
                     <h3>Focused 30-Minute Review</h3>
                     <p>We discuss your environment, current risks, business constraints, and the improvements that will deliver the most value.</p>
                 </article>
-                <article class="next-step">
+                <article class="next-step node">
                     <div class="step-number" aria-hidden="true">3</div>
                     <h3>Practical Next-Step Plan</h3>
                     <p>You receive clear priorities and options for implementation, without a generic sales presentation or unnecessary complexity.</p>
@@ -1469,7 +435,7 @@
             <p class="contact-email">Tell us what you are concerned about using the secure enquiry form below.</p>
             <form
                 id="securityReviewForm"
-                class="contact-form"
+                class="contact-form node"
                 action="https://submit.jotform.com/submit/261880828694069"
                 method="post"
                 accept-charset="utf-8"
@@ -1515,6 +481,6 @@
         </div>
     </footer>
 
-    <script src="assets/main.js?v=20261101-1" defer></script>
+    <script src="assets/main.js?v=20261101-2" defer></script>
 </body>
 </html>

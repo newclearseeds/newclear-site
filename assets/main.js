@@ -33,12 +33,23 @@ indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => selectSlide(index));
 });
 
-let autoSlideInterval = setInterval(() => changeSlide(1), 5000);
 const carousel = document.getElementById('carousel');
-carousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-carousel.addEventListener('mouseleave', () => {
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let autoSlideInterval = 0;
+
+function startAutoSlide() {
+    if (reduceMotion) return;
+    clearInterval(autoSlideInterval);
     autoSlideInterval = setInterval(() => changeSlide(1), 5000);
-});
+}
+
+function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+}
+
+startAutoSlide();
+carousel.addEventListener('mouseenter', stopAutoSlide);
+carousel.addEventListener('mouseleave', startAutoSlide);
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (event) {
@@ -58,41 +69,6 @@ if (securityReviewForm) {
         }
     });
 }
-
-const canvas = document.getElementById('matrixCanvas');
-const context = canvas.getContext('2d');
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$@#%&*';
-let fontSize = 16;
-let columns = [];
-
-function resizeMatrix() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    fontSize = window.innerWidth < 768 ? 14 : 16;
-    const columnCount = Math.floor(canvas.width / fontSize);
-    columns = Array(columnCount).fill(1);
-}
-
-function drawMatrix() {
-    context.fillStyle = 'rgba(5, 7, 13, 0.07)';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.font = `${fontSize}px monospace`;
-    context.fillStyle = '#3aa50b';
-    for (let index = 0; index < columns.length; index++) {
-        const character = letters[Math.floor(Math.random() * letters.length)];
-        const x = index * fontSize;
-        const y = columns[index] * fontSize;
-        context.fillText(character, x, y);
-        if (y > canvas.height && Math.random() > 0.975) {
-            columns[index] = 0;
-        }
-        columns[index]++;
-    }
-}
-
-resizeMatrix();
-window.addEventListener('resize', resizeMatrix);
-setInterval(drawMatrix, 50);
 
 const siteNav = document.querySelector('.site-nav');
 const navToggle = document.querySelector('.nav-toggle');
