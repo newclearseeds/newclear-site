@@ -1,0 +1,4 @@
+# html_handling is "none", so /page.html is served at that exact path (same as
+# GitHub Pages). The site root still needs index.html. Status 200 rewrites the
+# body and leaves the browser address as /.
+/ /index.html 200

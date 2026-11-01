@@ -1,0 +1,28 @@
+# Excluded from the Cloudflare Worker asset upload only.
+# GitHub Pages does not read this file and still publishes the repository.
+
+.git/
+.github/
+.vscode/
+.wrangler/
+.DS_Store
+
+README.md
+/CNAME
+wrangler.jsonc
+wrangler.json
+wrangler.toml
+package.json
+package-lock.json
+node_modules/
+
+# Set Doubles source. The published page is setdoubles.html plus assets/setdoubles*.
+/src/
+
+# Internal tooling, not the website.
+/OSDCloudFactory/
+/intune/
+
+# Archives that are not linked from any page.
+*.zip
+*.pdf
