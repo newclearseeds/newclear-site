@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.00 64.00" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Newclear Computing</title>
+  <rect width="64" height="64" rx="14.00" fill="#07141E"/><g transform="translate(32.00 32.00)" fill="none" stroke-linecap="round" stroke-width="4.10"><ellipse rx="24.32" ry="9.27" transform="rotate(-56)" stroke="#C8F4FF"/><ellipse rx="24.32" ry="9.27" transform="rotate(56)" stroke="#7AD4FF"/><ellipse rx="9.27" ry="24.32" stroke="#6EF0B0"/></g><circle cx="18.40" cy="52.16" r="3.40" fill="#F4FBFF"/><circle cx="45.60" cy="52.16" r="3.40" fill="#F4FBFF"/><circle cx="32.00" cy="7.68" r="3.40" fill="#F3FFF8"/><circle cx="32.00" cy="32.00" r="7.14" fill="#F4FBFF"/><circle cx="32.00" cy="32.00" r="3.93" fill="#1596CC"/><circle cx="32.00" cy="32.00" r="1.57" fill="#FFFFFF"/>
+</svg>

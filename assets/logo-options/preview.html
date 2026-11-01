@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'none'">
+    <title>Logo options | Newclear Computing</title>
+    <style>
+        :root {
+            --bg: #070b14;
+            --cyan: #8fe8ff;
+            --text: #e8f1f8;
+            --muted: #b7c6d6;
+            --line: rgba(143, 232, 255, 0.38);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 14% -8%, rgba(46, 150, 210, 0.16), transparent 42%),
+                radial-gradient(ellipse at 100% 100%, rgba(46, 180, 120, 0.09), transparent 38%),
+                linear-gradient(rgba(148, 206, 230, 0.075) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 206, 230, 0.075) 1px, transparent 1px);
+            background-size: auto, auto, 56px 56px, 56px 56px;
+        }
+
+        main {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 2.2rem 0 3rem;
+        }
+
+        h1 {
+            margin: 0 0 0.35rem;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            letter-spacing: -0.02em;
+        }
+
+        .lede {
+            margin: 0 0 1.6rem;
+            max-width: 68ch;
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        article {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            padding: 0.9rem 0.9rem 1rem;
+            background: rgba(8, 18, 32, 0.88);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+        }
+
+        article.selected {
+            border-color: rgba(143, 232, 255, 0.85);
+            box-shadow: 0 0 0 1px rgba(143, 232, 255, 0.25), 0 0 24px rgba(80, 200, 255, 0.12);
+        }
+
+        .kicker {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 0;
+            color: var(--cyan);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            padding: 0.12rem 0.4rem;
+            border: 1px solid rgba(143, 232, 255, 0.7);
+            border-radius: 4px;
+            color: #f4fbff;
+            letter-spacing: 0.08em;
+        }
+
+        .stage {
+            display: flex;
+            align-items: center;
+            min-height: 118px;
+            padding: 0.8rem 0.4rem;
+            background:
+                linear-gradient(rgba(148, 206, 230, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 206, 230, 0.07) 1px, transparent 1px),
+                #070b14;
+            background-size: 28px 28px, 28px 28px, auto;
+            border-radius: 4px;
+        }
+
+        .stage img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .sizes {
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            min-height: 74px;
+            padding: 0 0.7rem;
+            background: rgba(6, 10, 18, 0.94);
+            border: 1px solid rgba(143, 232, 255, 0.28);
+            border-radius: 4px;
+        }
+
+        .bar img { height: 62px; width: auto; max-width: 100%; }
+        .mobile img { height: 42px; }
+        .mobile { min-height: 54px; }
+
+        .label {
+            margin: 0;
+            color: var(--muted);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .icons {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.7rem;
+        }
+
+        .icons img {
+            display: block;
+            width: 64px;
+            height: 64px;
+        }
+
+        .icons img.sm { width: 32px; height: 32px; }
+        .icons img.xs { width: 16px; height: 16px; }
+
+        p {
+            margin: 0;
+            color: #d3e0ec;
+            font-size: 0.92rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 980px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Logo options</h1>
+        <p class="lede">Three lockups for the dark node-graph site. Each keeps the name Newclear, the ®, and Computing. Wordmarks are outlined paths, so nothing is loaded from another host. Option A is the mark used in the header, footer, favicon, and social image.</p>
+        <div class="grid">
+            <article class="selected">
+                <p class="kicker">Option A · Helix <span class="badge">Selected</span></p>
+                <div class="stage">
+                    <img src="option-a-helix.svg" width="400" height="93" alt="Option A, Helix: Newclear Computing wordmark with a three-orbit nucleus">
+                </div>
+                <div class="sizes">
+                    <p class="label">Header 62px</p>
+                    <div class="bar"><img src="option-a-helix.svg" alt=""></div>
+                    <p class="label">Mobile 42px</p>
+                    <div class="bar mobile"><img src="option-a-helix.svg" alt=""></div>
+                    <p class="label">Icon 64 / 32 / 16</p>
+                    <div class="icons">
+                        <img src="option-a-mark.svg" width="64" height="64" alt="">
+                        <img class="sm" src="option-a-icon.svg" width="32" height="32" alt="">
+                        <img class="xs" src="option-a-icon.svg" width="16" height="16" alt="">
+                    </div>
+                </div>
+                <h2>Helix</h2>
+                <p>The existing nucleus, redrawn without the block letter behind it. Three light orbits, a bright core, and electrons set in a triangle. The name stays solid white so it holds on the navy grid, and Computing sits in tracked cyan.</p>
+            </article>
+            <article>
+                <p class="kicker">Option B · Node N</p>
+                <div class="stage">
+                    <img src="option-b-node-n.svg" width="387" height="91" alt="Option B, Node N: Newclear Computing wordmark with an N made of nodes and wires">
+                </div>
+                <div class="sizes">
+                    <p class="label">Header 62px</p>
+                    <div class="bar"><img src="option-b-node-n.svg" alt=""></div>
+                    <p class="label">Mobile 42px</p>
+                    <div class="bar mobile"><img src="option-b-node-n.svg" alt=""></div>
+                    <p class="label">Icon 64 / 32 / 16</p>
+                    <div class="icons">
+                        <img src="option-b-mark.svg" width="64" height="64" alt="">
+                        <img class="sm" src="option-b-icon.svg" width="32" height="32" alt="">
+                        <img class="xs" src="option-b-icon.svg" width="16" height="16" alt="">
+                    </div>
+                </div>
+                <h2>Node N</h2>
+                <p>The monogram is the node graph: four terminals and a green wire forming an N. It matches the interface most directly, and the letter still reads when the icon is tiny.</p>
+            </article>
+            <article>
+                <p class="kicker">Option C · Lattice</p>
+                <div class="stage">
+                    <img src="option-c-lattice.svg" width="400" height="92" alt="Option C, Lattice: Newclear Computing wordmark with a hexagonal node network">
+                </div>
+                <div class="sizes">
+                    <p class="label">Header 62px</p>
+                    <div class="bar"><img src="option-c-lattice.svg" alt=""></div>
+                    <p class="label">Mobile 42px</p>
+                    <div class="bar mobile"><img src="option-c-lattice.svg" alt=""></div>
+                    <p class="label">Icon 64 / 32 / 16</p>
+                    <div class="icons">
+                        <img src="option-c-mark.svg" width="64" height="64" alt="">
+                        <img class="sm" src="option-c-icon.svg" width="32" height="32" alt="">
+                        <img class="xs" src="option-c-icon.svg" width="16" height="16" alt="">
+                    </div>
+                </div>
+                <h2>Lattice</h2>
+                <p>A hexagonal network around the same kind of core. New stays white and clear picks up the interface cyan, with Computing in a quieter silver so the name does not become one colour.</p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>
