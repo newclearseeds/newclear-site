@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Newclear Computing">
-  <rect width="32" height="32" rx="7" fill="#1e384c"/>
-  <g transform="translate(16 16)" fill="none" stroke-linecap="round" stroke-width="2.35">
-    <ellipse rx="11.2" ry="4.3" transform="rotate(-58)" stroke="#c8f3ff"/>
-    <ellipse rx="11.2" ry="4.3" transform="rotate(58)" stroke="#1aa7e8"/>
-    <ellipse rx="4.3" ry="11.2" stroke="#6ad48a"/>
-    <circle r="4.3" fill="#f7fdff" stroke="none"/>
-    <circle r="1.9" fill="#1870d0" stroke="none"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.00 32.00" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Newclear Computing</title>
+  <rect width="32" height="32" rx="7.00" fill="#07141E"/><g transform="translate(16.00 16.00)" fill="none" stroke-linecap="round"><path d="M 0.00 -11.30 L 9.79 -5.65 L 9.79 5.65 L 0.00 11.30 L -9.79 5.65 L -9.79 -5.65 Z" stroke="#C8F4FF" stroke-width="1.80"/><path d="M 0.00 -4.35 L 3.77 -2.17 L 3.77 2.17 L 0.00 4.35 L -3.77 2.17 L -3.77 -2.18 Z" stroke="#9AEBFF" stroke-width="1.00" opacity="0.55"/><path d="M0 0 L0.00 -7.15" stroke="#C8F4FF" stroke-width="1.71"/><path d="M0 0 L-6.19 3.57" stroke="#7AD4FF" stroke-width="1.71"/><path d="M0 0 L6.19 3.57" stroke="#6EF0B0" stroke-width="1.71"/><circle cx="0.00" cy="-7.15" r="2.15" fill="none" stroke="#C8F4FF" stroke-width="1.20"/><circle cx="0.00" cy="-7.15" r="0.90" fill="#F4FBFF"/><circle cx="-6.19" cy="3.57" r="2.15" fill="none" stroke="#7AD4FF" stroke-width="1.20"/><circle cx="-6.19" cy="3.57" r="0.90" fill="#F4FBFF"/><circle cx="6.19" cy="3.57" r="2.15" fill="none" stroke="#6EF0B0" stroke-width="1.20"/><circle cx="6.19" cy="3.57" r="0.90" fill="#F3FFF8"/><circle r="2.75" fill="#F4FBFF"/><circle r="1.51" fill="#1596CC"/><circle r="0.60" fill="#FFFFFF"/></g>
 </svg>
