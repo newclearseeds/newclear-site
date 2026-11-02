@@ -38,7 +38,7 @@ header {
     min-width: 0;
     max-width: 100%;
     line-height: 0;
-    background: radial-gradient(circle at 9.5% 41%, rgba(90, 200, 255, 0.28), transparent 46px);
+    background: radial-gradient(circle at 9.3% 41%, rgba(90, 200, 255, 0.28), transparent 46px);
 }
 
 .site-logo {
