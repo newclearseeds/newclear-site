@@ -11,8 +11,10 @@
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <title>Newclear Computing Pty Ltd - Cybersecurity and IT Solutions</title>
     <meta name="theme-color" content="#070b14">
+    <link rel="preload" as="image" href="assets/hero-cyber.webp" type="image/webp" media="(min-width: 981px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/hero-cyber-mobile.webp" type="image/webp" media="(max-width: 980px)" fetchpriority="high">
     <link rel="stylesheet" href="assets/site.css?v=20261101-2">
-    <link rel="stylesheet" href="assets/home.css?v=20261101-2">
+    <link rel="stylesheet" href="assets/home.css?v=20261102-1">
 </head>
 <body class="page-home">
     <header>
@@ -155,6 +157,14 @@
     </section>
 
     <section id="home" class="hero">
+        <div class="hero-media" aria-hidden="true">
+            <picture>
+                <source media="(max-width: 980px)" srcset="assets/hero-cyber-mobile.webp" type="image/webp">
+                <source media="(max-width: 980px)" srcset="assets/hero-cyber-mobile.jpg" type="image/jpeg">
+                <source srcset="assets/hero-cyber.webp" type="image/webp">
+                <img src="assets/hero-cyber.jpg" alt="" width="1280" height="720" fetchpriority="high">
+            </picture>
+        </div>
         <div class="container hero-layout">
             <div class="hero-copy">
                 <p class="node-kicker">Newclear Computing · Cybersecurity</p>
